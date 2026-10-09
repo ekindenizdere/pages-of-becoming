@@ -92,16 +92,10 @@ const h = (path: string) => url(`home/${path}?v=${build}`);
           <div class="title-stage" data-cap="shared" data-question={t.articles} role="img" aria-label={t.articles}></div>
           <div class="toc" data-list="articles" data-style="contents"></div>
         </div>
-        <span class="folio">— 2 —</span>
       </div>
     </div>
   </section>
 </main>
-
-<footer class="lab-bottom">
-  <div class="counter"><span class="ticks"></span><span data-counter-name>Pages of Becoming</span><span data-counter>01 / 02</span></div>
-  <button class="lab-toggle" type="button" data-motion-toggle aria-pressed="true">{t.motion[0]}</button>
-</footer>
 
 <script is:inline define:vars={{ data, i18n: { min: t.min, becoming: t.becoming, motion: t.motion, quotes: t.quotes } }}>window.POB_PIECES = data; window.POB_I18N = i18n;</script>
 <script is:inline src={h('vendor/opentype.min.js')}></script>
