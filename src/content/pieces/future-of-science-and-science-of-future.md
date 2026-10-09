@@ -3,6 +3,7 @@ title: "Future of Science and Science of Future"
 kind: article
 status: published
 order: 1
+keywords: ["science", "qualities", "philosophy"]
 ---
 
 Science develops cumulatively. Discoveries are made, theories are developed, experiments are designed by standing on the shoulders of giants. We are all, in this sense, historical beings; we are children of our time. This is true for revolutions as well. They, too, “need time for their accomplishment'; [they] too, have a history” (Koyré 1957, p. viii).

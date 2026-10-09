@@ -6,6 +6,7 @@ order: 5
 dedication: "Für Eylül"
 lang: de
 source: on-necessity
+keywords: ["Notwendigkeit", "Konfiguration", "Entscheidung"]
 ---
 
 In welchem Maße ist die Lebensform, die ich heute lebe, notwendig? In welchem Maße haben die Entscheidungen, die ich getroffen habe, meine gegenwärtigen Lebensumstände notwendig gemacht? Was wird angesichts meines gegenwärtigen Verhaltens in Zukunft notwendigerweise geschehen?

@@ -6,6 +6,7 @@ order: 5
 dedication: "Eylül için"
 lang: tr
 source: on-necessity
+keywords: ["zorunluluk", "konfigürasyon", "karar"]
 ---
 
 Bugün sürdürdüğüm yaşam biçimi ne ölçüde zorunlu? Verdiğim kararlar şimdiki koşullarımı ne ölçüde zorunlu kıldı? Şimdiki davranışlarım göz önüne alındığında gelecekte zorunlu olarak ne olacak?

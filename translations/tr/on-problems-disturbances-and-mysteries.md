@@ -5,6 +5,7 @@ status: published
 order: 4
 lang: tr
 source: on-problems-disturbances-and-mysteries
+keywords: ["acı", "rahatsızlık", "gizem"]
 ---
 
 Sorunlar vardır, rahatsızlıklar vardır, bir de gizemler vardır. Her yaşamın bir eksiği vardır ve eksik olan şey, değeri yaratanın ta kendisidir. Acının kaynağı olan arzu hem bir sorun hem de bir rahatsızlıktır: kökü organizmada, nesnesi ise çevrededir. Sorunlar ve rahatsızlıklar çoğu durumda birbirinden kesin çizgilerle ayrılamaz; oysa sorunları sorun, rahatsızlıkları rahatsızlık olarak ele almak insanın iyi oluşu için büyük değer taşır. Gizemler ise ne bir çözüm ne de bir karşılık talep eder. Yapılabilecek en iyi şey onlarla birlikte oturmak ve belki de onların yaratıcılığın kaynağı olduğunu fark etmektir.

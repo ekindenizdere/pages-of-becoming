@@ -1,0 +1,83 @@
+---
+// Configurations: the map of the people and key concepts that run through the pieces.
+// Search, filters, a details panel with the sentence where each appears, zoom and drag, a list view
+// (for phones and screen readers), and links such as #c=organism that open the map on a word.
+import Base from '../layouts/Base.astro';
+import { url } from '../lib';
+import { pieceText } from '../piece-text';
+import { configurations } from '../lib/configurations.mjs';
+import type { Lang } from '../home-text';
+import '../styles/map.css';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = pieceText[lang].map;
+const prefix = lang === 'en' ? '' : `${lang}/`;
+const d = configurations(lang);
+const data = {
+  pieces: Object.fromEntries(Object.entries(d.pieces).map(([s, p]) => [s, { ...p, href: url(`${prefix}pieces/${s}/`) }])),
+  // concepts that connect pieces (or are key concepts), and every person
+  concepts: Object.fromEntries(Object.entries(d.concepts).filter(([, c]) => c.in.length >= 2 || (c.key && c.in.length))),
+  people: d.people,
+  kind: { opinion: pieceText[lang].opinion, article: pieceText[lang].article },
+  text: { ...t, appearsIn: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => t.appearsIn(n)) },
+};
+const langs = (['en', 'de', 'tr'] as const).map((l) => ({ lang: l, href: url(l === 'en' ? 'configurations/' : l + '/configurations/') }));
+---
+<Base title={t.title} lang={lang} langs={langs} current="configurations" description={t.intro}>
+  <section class="cmap">
+    <header class="cmap-head">
+      <a class="cmap-back" href="#" hidden>← {t.back}</a>
+      <h1>{t.title}</h1>
+      <p class="cmap-intro">{t.intro}</p>
+    </header>
+
+    <div class="cmap-tools" role="toolbar" aria-label={t.title}>
+      <label class="cmap-search">
+        <span class="visually-hidden">{t.search}</span>
+        <input type="search" list="cmap-names" placeholder={t.search} autocomplete="off" />
+        <datalist id="cmap-names"></datalist>
+      </label>
+      <div class="cmap-filters">
+        <button type="button" class="chip piece" data-filter="piece" aria-pressed="true">{t.pieces}</button>
+        <button type="button" class="chip concept" data-filter="concept" aria-pressed="true">{t.concepts}</button>
+        <button type="button" class="chip person" data-filter="person" aria-pressed="true">{t.people}</button>
+      </div>
+      <div class="cmap-view">
+        <button type="button" data-view="graph" aria-pressed="true">{t.graph}</button>
+        <button type="button" data-view="list" aria-pressed="false">{t.list}</button>
+      </div>
+    </div>
+
+    <div class="cmap-body">
+      <div class="cmap-stage">
+        <svg class="cmap-svg" role="img" aria-label={t.title}><g class="vp"></g></svg>
+        <div class="cmap-zoom">
+          <button type="button" data-zoom="in" aria-label={t.zoomIn}>+</button>
+          <button type="button" data-zoom="out" aria-label={t.zoomOut}>−</button>
+          <button type="button" data-zoom="fit">{t.reset}</button>
+        </div>
+        <p class="cmap-hint">{t.hint}</p>
+        <div class="cmap-list" hidden></div>
+      </div>
+      <aside class="cmap-details" aria-live="polite">
+        <div class="cmap-default">
+          <p>{t.choose}</p>
+          <h2>{t.legend}</h2>
+          <ul class="cmap-legend">
+            <li><span class="lg piece">Aa</span> {t.legendPiece}</li>
+            <li><span class="lg key">Aa</span> {t.legendKey}</li>
+            <li><span class="lg concept">Aa</span> {t.legendConcept}</li>
+            <li><span class="lg person">Aa</span> {t.legendPerson}</li>
+          </ul>
+        </div>
+        <div class="cmap-selected" hidden></div>
+      </aside>
+    </div>
+  </section>
+  <script type="application/json" id="cmap-data" set:html={JSON.stringify(data).replace(/</g, '\\u003c')} />
+  <script>
+    import { initMap } from '../scripts/map.js';
+    initMap();
+  </script>
+</Base>

@@ -3,6 +3,7 @@ title: "On Critical Thinking"
 kind: opinion
 status: published
 order: 2
+keywords: ["criticism", "conversation", "context"]
 ---
 
 It’s easy to criticize. It’s easy because it requires no effort, and it makes one feel sophisticated. One might think that sophistication demands long-term, stable and sustained effort such as reading, thinking, writing, being present, working, experimenting, hypothesizing, testing hypotheses and so on and so forth. Being critical requires none of these, yet it lets one “argue” or "discuss" with experts (those who have invested effort in their "being", in their "existing") on equal footing (no, I am not laughing).

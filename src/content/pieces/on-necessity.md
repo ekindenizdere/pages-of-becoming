@@ -4,6 +4,7 @@ kind: opinion
 status: published
 order: 5
 dedication: "For Eylül"
+keywords: ["necessity", "configuration", "decision"]
 ---
 
 To what degree is the form of life I am living today necessary? To what degree did the decisions I made necessitate my current conditions? What will necessarily happen in the future given my present behavior?

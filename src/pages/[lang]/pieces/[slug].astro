@@ -1,41 +1,29 @@
 ---
 // Translated piece pages (DE/TR), reached through the language switch on each piece.
 import { getCollection, render, type CollectionEntry } from 'astro:content';
-import Base from '../../../layouts/Base.astro';
+import PieceView from '../../../components/PieceView.astro';
 import { url, languageLinks } from '../../../lib';
+import { homeText } from '../../../home-text';
 
-const ui = {
-  de: { opinion: 'Meinung', article: 'Artikel', min: 'Min. Lesezeit', auto: 'Automatisch übersetzt. Das Original ist auf', origLink: 'Englisch', notes: 'Anmerkungen', back: 'Zurück zur Stelle' },
-  tr: { opinion: 'Görüş', article: 'Makale', min: 'dk okuma', auto: 'Otomatik çeviridir. Özgün metin', origLink: 'İngilizce', notes: 'Notlar', back: 'Metne dön' },
-} as const;
-
+type T = CollectionEntry<'translations'>;
 export async function getStaticPaths() {
   const all = await getCollection('translations', (t) => t.data.status === 'published');
-  return all.map((t) => ({ params: { lang: t.data.lang, slug: t.data.source }, props: { piece: t } }));
+  return all.map((t) => {
+    const same = all.filter((q) => q.data.lang === t.data.lang && q.data.kind === t.data.kind).sort((a, b) => a.data.order - b.data.order);
+    const i = same.indexOf(t);
+    return { params: { lang: t.data.lang, slug: t.data.source }, props: { piece: t, prev: same[i - 1], next: same[i + 1] } };
+  });
 }
-interface Props { piece: CollectionEntry<'translations'> }
-const { piece } = Astro.props;
+interface Props { piece: T; prev?: T; next?: T }
+const { piece, prev, next } = Astro.props;
 const { Content } = await render(piece);
+const lang = piece.data.lang;
 const langs = await languageLinks(piece.data.source);
-const t = ui[piece.data.lang];
+const home = url(`${lang}/`);
+const section = piece.data.kind === 'opinion' ? { href: `${home}#opinion`, label: homeText[lang].opinion } : { href: `${home}#articles`, label: homeText[lang].articles };
+const n = (p?: T) => (p ? { title: p.data.title, href: url(`${lang}/pieces/${p.data.source}/`) } : undefined);
 ---
-<Base title={piece.data.title} lang={piece.data.lang} langs={langs} current={piece.data.kind === 'opinion' ? 'opinion' : 'articles'}>
-  <article lang={piece.data.lang}>
-    <header class="piece-head">
-      <p class="label">{t[piece.data.kind]}</p>
-      <h1>{piece.data.title}</h1>
-      {piece.data.dedication && <p class="dedication">{piece.data.dedication}</p>}
-      <p class="label translation-note">{t.auto} <a href={url(`pieces/${piece.data.source}/`)} hreflang="en">{t.origLink}</a>{piece.data.lang === 'tr' ? 'dir.' : '.'}</p>
-    </header>
-    <div class="prose"><Content /></div>
-  </article>
-  <script is:inline define:vars={{ notes: t.notes, back: t.back }}>
-    // The Markdown renderer labels footnotes in English; relabel them for this language (screen readers).
-    const h = document.getElementById('footnote-label');
-    if (h) h.textContent = notes;
-    document.querySelectorAll('[data-footnote-backref]').forEach((a) => {
-      const l = a.getAttribute('aria-label');
-      if (l) a.setAttribute('aria-label', l.replace(/^Back to reference/, back));
-    });
-  </script>
-</Base>
+<PieceView lang={lang} slug={piece.data.source} kind={piece.data.kind} title={piece.data.title} dedication={piece.data.dedication}
+  langs={langs} prev={n(prev)} next={n(next)} section={section}>
+  <Content />
+</PieceView>

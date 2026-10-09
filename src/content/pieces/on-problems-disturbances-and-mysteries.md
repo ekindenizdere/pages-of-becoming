@@ -3,6 +3,7 @@ title: "On Problems, Disturbances and Mysteries"
 kind: opinion
 status: published
 order: 4
+keywords: ["suffering", "disturbance", "mystery"]
 ---
 
 There are problems, there are disturbances, and then there are mysteries. All life lacks something, and what it lacks is precisely what creates value. Craving, the source of suffering, is both a problem and a disturbance: its root lies in the organism, while its object lies in the environment. There are many cases in which problems and disturbances cannot be neatly separated, even though it is of great value to one’s well-being to treat problems as problems and disturbances as disturbances. Mysteries, however, demand neither a solution nor a response. The best one can do is to sit with them and, perhaps, realize that they are the source of creativity.

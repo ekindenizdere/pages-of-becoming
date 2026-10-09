@@ -1,0 +1,67 @@
+---
+// The piece template (approved in prototypes/piece.html, 2026-10-09), shared by English, German and Turkish.
+// Text column with notes in the margin, a quiet empty rail, people and concepts that open "Also in" cards
+// and lead to the map, the Configuration opening for the title, and a hairline that shows reading progress.
+import Base from '../layouts/Base.astro';
+import { url } from '../lib';
+import { pieceText } from '../piece-text';
+import { ETYMOLOGY } from '../lib/configurations.mjs';
+import type { Lang } from '../home-text';
+import '../styles/piece.css';
+
+interface Neighbour { title: string; href: string }
+interface Props {
+  lang: Lang; slug: string; kind: 'opinion' | 'article'; title: string; dedication?: string;
+  langs: { lang: string; href: string }[]; prev?: Neighbour; next?: Neighbour; section: { href: string; label: string };
+}
+const { lang, slug, kind, title, dedication, langs, prev, next, section } = Astro.props;
+const t = pieceText[lang];
+const prefix = lang === 'en' ? '' : `${lang}/`;
+// everything the page's script needs, in this language
+const client = {
+  lang, slug,
+  data: url(`data/${lang}.json`),
+  map: url(`${prefix}configurations/`),
+  pieceBase: url(`${prefix}pieces/`),
+  text: { alsoIn: t.alsoIn, onlyHere: t.onlyHere, openMap: t.openMap, close: t.close, note: t.note },
+  ety: Object.fromEntries(ETYMOLOGY.map((e) => [e.key, e.cards[lang] ?? e.cards.en])),
+};
+const words = title.split(' ');
+// Configuration opening: each letter starts from its own scattered place (steady pseudo-random, the same on every visit)
+let ci = 0;
+const r = (i: number, n: number) => (Math.sin(i * 12.9898 + n * 78.233) * 43758.5453) % 1;
+const scatter = () => { const i = ci++; return `--i:${i};--dx:${(r(i, 1) * 1.6).toFixed(2)}em;--dy:${(r(i, 2) * 1.1).toFixed(2)}em;--dr:${(r(i, 3) * 40).toFixed(0)}deg`; };
+---
+<Base title={title} lang={lang} langs={langs} current={kind === 'opinion' ? 'opinion' : 'articles'}>
+  <div class="progress-top" aria-hidden="true"><i></i></div>
+  <article class="reader" lang={lang}>
+    <aside class="rail" aria-hidden="true"></aside>
+    <script is:inline>
+      // the title opening plays once, only when motion is welcome; without this script the title is simply there
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('o-js');
+        setTimeout(function () { var t = document.querySelector('.title-block'); if (t) t.classList.add('o-run'); }, 120);
+      }
+    </script>
+    <header class="title-block">
+      <h1 aria-label={title}><span aria-hidden="true">{words.map((w, i) => (
+        <Fragment><span class="w">{[...w].map((c) => <span class="ch" style={scatter()}>{c}</span>)}</span>{i < words.length - 1 ? ' ' : ''}</Fragment>
+      ))}</span></h1>
+      {dedication && <p class="dedication">{dedication}</p>}
+      {t.auto && <p class="tnote">{t.auto[0]}<a href={url(`pieces/${slug}/`)} hreflang="en">{t.auto[1]}</a>{t.auto[2]}</p>}
+    </header>
+    <div class="prose"><slot /></div>
+    <div class="margin"></div>
+    <nav class="piece-nav" aria-label={t.contents}>
+      {prev ? <a class="prev" href={prev.href}>←<span class="t">{prev.title}</span></a> : <span></span>}
+      <a class="mid" href={section.href}>{section.label}</a>
+      {next ? <a class="next" href={next.href}>→<span class="t">{next.title}</span></a> : <span></span>}
+    </nav>
+  </article>
+  <div class="pop" id="pop" role="dialog" aria-modal="false" tabindex="-1" hidden></div>
+  <script type="application/json" id="piece-client" set:html={JSON.stringify(client).replace(/</g, '\\u003c')} />
+  <script>
+    import { initPiece } from '../scripts/piece.js';
+    initPiece();
+  </script>
+</Base>

@@ -5,6 +5,7 @@ status: published
 order: 2
 lang: de
 source: on-critical-thinking
+keywords: ["Kritik", "Gespräch", "Kontext"]
 ---
 
 Kritisieren ist leicht. Es ist leicht, weil es keine Anstrengung erfordert und einem das Gefühl gibt, kultiviert zu sein. Man könnte meinen, dass Kultiviertheit eine langfristige, stabile und anhaltende Anstrengung verlangt, etwa Lesen, Denken, Schreiben, Präsentsein, Arbeiten, Experimentieren, Hypothesenbilden, Hypothesentesten und so weiter und so fort. Kritischsein erfordert nichts davon, und doch erlaubt es einem, mit Experten (denjenigen, die Anstrengung in ihr „Sein“, in ihr „Existieren“ investiert haben) auf Augenhöhe zu „argumentieren“ oder zu „diskutieren“ (nein, ich lache nicht).

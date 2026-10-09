@@ -13,6 +13,7 @@ const pieces = defineCollection({
     dedication: z.string().optional(),
     teaser: z.string().optional(),  // shown for upcoming pieces
     date: z.coerce.date().optional(),
+    keywords: z.array(z.string()).optional(),  // automatic: the words most particular to this piece (shown small, after the text)
   }),
 });
 
@@ -28,6 +29,7 @@ const translations = defineCollection({
     source: z.string(),
     dedication: z.string().optional(),
     teaser: z.string().optional(),
+    keywords: z.array(z.string()).optional(),
   }),
 });
 

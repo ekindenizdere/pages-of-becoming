@@ -5,6 +5,7 @@ status: published
 order: 1
 lang: tr
 source: future-of-science-and-science-of-future
+keywords: ["bilim", "nitelikler", "felsefe"]
 ---
 
 Bilim birikimli olarak gelişir. Keşifler yapılır, kuramlar geliştirilir, deneyler devlerin omuzlarında durularak tasarlanır. Bu anlamda hepimiz tarihsel varlıklarız; çağımızın çocuklarıyız. Bu, devrimler için de geçerlidir. Onların da “gerçekleşmek için zamana ihtiyacı vardır; [onların] da bir tarihi vardır” (Koyré 1957, p. viii).

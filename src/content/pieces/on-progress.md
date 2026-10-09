@@ -3,6 +3,7 @@ title: "On Progress"
 kind: opinion
 status: published
 order: 1
+keywords: ["progress", "acceleration", "viability"]
 ---
 
 Something is off with the vibe. I am not trying to create polemic or say something to be frowned upon to feel special, to feel like I know or have figured out something that the majority of others have not or cannot. That’s the disclaimer. Now, to me it is plainly obvious that there has been an obsession with progress since pretty much I’ve known myself[^1]. Read more, get more degrees, get a promotion, earn more, receive more respect and authority, have more friends, build more muscle, and so on and so forth. Not that progress is inherently bad (few things are inherently good or bad). But what we implicitly mean by progress might be. The word comes from Latin progressus: a going forward. Pro- means forward, and gressus means to walk. So progress is, strictly speaking, temporal and unavoidable. Behind the word lies an assumption: what is ahead is better than what is behind. Is the reverse imaginable? Could it be that in moving forward, we do not reach the better but rather move further away from it?[^2] Logically speaking, no, since the word better means an improvement from the past stages. So, we will share the assumption, in this context, but still define progress neutrally as the inevitable temporal movement of living matter: forward. So far, so good.

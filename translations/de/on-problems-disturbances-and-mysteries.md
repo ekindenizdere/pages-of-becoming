@@ -5,6 +5,7 @@ status: published
 order: 4
 lang: de
 source: on-problems-disturbances-and-mysteries
+keywords: ["Leiden", "Störung", "Mysterium"]
 ---
 
 Es gibt Probleme, es gibt Störungen, und dann gibt es Mysterien. Allem Leben fehlt etwas, und das, was ihm fehlt, ist genau das, was Wert erzeugt. Das Begehren, die Quelle des Leidens, ist sowohl ein Problem als auch eine Störung: Seine Wurzel liegt im Organismus, sein Gegenstand dagegen in der Umwelt. Es gibt viele Fälle, in denen sich Probleme und Störungen nicht sauber voneinander trennen lassen, auch wenn es für das eigene Wohlbefinden von großem Wert ist, Probleme als Probleme und Störungen als Störungen zu behandeln. Mysterien hingegen verlangen weder eine Lösung noch eine Antwort. Das Beste, was man tun kann, ist, bei ihnen zu verweilen und vielleicht zu erkennen, dass sie die Quelle von Kreativität sind.

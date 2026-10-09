@@ -5,6 +5,7 @@ status: published
 order: 1
 lang: de
 source: future-of-science-and-science-of-future
+keywords: ["Wissenschaft", "Qualitäten", "Philosophie"]
 ---
 
 Wissenschaft entwickelt sich kumulativ. Entdeckungen werden gemacht, Theorien entwickelt, Experimente entworfen, indem man auf den Schultern von Riesen steht. In diesem Sinne sind wir alle geschichtliche Wesen; wir sind Kinder unserer Zeit. Das gilt auch für Revolutionen. Auch sie „brauchen Zeit, um sich zu vollziehen; [auch sie] haben eine Geschichte“ (Koyré 1957, p. viii).

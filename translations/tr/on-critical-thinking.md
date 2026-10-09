@@ -5,6 +5,7 @@ status: published
 order: 2
 lang: tr
 source: on-critical-thinking
+keywords: ["eleştiri", "sohbet", "bağlam"]
 ---
 
 Eleştirmek kolaydır. Kolaydır, çünkü hiçbir çaba gerektirmez ve insana kendini sofistike hissettirir. İnsan, sofistike olmanın okumak, düşünmek, yazmak, anda olmak, çalışmak, deney yapmak, hipotez kurmak, hipotezleri sınamak vesaire gibi uzun soluklu, istikrarlı ve kesintisiz bir çaba gerektirdiğini düşünebilir. Eleştirel olmak bunların hiçbirini gerektirmez; yine de insana uzmanlarla (kendi “varlıklarına”, kendi “var oluşlarına” emek vermiş olanlarla) eşit düzeyde “tartışma” ya da “fikir alışverişinde bulunma” olanağı tanır (hayır, gülmüyorum).

@@ -5,6 +5,7 @@ status: published
 order: 3
 lang: tr
 source: on-reality
+keywords: ["gerçeklik", "algılayan", "orman"]
 ---
 
 Bu, Bratislava'da ormanda kayboluşumun hikâyesi. Başlıkla ne ilgisi var? Umarım yakında ikimiz de göreceğiz.

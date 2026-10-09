@@ -5,6 +5,7 @@ status: published
 order: 3
 lang: de
 source: on-reality
+keywords: ["Wirklichkeit", "der Wahrnehmende", "der Wald"]
 ---
 
 Das ist die Geschichte davon, wie ich mich im Wald in Bratislava verirrt habe. Was hat das mit dem Titel zu tun? Ich hoffe, wir werden es beide bald genug sehen.

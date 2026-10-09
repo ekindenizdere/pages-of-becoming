@@ -1,0 +1,8 @@
+---
+import ConfigMap from '../../components/ConfigMap.astro';
+export function getStaticPaths() {
+  return [{ params: { lang: 'de' } }, { params: { lang: 'tr' } }];
+}
+const { lang } = Astro.params as { lang: 'de' | 'tr' };
+---
+<ConfigMap lang={lang} />

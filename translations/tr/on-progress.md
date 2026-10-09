@@ -5,6 +5,7 @@ status: published
 order: 1
 lang: tr
 source: on-progress
+keywords: ["ilerleme", "ivmelenme", "yaşayabilirlik"]
 ---
 
 Havada bir terslik var. Polemik yaratmaya ya da kendimi özel hissetmek için, çoğunluğun bilmediği, çözemediği ya da çözemeyeceği bir şeyi bildiğimi veya çözdüğümü hissetmek için kaş çattıracak bir şey söylemeye çalışmıyorum. Bu da benim feragatnamem. Şimdi: bana göre, aşağı yukarı kendimi bildim bileli[^1] bir ilerleme saplantısı olduğu apaçık ortada. Daha çok oku, daha çok diploma al, terfi et, daha çok kazan, daha çok saygı ve otorite gör, daha çok arkadaşın olsun, daha çok kas yap, vesaire vesaire. İlerlemenin özünde kötü olduğundan değil (pek az şey özünde iyi ya da kötüdür). Ama ilerleme derken örtük olarak kastettiğimiz şey kötü olabilir. İngilizcedeki progress sözcüğü Latince progressus'tan gelir: ileri gidiş. Pro- ileri, gressus ise yürümek demektir. Yani ilerleme, tam anlamıyla, zamansal ve kaçınılmazdır. Sözcüğün ardında bir varsayım yatar: önde olan, geride olandan daha iyidir. Tersi düşünülebilir mi? İleri giderken daha iyiye ulaşmıyor, tersine ondan daha da uzaklaşıyor olabilir miyiz?[^2] Mantıksal olarak hayır, çünkü daha iyi sözcüğü önceki aşamalara göre bir gelişme anlamına gelir. Öyleyse bu bağlamda varsayımı paylaşacağız, ama yine de ilerlemeyi nötr biçimde, canlı maddenin kaçınılmaz zamansal hareketi olarak tanımlayacağız: ileriye doğru. Buraya kadar her şey yolunda.

@@ -3,6 +3,7 @@ title: "On Reality"
 kind: opinion
 status: published
 order: 3
+keywords: ["reality", "perceiver", "the woods"]
 ---
 
 This is a story of me getting lost in the woods in Bratislava. How does it relate to the title? I hope we will both see soon enough.

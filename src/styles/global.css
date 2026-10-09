@@ -58,37 +58,7 @@ a { color: inherit; }
   .pieces .meta { grid-column: 2; text-align: left; }
 }
 
-/* Reading */
-.piece-head { max-width: var(--measure); margin: var(--space-9) auto var(--space-7); }
-.piece-head h1 { font-family: var(--font-display); font-weight: var(--display-weight); font-size: var(--step-4); line-height: 1.02; margin: var(--space-3) 0; }
-.piece-head .dedication { font-family: var(--font-reading); font-style: italic; color: var(--text-muted); margin: 0; }
-.prose {
-  max-width: var(--measure); margin-inline: auto;
-  font-family: var(--font-reading); font-size: var(--step-0); line-height: 1.65;
-  hyphens: auto; -webkit-hyphens: auto;
-}
-.prose p { margin: 0 0 1.1em; }
-.prose sup { line-height: 0; }
-.prose sup a {
-  text-decoration: none; font-family: var(--font-sans); font-size: 0.72em;
-  padding: 0 0.15em; color: var(--blue-deep);
-}
-.prose sup a:hover, .prose sup a:target { background: var(--blue); color: var(--ink); }
-.prose .footnotes {
-  margin-top: var(--space-8); padding-top: var(--space-5);
-  border-top: var(--line) solid var(--rule);
-  font-size: var(--step--1); line-height: 1.55; color: var(--grey-700);
-}
-.prose .footnotes h2 { font-family: var(--font-sans); font-weight: 400; font-size: var(--step--1); color: var(--text-muted); margin: 0 0 var(--space-4); }
-.prose .footnotes ol { padding-left: 1.4em; }
-.prose .footnotes li { margin-bottom: var(--space-3); }
-.prose .footnotes li:target { background: var(--blue-soft); }
-.prose .footnotes p { margin: 0; display: inline; }
-.prose .data-footnote-backref, .prose [data-footnote-backref] { text-decoration: none; color: var(--blue-deep); margin-left: 0.3em; }
-.piece-nav { max-width: var(--measure); margin: var(--space-9) auto 0; display: flex; justify-content: space-between; gap: var(--space-5); font-size: var(--step--1); }
-.piece-nav a { text-decoration: none; color: var(--text-muted); }
-.piece-nav a:hover { color: var(--ink); }
-
+/* Reading: the piece pages have their own styles (src/styles/piece.css) */
 
 .translation-note { margin-top: var(--space-4); }
 .translation-note a { color: var(--blue-deep); }
