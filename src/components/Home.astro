@@ -68,7 +68,7 @@ const h = (path: string) => url(`home/${path}`);
 <body class="home">
 <header class="site-top">
   <a class="mark" href={langs.find((l) => l.lang === lang)!.href}>Pages <em>of</em> Becoming</a>
-  <nav><a href="#opinion">{t.opinion}</a><a href="#articles">{t.articles}</a>
+  <nav><a class="opt" href="#opinion">{t.opinion}</a><a class="opt" href="#articles">{t.articles}</a>
     <span class="lang-switch" role="group" aria-label={t.language}>{langs.map((l) => <a href={l.href} hreflang={l.lang} lang={l.lang} aria-current={l.lang === lang ? 'true' : undefined}>{l.lang.toUpperCase()}</a>)}</span>
   </nav>
 </header>

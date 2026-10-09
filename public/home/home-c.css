@@ -44,3 +44,4 @@
 .left-title { font-family: var(--font-display); font-weight: var(--display-weight); font-size: var(--step-3); line-height: 1.05; letter-spacing: -0.01em; margin: 0 0 var(--space-6); }
 .page-left .small-bio { grid-template-columns: 5.5rem auto; align-items: end; margin-bottom: var(--space-6); }
 .page-left .ink + .ink { margin-top: 0; }
+.page-left .small-bio .social { margin-left: 0; }
