@@ -64,3 +64,4 @@
 .toc-row:has(.toc-meta:empty) .toc-leader, .toc-meta:empty { display: none; }
 /* The commonplace stage grows with the number of cards it holds (three in the prototype) */
 .page-left .planes-stage { --cards: 3; aspect-ratio: auto; height: calc(10rem * var(--cards)); min-height: 30rem; }
+@media (max-width: 700px) { .page-left .planes-stage { height: calc(13rem * var(--cards)); } }
