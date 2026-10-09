@@ -1,5 +1,5 @@
 /* Home C · Contents (from prototypes/home-c.html, unchanged): the home as an open book. */
-  .spread { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 0; padding-block: var(--space-9) var(--space-10); }
+  .spread { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0; padding-block: var(--space-9) var(--space-10); }
   .spread::before { /* the fold */ content: ""; position: absolute; top: var(--space-9); bottom: var(--space-8); left: 50%; width: 1px; background: var(--rule);
     box-shadow: -18px 0 28px -22px rgba(0,0,0,.18), 18px 0 28px -22px rgba(0,0,0,.18); }
   .page { position: relative; padding: 0 clamp(1.2rem, 4vw, 4.5rem); }
@@ -29,7 +29,7 @@
   .social a:hover, .social a:focus-visible { background: var(--blue); }
   .social svg { width: 1.15rem; height: 1.15rem; fill: currentColor; }
   @media (max-width: 900px) {
-    .spread { grid-template-columns: 1fr; }
+    .spread { grid-template-columns: minmax(0, 1fr); }
     .spread::before { display: none; }
     .page-left .inner { position: static; }
     .page-right { margin-top: var(--space-8); }
@@ -52,5 +52,4 @@
 /* Home header without the small mark (the hero carries the title): the links sit on the right */
 .home .site-top { justify-content: flex-end; }
 /* Long German and Turkish compounds in the large left-page text hyphenate instead of widening the page */
-.page-left { min-width: 0; }
 .page-left .ink, .left-title { hyphens: auto; -webkit-hyphens: auto; overflow-wrap: break-word; }
