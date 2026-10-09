@@ -65,6 +65,9 @@ html.o-js .title-block:not(.o-run) .ch { transform: translate(var(--dx), var(--d
 .prose .footnotes p { margin: 0; }
 .prose [data-footnote-backref] { text-decoration: none; color: var(--blue-deep); margin-left: 0.35em; font-family: var(--font-sans); }
 .nq-br { display: block; content: ""; margin-top: 0.5em; }
+@media screen {
+  .notes-in-margin .prose .footnotes { position: absolute; width: 1px; height: 1px; margin: 0; padding: 0; border: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
 
 /* people (grey half marker) and concepts (blue: full for key concepts, half for the others), first mention */
 .c { border-radius: 2px; box-decoration-break: clone; -webkit-box-decoration-break: clone; transition: background var(--dur-2) var(--ease-default); }

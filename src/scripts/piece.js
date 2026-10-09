@@ -34,6 +34,9 @@ export function initPiece() {
   }
   function layoutMargin() {
     margin.innerHTML = '';
+    // when the notes stand in the margin, the list under the text would only repeat them: it is hidden
+    // from view then (screen readers, print and narrow screens still get it)
+    reader.classList.toggle('notes-in-margin', marginOn() && refs.some((r) => r.li));
     if (!marginOn()) return;
     const top0 = margin.getBoundingClientRect().top;
     let floor = 0;
