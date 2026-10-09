@@ -89,6 +89,9 @@ a { color: inherit; }
 .piece-nav a:hover { color: var(--ink); }
 
 
+.translation-note { margin-top: var(--space-4); }
+.translation-note a { color: var(--blue-deep); }
+
 /* Language switch (piece pages) */
 .lang-switch { display: flex; gap: var(--space-3); font-size: var(--step--1); margin-left: auto; }
 .site-nav + .lang-switch { margin-left: 0; }

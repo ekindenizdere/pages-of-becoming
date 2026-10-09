@@ -5,8 +5,8 @@ import Base from '../../../layouts/Base.astro';
 import { url, languageLinks } from '../../../lib';
 
 const ui = {
-  de: { opinion: 'Meinung', article: 'Artikel', min: 'Min. Lesezeit', original: 'Englisches Original', notes: 'Anmerkungen', back: 'Zurück zur Stelle' },
-  tr: { opinion: 'Görüş', article: 'Makale', min: 'dk okuma', original: 'İngilizce orijinal', notes: 'Notlar', back: 'Metne dön' },
+  de: { opinion: 'Meinung', article: 'Artikel', min: 'Min. Lesezeit', auto: 'Automatisch übersetzt. Das Original ist auf', origLink: 'Englisch', notes: 'Anmerkungen', back: 'Zurück zur Stelle' },
+  tr: { opinion: 'Görüş', article: 'Makale', min: 'dk okuma', auto: 'Otomatik çeviridir. Özgün metin', origLink: 'İngilizce', notes: 'Notlar', back: 'Metne dön' },
 } as const;
 
 export async function getStaticPaths() {
@@ -23,9 +23,10 @@ const minutes = Math.max(1, Math.round((piece.body ?? '').split(/\s+/).length / 
 <Base title={piece.data.title} lang={piece.data.lang} langs={langs} current={piece.data.kind === 'opinion' ? 'opinion' : 'articles'}>
   <article lang={piece.data.lang}>
     <header class="piece-head">
-      <p class="label">{t[piece.data.kind]} · {minutes} {t.min} · <a href={url(`pieces/${piece.data.source}/`)} hreflang="en" lang="en">{t.original}</a></p>
+      <p class="label">{t[piece.data.kind]} · {minutes} {t.min}</p>
       <h1>{piece.data.title}</h1>
       {piece.data.dedication && <p class="dedication">{piece.data.dedication}</p>}
+      <p class="label translation-note">{t.auto} <a href={url(`pieces/${piece.data.source}/`)} hreflang="en">{t.origLink}</a>{piece.data.lang === 'tr' ? 'dir.' : '.'}</p>
     </header>
     <div class="prose"><Content /></div>
   </article>

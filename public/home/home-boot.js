@@ -10,7 +10,7 @@
   // quotes on the planes: author first, citation last
   const quote = (author, text, cite, small) => `<small class="au">${author}</small><p class="pr${small ? " pr-s" : ""}">${text}</p><small class="cite">${cite}</small>`;
   const quiet = [
-    { l: "36%", t: "2%", w: "62%", z: 120, html: quote("Thomas Nagel", "There is no view from nowhere.", "after <i>The View from Nowhere</i>, 1986") },
+    { l: "36%", t: "2%", w: "62%", z: 120, html: quote("Thomas Nagel", "There is no view from nowhere.", "1986, paraphrase", true) },
     { l: "0%", t: "22%", w: "72%", z: 70, html: quote("Francisco J. Varela", "Our current notions about evolution and brain will be as distant to our grandchildren as this animistic cosmology is to us today.", "1987, p. 49", true) },
     { l: "24%", t: "52%", w: "76%", z: 160, html: quote("Howard H. Pattee", "Since we are free to make our own syntactic rules we are also free to interpret inherently simple events as messages in our own elaborate symbolic systems, and indeed this is what has generated all mythologies and probably several sciences.", "1977, p. 262", true) },
   ];
