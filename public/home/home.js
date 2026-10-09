@@ -252,7 +252,17 @@
     el("path", { d: M.q.d, fill: INK }, back);
     el("path", { d: M.spiralOut, fill: "none", stroke: INK, "stroke-width": 0.9, "vector-effect": "non-scaling-stroke" }, back);
     const front = layer(0);
-    cards.forEach((c) => { const d = document.createElement("div"); d.className = "plane card-plane"; Object.assign(d.style, { left: c.l, top: c.t, width: c.w, transform: `translateZ(${c.z}px)` }); d.innerHTML = c.html; front.appendChild(d); });
+    const planesEls = cards.map((c) => { const d = document.createElement("div"); d.className = "plane card-plane"; Object.assign(d.style, { left: c.l, top: c.t, width: c.w, transform: `translateZ(${c.z}px)` }); d.innerHTML = c.html; front.appendChild(d); return d; });
+    // More cards than the prototype's three: stack them by their real heights (a card's gap below the previous one)
+    // and size the stage to fit, so no card covers another at any width.
+    const flow = () => {
+      if (cards.length <= 3) return;
+      const gap = Math.max(14, stage.clientWidth * 0.035);
+      let y = 0;
+      planesEls.forEach((d) => { d.style.top = `${y}px`; y += d.offsetHeight + gap; });
+      stage.style.height = `${y + gap}px`;
+    };
+    flow(); new ResizeObserver(flow).observe(stage);
     const pin = () => { const m = back.getScreenCTM(), r = stage.getBoundingClientRect(); if (!m) return; const pt = new DOMPoint(M.C.x, M.C.y).matrixTransform(m); const x = ((pt.x - r.left) / r.width) * 100, y = ((pt.y - r.top) / r.height) * 100; stage.style.perspectiveOrigin = `${x}% ${y}%`; stack.style.transformOrigin = `${x}% ${y}% ${DOT_Z}px`; };
     pin(); new ResizeObserver(() => { const t = stack.style.transform; stack.style.transform = "none"; pin(); stack.style.transform = t; }).observe(stage);
     const p = pointer(stage), rot = { x: 0, y: 0 };

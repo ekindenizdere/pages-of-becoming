@@ -19,7 +19,6 @@
     const r = RHYTHM[i % RHYTHM.length];
     return { l: r.l, t: `${(2 + i * step * 0.92).toFixed(1)}%`, w: r.w, z: r.z, html: quote(q.author, q.text, q.cite, true) };
   });
-  document.querySelectorAll("[data-planes='quiet']").forEach((n) => { if (picked.length > 3) n.style.setProperty("--cards", picked.length); });
   document.querySelectorAll("[data-planes]").forEach((n) => HOME.planes(n, n.dataset.planes === "quiet" ? quiet : [
     { l: "4%", t: "8%", w: "34%", z: 50, html: `<small>( 01 ) The question</small><p class="pq">what does it mean to <em>be</em> who we are?</p>` },
     { l: "58%", t: "14%", w: "36%", z: 120, html: `<small>( 02 ) Partial</small><p class="pr">There is no view from nowhere.</p><small style="margin:.6rem 0 0">Thomas Nagel · all viewpoints are partial</small>` },
