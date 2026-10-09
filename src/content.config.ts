@@ -16,4 +16,19 @@ const pieces = defineCollection({
   }),
 });
 
-export const collections = { pieces };
+// German and Turkish versions in translations/<lang>/, same filenames as the English pieces.
+const translations = defineCollection({
+  loader: glob({ pattern: '{de,tr}/*.md', base: './translations' }),
+  schema: z.object({
+    title: z.string(),
+    kind: z.enum(['opinion', 'article']),
+    status: z.enum(['published', 'upcoming']),
+    order: z.number(),
+    lang: z.enum(['de', 'tr']),
+    source: z.string(),
+    dedication: z.string().optional(),
+    teaser: z.string().optional(),
+  }),
+});
+
+export const collections = { pieces, translations };

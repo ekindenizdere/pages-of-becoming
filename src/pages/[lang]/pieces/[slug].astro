@@ -1,0 +1,31 @@
+---
+// Translated piece pages (DE/TR). Review stage: not linked from the menu and hidden from search engines.
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import { url } from '../../../lib';
+
+const ui = {
+  de: { opinion: 'Meinung', article: 'Artikel', min: 'Min. Lesezeit', original: 'Englisches Original', note: 'Übersetzung' },
+  tr: { opinion: 'Görüş', article: 'Makale', min: 'dk okuma', original: 'İngilizce orijinal', note: 'Çeviri' },
+} as const;
+
+export async function getStaticPaths() {
+  const all = await getCollection('translations', (t) => t.data.status === 'published');
+  return all.map((t) => ({ params: { lang: t.data.lang, slug: t.data.source }, props: { piece: t } }));
+}
+interface Props { piece: CollectionEntry<'translations'> }
+const { piece } = Astro.props;
+const { Content } = await render(piece);
+const t = ui[piece.data.lang];
+const minutes = Math.max(1, Math.round((piece.body ?? '').split(/\s+/).length / 220));
+---
+<Base title={piece.data.title} lang={piece.data.lang} noindex>
+  <article lang={piece.data.lang}>
+    <header class="piece-head">
+      <p class="label">{t[piece.data.kind]} · {minutes} {t.min} · <a href={url(`pieces/${piece.data.source}/`)} hreflang="en" lang="en">{t.original}</a></p>
+      <h1>{piece.data.title}</h1>
+      {piece.data.dedication && <p class="dedication">{piece.data.dedication}</p>}
+    </header>
+    <div class="prose"><Content /></div>
+  </article>
+</Base>

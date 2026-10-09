@@ -2,8 +2,8 @@
 import '../styles/global.css';
 import { url } from '../lib';
 
-interface Props { title?: string; description?: string; current?: 'opinion' | 'articles' }
-const { title, description = 'Essays on philosophy, cognitive science and science by Ekin Deniz Dere.', current } = Astro.props;
+interface Props { title?: string; description?: string; current?: 'opinion' | 'articles'; lang?: string; noindex?: boolean }
+const { title, description = 'Essays on philosophy, cognitive science and science by Ekin Deniz Dere.', current, lang = 'en', noindex = false } = Astro.props;
 const fullTitle = title ? `${title} · Pages of Becoming` : 'Pages of Becoming';
 const nav = [
   { key: 'opinion', href: url('opinion/'), label: 'Opinion Pieces' },
@@ -11,12 +11,13 @@ const nav = [
 ] as const;
 ---
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{fullTitle}</title>
   <meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex" />}
   <meta property="og:title" content={fullTitle} />
   <meta property="og:description" content={description} />
   <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
