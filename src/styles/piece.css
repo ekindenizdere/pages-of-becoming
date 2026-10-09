@@ -121,10 +121,14 @@ a.ctx-t:hover { background: linear-gradient(transparent 62%, var(--blue) 62%); }
 .piece-nav { margin-top: var(--space-9); padding-top: var(--space-5); border-top: 1px solid var(--rule); display: grid; grid-template-columns: 1fr auto 1fr; gap: var(--space-5); align-items: baseline; font-size: var(--step--1); }
 .piece-nav a { text-decoration: none; color: var(--text-muted); }
 .piece-nav a:hover { color: var(--ink); }
-.piece-nav .t { display: block; font-family: var(--font-display); font-weight: var(--display-weight); font-size: var(--step-1); line-height: 1.15; color: var(--ink); margin-top: var(--space-1); }
+/* the arrow sits on the line of the title it points to */
+.piece-nav .prev, .piece-nav .next { display: flex; align-items: baseline; gap: 0.5em; }
+.piece-nav .next { justify-content: flex-end; text-align: right; }
+.piece-nav .arr { font-size: var(--step-0); line-height: 1; }
+.piece-nav .t { font-family: var(--font-display); font-weight: var(--display-weight); font-size: var(--step-1); line-height: 1.15; color: var(--ink); }
 .piece-nav a:hover .t { background: linear-gradient(transparent 62%, var(--blue) 62%); }
-.piece-nav .next { text-align: right; }
-.piece-nav .mid { text-align: center; }
+.piece-nav .mid { text-align: center; font-family: var(--font-reading); font-style: italic; color: var(--grey-500); }
+.piece-nav .mid:hover { color: var(--ink); }
 
 /* medium screens: text + margin (the rail folds away) */
 @container page (min-width: 860px) and (max-width: 1019px) {

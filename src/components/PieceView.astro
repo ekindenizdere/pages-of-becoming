@@ -53,9 +53,9 @@ const scatter = () => { const i = ci++; return `--i:${i};--dx:${(r(i, 1) * 1.6).
     <div class="prose"><slot /></div>
     <div class="margin"></div>
     <nav class="piece-nav" aria-label={t.contents}>
-      {prev ? <a class="prev" href={prev.href}>←<span class="t">{prev.title}</span></a> : <span></span>}
+      {prev ? <a class="prev" href={prev.href}><span class="arr" aria-hidden="true">←</span><span class="t">{prev.title}</span></a> : <span></span>}
       <a class="mid" href={section.href}>{section.label}</a>
-      {next ? <a class="next" href={next.href}>→<span class="t">{next.title}</span></a> : <span></span>}
+      {next ? <a class="next" href={next.href}><span class="t">{next.title}</span><span class="arr" aria-hidden="true">→</span></a> : <span></span>}
     </nav>
   </article>
   <div class="pop" id="pop" role="dialog" aria-modal="false" tabindex="-1" hidden></div>
