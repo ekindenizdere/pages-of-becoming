@@ -271,7 +271,7 @@
       if (!it.upcoming) n++;
       const num = it.upcoming ? "( — )" : `( ${pad2(n)} )`;
       const T = window.POB_I18N || { min: "min", becoming: "becoming" };
-      const meta = it.upcoming ? T.becoming : `${it.min} ${T.min}`;
+      const meta = it.upcoming ? T.becoming : "";  // reading times dropped (2026-10-09)
       if (style === "contents") {
         return `<a class="toc-row${it.upcoming ? " is-upcoming" : ""}" href="${it.href || "#"}" ${it.upcoming ? 'aria-disabled="true" tabindex="-1"' : ""}>
           <span class="toc-title">${it.title}</span><span class="toc-leader" aria-hidden="true"></span><span class="toc-meta">${meta}</span>

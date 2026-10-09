@@ -18,12 +18,11 @@ const { piece } = Astro.props;
 const { Content } = await render(piece);
 const langs = await languageLinks(piece.data.source);
 const t = ui[piece.data.lang];
-const minutes = Math.max(1, Math.round((piece.body ?? '').split(/\s+/).length / 220));
 ---
 <Base title={piece.data.title} lang={piece.data.lang} langs={langs} current={piece.data.kind === 'opinion' ? 'opinion' : 'articles'}>
   <article lang={piece.data.lang}>
     <header class="piece-head">
-      <p class="label">{t[piece.data.kind]} · {minutes} {t.min}</p>
+      <p class="label">{t[piece.data.kind]}</p>
       <h1>{piece.data.title}</h1>
       {piece.data.dedication && <p class="dedication">{piece.data.dedication}</p>}
       <p class="label translation-note">{t.auto} <a href={url(`pieces/${piece.data.source}/`)} hreflang="en">{t.origLink}</a>{piece.data.lang === 'tr' ? 'dir.' : '.'}</p>

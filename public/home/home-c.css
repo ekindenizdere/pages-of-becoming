@@ -60,3 +60,5 @@
 .about-page .site-top .mark { font-family: var(--font-display); font-weight: var(--display-weight); font-size: var(--step-0); }
 .about-page .site-top { justify-content: space-between; }
 .about-page .site-top nav a[aria-current="page"] { background-size: 100% 1px; }
+/* Without reading times the dotted leader has nothing to lead to; it stays only for "becoming" */
+.toc-row:has(.toc-meta:empty) .toc-leader, .toc-meta:empty { display: none; }

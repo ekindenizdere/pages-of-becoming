@@ -11,7 +11,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
         <a href={pieceUrl(p)}>
           <span class="label">( {pad(i + 1)} )</span>
           <span class="t">{p.data.title}</span>
-          <span class="meta">{showKind && `${kindLabel[p.data.kind]} · `}{minutes(p)} min</span>
+          <span class="meta">{showKind && kindLabel[p.data.kind]}</span>
         </a>
       ) : (
         <div class="soon" aria-label={`${p.data.title}, upcoming`}>

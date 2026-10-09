@@ -22,7 +22,7 @@ const section = piece.data.kind === 'opinion' ? { href: url('opinion/'), label: 
 <Base title={piece.data.title} langs={langs} current={piece.data.kind === 'opinion' ? 'opinion' : 'articles'}>
   <article>
     <header class="piece-head">
-      <p class="label"><a href={section.href}>{kindLabel[piece.data.kind]}</a> · {minutes(piece)} min read</p>
+      <p class="label"><a href={section.href}>{kindLabel[piece.data.kind]}</a></p>
       <h1>{piece.data.title}</h1>
       {piece.data.dedication && <p class="dedication">{piece.data.dedication}</p>}
     </header>
