@@ -3,9 +3,11 @@
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let stored = null;
   try { stored = localStorage.getItem("pob-motion"); } catch { /* storage unavailable */ }
+  // A page without the Motion button (About) follows only the system setting: a remembered "off" could not be undone there.
+  const hasToggle = !!document.querySelector("[data-motion-toggle]");
   const listeners = new Set();
   const LAB = {
-    motion: stored === null ? !reduced : stored === "on",
+    motion: stored === null || !hasToggle ? !reduced : stored === "on",
     onMotion(cb) { listeners.add(cb); cb(LAB.motion); },
   };
   window.LAB = LAB;

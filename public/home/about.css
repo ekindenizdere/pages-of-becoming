@@ -1,0 +1,21 @@
+/* About: the home C spread (prototypes/home-c.html) without the hero. Left page = Ekin; right page = the commonplace. */
+.about-page .about-spread { padding-block: var(--space-10) var(--space-10); }
+.about-page .about-spread::before { top: var(--space-10); }
+/* whichever page is shorter stays in view while the other scrolls (home-boot sets the top of each [data-sticky]) */
+.about-page .about-spread .inner { position: sticky; }
+
+/* left page: the two paragraphs a size down from the home, then the portrait with its links */
+.about-page .page-left .ink { font-size: var(--step-2); margin: 0 0 var(--space-5); }
+.about-id { display: grid; grid-template-columns: 10rem auto; gap: var(--space-5); align-items: end; margin-top: var(--space-6); }
+.about-page .about-id .social { margin-left: calc(-1 * var(--space-2)); }
+
+/* right page: one line in Ekin's voice, then the stage sized by its cards, the buttons beneath */
+.quote-intro { margin: 0 0 var(--space-6); max-width: 26rem; font-size: var(--step--1); line-height: 1.5; color: var(--text-muted); }
+/* overflow visible: the cards' soft shadows fade out on the paper instead of being cut at the stage edge */
+.page-right .planes-stage { aspect-ratio: auto; min-height: 30rem; overflow: visible; }
+
+@media (max-width: 900px) {
+  .about-page .about-spread .inner { position: static; }
+  .about-page .about-spread { padding-block: var(--space-9) var(--space-9); }
+  .about-id { grid-template-columns: 7rem auto; }
+}

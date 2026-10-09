@@ -141,9 +141,19 @@
   };
 
   // ─────────────────────────── scroll-inked paragraph ───────────────────────────
+  let inkChain = Promise.resolve();
   const ink = (p, { unit = "words", start = "top 82%", end = "bottom 45%" } = {}) => {
     if (!LAB.motion) return;
     const split = SplitText.create(p, { type: unit, aria: "auto" });
+    // data-ink="play" (About, a page too short to scroll through): the words ink by themselves once in view,
+    // each paragraph after the previous one, then the highlight draws.
+    if (p.dataset.ink === "play") {
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo(split[unit], { color: "#c3c3c0" }, { color: INK, ease: "none", stagger: 0.045, duration: 0.5 });
+      p.querySelectorAll(".hl").forEach((hl) => tl.fromTo(hl, { "--hl": "0%" }, { "--hl": "100%", ease: "power1.inOut", duration: 0.8 }));
+      ScrollTrigger.create({ trigger: p, start: "top 92%", once: true, onEnter: () => { inkChain = inkChain.then(() => new Promise((done) => { tl.eventCallback("onComplete", done); tl.play(); })); } });
+      return;
+    }
     gsap.fromTo(split[unit], { color: "#c3c3c0" }, { color: INK, ease: "none", stagger: 0.08, duration: 0.3, scrollTrigger: { trigger: p, start, end, scrub: 0.6 } });
     p.querySelectorAll(".hl").forEach((hl) => gsap.fromTo(hl, { "--hl": "0%" }, { "--hl": "100%", ease: "none", scrollTrigger: { trigger: p, start: "bottom 62%", end: "bottom 40%", scrub: 0.6 } }));
   };

@@ -11,7 +11,8 @@
   const PANGAIA = "https://elisabetdelgadomas.com/file/ekinweb/font/";
   const FONTS = {
     pangaia: { label: "PP Pangaia Medium", regular: PANGAIA + "PPPangaia-Medium.otf?v=2", italic: PANGAIA + "PPPangaia-MediumItalic.otf?v=2", licence: "Pangram web licence" },
-    instrument: { label: "Instrument Serif", regular: "fonts/glyph/instrument-serif.ttf", italic: "fonts/glyph/instrument-serif-italic.ttf", licence: "OFL" },
+    // resolved from this script's folder (home/), so the fallback also loads on deeper pages such as /about/ and /de/
+    instrument: { label: "Instrument Serif", regular: new URL("../fonts/glyph/instrument-serif.ttf", document.currentScript.src).href, italic: new URL("../fonts/glyph/instrument-serif-italic.ttf", document.currentScript.src).href, licence: "OFL" },
   };
   const FALLBACK = { [FONTS.pangaia.regular]: FONTS.instrument.regular, [FONTS.pangaia.italic]: FONTS.instrument.italic };
 

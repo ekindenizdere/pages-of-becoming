@@ -1,7 +1,7 @@
 ---
-// About: the bio page, carrying the left page of the home prototype (portrait, bio, the question, the quotes) unchanged.
-// Its scripts and styles live in public/home/; the pieces come from src/content/pieces/.
-// The only difference from the prototype: the display font is Instrument Serif (see public/home/glyphs.js).
+// About: the home C spread (prototypes/home-c.html) without the hero. Left page: the bio and the question,
+// then the portrait with LinkedIn and Forbes; right page: the commonplace quotes and their two buttons.
+// Its scripts and styles live in public/home/ (about.css holds what differs from the home).
 import '../styles/tokens.css';
 import { getCollection } from 'astro:content';
 import { pieces, pieceUrl, minutes, url } from '../lib';
@@ -69,6 +69,7 @@ const h = (path: string) => url(`home/${path}?v=${build}`);
   <link rel="stylesheet" href={h('lab.css')} />
   <link rel="stylesheet" href={h('home.css')} />
   <link rel="stylesheet" href={h('home-c.css')} />
+  <link rel="stylesheet" href={h('about.css')} />
 </head>
 <body class="home about-page">
 <header class="site-top">
@@ -80,13 +81,16 @@ const h = (path: string) => url(`home/${path}?v=${build}`);
 
 <main class="lab-main">
   <section class="lab-section wrap" data-name={t.about} id="about">
-    <div class="spread spread-single">
-      <div class="page page-left page-about">
-        <div class="inner">
-          <div class="small-bio" id="ekin">
+    <h1 class="visually-hidden">{t.about}: Ekin Deniz Dere</h1>
+    <div class="spread about-spread">
+      <div class="page page-left">
+        <div class="inner" data-sticky>
+          {t.note && <p class="label translation-note">{t.note}</p>}
+          <p class="ink" data-ink="play">{t.bio}</p>
+          <p class="ink" data-ink="play">{t.inkA} <mark class="hl">{t.inkB}</mark></p>
+          <div class="about-id" id="ekin">
             <img class="portrait" src={url('images/ekin-portrait.jpg')} alt={t.portraitAlt}>
-            <div>
-              <div class="bio-links">
+            <div class="id-text">
               <nav class="social" aria-label={t.elsewhere}>
               <a href="https://www.linkedin.com/in/ekin-deniz-dere-70929b154" target="_blank" rel="noopener noreferrer" aria-label={t.linkedin}>
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
@@ -95,30 +99,27 @@ const h = (path: string) => url(`home/${path}?v=${build}`);
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="0" y="0" width="24" height="24" rx="2.2"/><text x="12" y="19.6" text-anchor="middle" font-family="PP Pangaia, Instrument Serif, serif" font-weight="700" font-size="19.5" fill="var(--paper)">F</text></svg>
               </a>
               </nav>
-              </div>
             </div>
           </div>
-          <h2 class="left-title">{t.sub}</h2>
-          {t.note && <p class="label translation-note">{t.note}</p>}
-          <p class="ink" data-ink>{t.bio}</p>
-          <p class="ink" data-ink>{t.inkA} <mark class="hl">{t.inkB}</mark></p>
-          <div class="planes-stage" data-planes="quiet" data-back="off"></div>
-          <div class="quote-controls" data-quote-controls>
-            <button type="button" data-refresh aria-label={t.commonplace.other} title={t.commonplace.other}>↻</button>
-            <button type="button" data-more aria-label={t.commonplace.more} title={t.commonplace.more}>+</button>
-            <p class="quote-note" data-note hidden></p>
-          </div>
-          
+          <span class="folio">— 1 —</span>
+        </div>
+      </div>
+      <div class="page page-right">
+        <div class="inner" data-sticky>
+        <p class="quote-intro">{t.commonplace.intro}</p>
+        <div class="planes-stage" data-planes="quiet" data-back="off"></div>
+        <div class="quote-controls" data-quote-controls>
+          <button type="button" data-refresh aria-label={t.commonplace.other} title={t.commonplace.other}>↻</button>
+          <button type="button" data-more aria-label={t.commonplace.more} title={t.commonplace.more}>+</button>
+          <p class="quote-note" data-note hidden></p>
+        </div>
+        <span class="folio">— 2 —</span>
         </div>
       </div>
     </div>
   </section>
 </main>
 
-<footer class="lab-bottom">
-  <div class="counter"><span class="ticks"></span><span data-counter-name>Pages of Becoming</span><span data-counter>01 / 02</span></div>
-  <button class="lab-toggle" type="button" data-motion-toggle aria-pressed="true">{t.motion[0]}</button>
-</footer>
 
 <script is:inline define:vars={{ data, quotes, i18n: { min: t.min, becoming: t.becoming, motion: t.motion, quotes: t.quotes, commonplace: t.commonplace } }}>window.POB_PIECES = data; window.POB_I18N = i18n; window.POB_QUOTES = quotes;</script>
 <script is:inline src={h('vendor/opentype.min.js')}></script>
