@@ -1,12 +1,12 @@
 ---
-// Translated piece pages (DE/TR). Review stage: not linked from the menu and hidden from search engines.
+// Translated piece pages (DE/TR), reached through the language switch on each piece.
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
-import { url } from '../../../lib';
+import { url, languageLinks } from '../../../lib';
 
 const ui = {
-  de: { opinion: 'Meinung', article: 'Artikel', min: 'Min. Lesezeit', original: 'Englisches Original', note: 'Übersetzung' },
-  tr: { opinion: 'Görüş', article: 'Makale', min: 'dk okuma', original: 'İngilizce orijinal', note: 'Çeviri' },
+  de: { opinion: 'Meinung', article: 'Artikel', min: 'Min. Lesezeit', original: 'Englisches Original', notes: 'Anmerkungen', back: 'Zurück zur Stelle' },
+  tr: { opinion: 'Görüş', article: 'Makale', min: 'dk okuma', original: 'İngilizce orijinal', notes: 'Notlar', back: 'Metne dön' },
 } as const;
 
 export async function getStaticPaths() {
@@ -16,10 +16,11 @@ export async function getStaticPaths() {
 interface Props { piece: CollectionEntry<'translations'> }
 const { piece } = Astro.props;
 const { Content } = await render(piece);
+const langs = await languageLinks(piece.data.source);
 const t = ui[piece.data.lang];
 const minutes = Math.max(1, Math.round((piece.body ?? '').split(/\s+/).length / 220));
 ---
-<Base title={piece.data.title} lang={piece.data.lang} noindex>
+<Base title={piece.data.title} lang={piece.data.lang} langs={langs} current={piece.data.kind === 'opinion' ? 'opinion' : 'articles'}>
   <article lang={piece.data.lang}>
     <header class="piece-head">
       <p class="label">{t[piece.data.kind]} · {minutes} {t.min} · <a href={url(`pieces/${piece.data.source}/`)} hreflang="en" lang="en">{t.original}</a></p>
@@ -28,4 +29,13 @@ const minutes = Math.max(1, Math.round((piece.body ?? '').split(/\s+/).length / 
     </header>
     <div class="prose"><Content /></div>
   </article>
+  <script is:inline define:vars={{ notes: t.notes, back: t.back }}>
+    // The Markdown renderer labels footnotes in English; relabel them for this language (screen readers).
+    const h = document.getElementById('footnote-label');
+    if (h) h.textContent = notes;
+    document.querySelectorAll('[data-footnote-backref]').forEach((a) => {
+      const l = a.getAttribute('aria-label');
+      if (l) a.setAttribute('aria-label', l.replace(/^Back to reference/, back));
+    });
+  </script>
 </Base>

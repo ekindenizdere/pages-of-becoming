@@ -18,3 +18,11 @@ export async function pieces(kind?: Piece['data']['kind']) {
 /** Rough reading time from the raw Markdown. */
 export const minutes = (p: Piece) =>
   Math.max(1, Math.round((p.body ?? '').split(/\s+/).length / 220));
+
+/** Language versions of a piece (English plus any published translation). */
+export async function languageLinks(slug: string) {
+  const tr = await getCollection('translations', (t) => t.data.source === slug && t.data.status === 'published');
+  const order = ['en', 'de', 'tr'];
+  return [{ lang: 'en', href: url(`pieces/${slug}/`) }, ...tr.map((t) => ({ lang: t.data.lang, href: url(`${t.data.lang}/pieces/${slug}/`) }))]
+    .sort((a, b) => order.indexOf(a.lang) - order.indexOf(b.lang));
+}

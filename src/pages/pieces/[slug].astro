@@ -1,7 +1,7 @@
 ---
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { pieces, pieceUrl, url, kindLabel, minutes, type Piece } from '../../lib';
+import { pieces, pieceUrl, url, kindLabel, minutes, languageLinks, type Piece } from '../../lib';
 
 export async function getStaticPaths() {
   const all = await pieces();
@@ -16,9 +16,10 @@ export async function getStaticPaths() {
 interface Props { piece: Piece; prev?: Piece; next?: Piece }
 const { piece, prev, next } = Astro.props;
 const { Content } = await render(piece);
+const langs = await languageLinks(piece.id);
 const section = piece.data.kind === 'opinion' ? { href: url('opinion/'), label: 'Opinion Pieces' } : { href: url('articles/'), label: 'Articles' };
 ---
-<Base title={piece.data.title} current={piece.data.kind === 'opinion' ? 'opinion' : 'articles'}>
+<Base title={piece.data.title} langs={langs} current={piece.data.kind === 'opinion' ? 'opinion' : 'articles'}>
   <article>
     <header class="piece-head">
       <p class="label"><a href={section.href}>{kindLabel[piece.data.kind]}</a> · {minutes(piece)} min read</p>
