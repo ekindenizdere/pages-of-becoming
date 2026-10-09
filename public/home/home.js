@@ -248,11 +248,21 @@
     const DOT_Z = -200;
     const stack = document.createElement("div"); stack.className = "stack"; stage.appendChild(stack);
     const layer = (z) => { const l = document.createElement("div"); l.className = "layer"; l.style.transform = `translateZ(${z}px)`; stack.appendChild(l); return l; };
-    const back = el("svg", { viewBox: "0 0 1600 900", preserveAspectRatio: "xMidYMid meet", "aria-hidden": "true" }, layer(DOT_Z));
-    el("path", { d: M.q.d, fill: INK }, back);
-    el("path", { d: M.spiralOut, fill: "none", stroke: INK, "stroke-width": 0.9, "vector-effect": "non-scaling-stroke" }, back);
+    // the "?" and spiral behind the cards; data-back="off" leaves the cards alone on the paper
+    const withBack = stage.dataset.back !== "off";
+    let back = null;
+    if (withBack) {
+      back = el("svg", { viewBox: "0 0 1600 900", preserveAspectRatio: "xMidYMid meet", "aria-hidden": "true" }, layer(DOT_Z));
+      el("path", { d: M.q.d, fill: INK }, back);
+      el("path", { d: M.spiralOut, fill: "none", stroke: INK, "stroke-width": 0.9, "vector-effect": "non-scaling-stroke" }, back);
+    }
     const front = layer(0);
-    const planesEls = cards.map((c) => { const d = document.createElement("div"); d.className = "plane card-plane"; Object.assign(d.style, { left: c.l, top: c.t, width: c.w, transform: `translateZ(${c.z}px)` }); d.innerHTML = c.html; front.appendChild(d); return d; });
+    let planesEls = [];
+    const render = (list) => {
+      cards = list; front.innerHTML = "";
+      planesEls = cards.map((c) => { const d = document.createElement("div"); d.className = "plane card-plane"; Object.assign(d.style, { left: c.l, top: c.t, width: c.w, transform: `translateZ(${c.z}px)` }); d.innerHTML = c.html; front.appendChild(d); return d; });
+      flow();
+    };
     // More cards than the prototype's three: stack them by their real heights (a card's gap below the previous one)
     // and size the stage to fit, so no card covers another at any width.
     const flow = () => {
@@ -262,9 +272,12 @@
       planesEls.forEach((d) => { d.style.top = `${y}px`; y += d.offsetHeight + gap; });
       stage.style.height = `${y + gap}px`;
     };
-    flow(); new ResizeObserver(flow).observe(stage);
-    const pin = () => { const m = back.getScreenCTM(), r = stage.getBoundingClientRect(); if (!m) return; const pt = new DOMPoint(M.C.x, M.C.y).matrixTransform(m); const x = ((pt.x - r.left) / r.width) * 100, y = ((pt.y - r.top) / r.height) * 100; stage.style.perspectiveOrigin = `${x}% ${y}%`; stack.style.transformOrigin = `${x}% ${y}% ${DOT_Z}px`; };
+    render(cards); new ResizeObserver(flow).observe(stage);
+    const pin = () => {
+      if (!back) { stage.style.perspectiveOrigin = "50% 50%"; stack.style.transformOrigin = `50% 50% ${DOT_Z}px`; return; }
+      const m = back.getScreenCTM(), r = stage.getBoundingClientRect(); if (!m) return; const pt = new DOMPoint(M.C.x, M.C.y).matrixTransform(m); const x = ((pt.x - r.left) / r.width) * 100, y = ((pt.y - r.top) / r.height) * 100; stage.style.perspectiveOrigin = `${x}% ${y}%`; stack.style.transformOrigin = `${x}% ${y}% ${DOT_Z}px`; };
     pin(); new ResizeObserver(() => { const t = stack.style.transform; stack.style.transform = "none"; pin(); stack.style.transform = t; }).observe(stage);
+    stage.planes = { render };
     const p = pointer(stage), rot = { x: 0, y: 0 };
     loop(stage, (t) => {
       const ty = p.inside ? (p.fx - 0.5) * 18 : Math.sin(t * 0.25) * 3, tx = p.inside ? -(p.fy - 0.5) * 10 : 0, k = LAB.motion ? 0.04 : 1;
