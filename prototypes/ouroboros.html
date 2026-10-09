@@ -1,0 +1,249 @@
+<title>Ouroboros Mosaic Lab</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&display=swap">
+<style>
+  /* Layout: one square stage, controls beside it (Eli's element-lab pattern). Tokens from tokens.css. */
+  :root {
+    --ink: #0b0b0c; --paper: #fafaf7;
+    --grey-200: #d6d6d3; --grey-300: #b9b9b6; --grey-400: #9a9a97; --grey-500: #7a7a78; --grey-600: #5c5c5a; --grey-700: #3f3f3e;
+    --blue: #c4f8fc; --blue-deep: #0a6f79;
+    --font-display: "Instrument Serif", Georgia, serif;
+    --font-reading: "Newsreader", Georgia, serif;
+    --font-sans: "Instrument Sans", system-ui, sans-serif;
+    --ease-turn: cubic-bezier(0.7, 0, 0.2, 1);
+    --bg: #fafaf7;
+    --rule: color-mix(in srgb, var(--ink) 14%, transparent);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-sans); font-size: 15px; line-height: 1.5; }
+  .wrap { max-width: 1120px; margin-inline: auto; padding-block: 1.25rem 4rem; padding-inline: clamp(16px, 4vw, 48px); }
+  .lab-top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; border-bottom: 1px solid var(--rule); padding-bottom: 1rem; }
+  .brand { font-family: var(--font-display); font-size: 1.25rem; }
+  .brand em { font-size: .75em; }
+  .lab-top small { color: var(--grey-600); }
+  .head { margin: 2.5rem 0 1.5rem; display: grid; gap: .35rem; }
+  .num { font-size: .85rem; color: var(--grey-600); font-variant-numeric: tabular-nums; }
+  h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(2rem, 1.4rem + 2.5vw, 3.2rem); line-height: 1.02; margin: 0; text-wrap: balance; }
+  .lede { font-family: var(--font-reading); font-size: 1.1rem; max-width: 42rem; color: var(--grey-700); margin: 0; }
+
+  .presets { display: flex; flex-wrap: wrap; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 1.5rem; }
+  .presets button { all: unset; cursor: pointer; padding: .9rem 1.1rem .9rem 0; margin-right: 1.5rem; display: grid; gap: .1rem; }
+  .presets button b { font-family: var(--font-display); font-weight: 400; font-size: 1.35rem; line-height: 1; }
+  .presets button span { font-size: .85rem; color: var(--grey-600); }
+  .presets button[aria-pressed="true"] b { background: linear-gradient(transparent 62%, var(--blue) 62%); }
+  .presets button:focus-visible, .swatches button:focus-visible { outline: 2px solid var(--blue-deep); outline-offset: 4px; }
+
+  .stage-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 17rem; gap: 2rem; align-items: start; }
+  @media (max-width: 820px) { .stage-wrap { grid-template-columns: minmax(0, 1fr); } }
+  .stage { background: var(--bg); aspect-ratio: 1; width: 100%; max-width: 100%; border-radius: 2px; position: relative; overflow: hidden; transition: background .64s var(--ease-turn); }
+  .stage svg { width: 100%; height: 100%; display: block; }
+  .overlay { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; padding: 2rem; pointer-events: none; }
+  .overlay h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(2rem, 1rem + 5vw, 4.4rem); line-height: 1; margin: 0; color: var(--ink); }
+  .overlay h2 em { font-size: .7em; }
+  .overlay p { font-family: var(--font-reading); font-size: clamp(.95rem, .8rem + .6vw, 1.2rem); max-width: 26ch; margin: .8rem auto 0; color: var(--ink); }
+  .overlay[hidden] { display: none; }
+  .hint { position: absolute; left: 1rem; bottom: .8rem; font-size: .78rem; color: var(--grey-500); }
+
+  .panel { display: grid; gap: 1.1rem; font-size: .85rem; }
+  .panel h2 { font-family: var(--font-sans); font-weight: 400; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--grey-600); margin: 0 0 .35rem; }
+  .field { display: grid; gap: .35rem; }
+  .field label { color: var(--grey-700); display: flex; justify-content: space-between; }
+  .field output { font-variant-numeric: tabular-nums; color: var(--grey-500); }
+  input[type=range] { width: 100%; accent-color: var(--ink); }
+  .seg { display: flex; flex-wrap: wrap; gap: .25rem .9rem; }
+  .seg label { display: inline-flex; gap: .35rem; align-items: center; cursor: pointer; color: var(--grey-700); }
+  .seg input { accent-color: var(--ink); margin: 0; }
+  .swatches { display: flex; gap: .5rem; flex-wrap: wrap; }
+  .swatches button { height: 2rem; width: 2rem; border: 1px solid var(--grey-200); border-radius: 50%; cursor: pointer; padding: 0; }
+  .swatches button[aria-pressed="true"] { outline: 2px solid var(--blue-deep); outline-offset: 2px; }
+  .notes { margin-top: 3rem; max-width: 42rem; font-family: var(--font-reading); font-size: 1rem; color: var(--grey-700); display: grid; gap: .8rem; }
+  .notes b { font-weight: 500; color: var(--ink); }
+</style>
+
+<div class="wrap">
+  <header class="lab-top"><span class="brand">Pages <em>of</em> Becoming <span style="color:var(--grey-500)">· Lab</span></span><small>Ouroboros mosaic · prototype 2 · 2026-10-09</small></header>
+
+  <div class="head">
+    <span class="num">( Lab · 05 )</span>
+    <h1>The mosaic serpent</h1>
+    <p class="lede">A closed loop: the serpent's body is a mosaic of small tiles, its outline grey instead of black, its colours softened so that black text sits on it comfortably. Sisyphus walks the inside of the ring, on the serpent's back. Four palettes, three tile styles; turn on the text overlay to judge readability.</p>
+  </div>
+
+  <div class="presets" role="group" aria-label="Palettes" id="presets">
+    <button type="button" data-preset="sorbet" aria-pressed="true"><b>A · Sorbet</b><span>the reference, two shades paler</span></button>
+    <button type="button" data-preset="fresco" aria-pressed="false"><b>B · Fresco</b><span>faded earths, sage, dusty blue</span></button>
+    <button type="button" data-preset="mist" aria-pressed="false"><b>C · Mist</b><span>cool pales close to the paper</span></button>
+    <button type="button" data-preset="stone" aria-pressed="false"><b>D · Stone and blue</b><span>the site's greys with its one blue</span></button>
+  </div>
+
+  <div class="stage-wrap">
+    <div class="stage" id="stage">
+      <svg id="svg" viewBox="-260 -260 520 520" role="img" aria-label="An ouroboros made of mosaic tiles, with a figure pushing a stone along the inside of the ring">
+        <g id="serpent"></g>
+        <g id="figure">
+          <g id="man" fill="none" stroke="var(--figure)" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M-14,-30 L-26,-16 L-34,0" stroke-width="7"/>
+            <path d="M-14,-30 L0,-18 L4,0" stroke-width="7"/>
+            <path d="M-14,-30 L8,-50" stroke-width="9"/>
+            <path d="M8,-50 L18,-42 L30,-30" stroke-width="6.5"/>
+            <path d="M7,-48 L19,-37 L31,-24" stroke-width="6.5"/>
+            <circle cx="16" cy="-58" r="6.5" fill="var(--figure)" stroke="none"/>
+          </g>
+          <g id="stone"><path fill="var(--figure)" d="M44,-32 C52,-32 60,-27 60,-18 C61,-9 54,-1 45,0 C36,0 28,-6 28,-15 C28,-24 35,-32 44,-32 Z"/></g>
+        </g>
+      </svg>
+      <div class="overlay" id="overlay" hidden>
+        <h2>Pages <em>of</em> Becoming</h2>
+        <p>The usual confusion but framed professionally</p>
+      </div>
+      <span class="hint" id="hint">cursor drives him · idle: slow drift</span>
+    </div>
+
+    <aside class="panel" aria-label="Controls">
+      <div>
+        <h2>Tiles</h2>
+        <div class="seg" id="tileMode">
+          <label><input type="radio" name="tile" value="mosaic" checked> mosaic</label>
+          <label><input type="radio" name="tile" value="scales"> scales</label>
+          <label><input type="radio" name="tile" value="bands"> bands</label>
+        </div>
+      </div>
+      <div class="field"><label for="rows">Rows across the body <output id="rowsOut">3</output></label><input type="range" id="rows" min="1" max="5" step="1" value="3"></div>
+      <div class="field"><label for="width">Body width <output id="widthOut">34</output></label><input type="range" id="width" min="18" max="48" step="1" value="34"></div>
+      <div class="field"><label for="sat">Colour strength <output id="satOut">60%</output></label><input type="range" id="sat" min="20" max="120" step="5" value="60"></div>
+      <div class="field"><label for="line">Outline <output id="lineOut">grey 400</output></label><input type="range" id="line" min="0" max="3" step="1" value="1"></div>
+      <div>
+        <h2>Figure</h2>
+        <div class="seg" id="figMode">
+          <label><input type="radio" name="fig" value="inside" checked> inside, on the back</label>
+          <label><input type="radio" name="fig" value="outside"> outside</label>
+          <label><input type="radio" name="fig" value="none"> none</label>
+        </div>
+      </div>
+      <div>
+        <h2>Motion</h2>
+        <div class="seg" id="motionMode">
+          <label><input type="radio" name="motion" value="cursor" checked> cursor</label>
+          <label><input type="radio" name="motion" value="loop"> loop</label>
+          <label><input type="radio" name="motion" value="still"> still</label>
+        </div>
+      </div>
+      <div class="seg"><label><input type="checkbox" id="text"> text overlay (readability check)</label></div>
+      <div class="seg"><label><input type="checkbox" id="reseed"> reshuffle tiles</label></div>
+    </aside>
+  </div>
+
+  <div class="notes">
+    <p><b>Closed loop.</b> The body runs the full circle; the head at the top takes the tail into its mouth, so the line never breaks. That is the only promise the drawing makes: it goes round.</p>
+    <p><b>Softened, not dulled.</b> Each palette keeps the reference's variety (six to eight hues, scattered tile by tile) but lifts every tile towards the paper. Grey outlines carry the mosaic; nothing on the ring is darker than the text that may sit on it. "Colour strength" moves between the reference's brightness (120%) and almost tone-on-tone (20%).</p>
+    <p><b>Sisyphus.</b> Inside the circle, feet on the serpent's back, leaning into the stone. At the top he hangs upside down; the loop has no summit. The cursor drives him, per the enactive rule; "loop" lets him go on his own.</p>
+  </div>
+</div>
+
+<script>
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const NS = 'http://www.w3.org/2000/svg';
+  const stage = $('#stage'), svg = $('#svg'), serpent = $('#serpent'), figure = $('#figure'), stone = $('#stone');
+  const R = 190;
+  const palettes = {
+    sorbet: { bg: '#fafaf7', tiles: ['#f6c8c8', '#f9dcb8', '#f7f0b8', '#c9ecd4', '#c4e4f3', '#d9ccf0', '#f4c9e6', '#cfe8e9'], head: '#f6c8c8', figure: '#3f3f3e' },
+    fresco: { bg: '#f7f5ef', tiles: ['#e3b9a6', '#e9cfa8', '#d8d3a4', '#bfcdb6', '#b9c8d2', '#cbbccb', '#e1c6b8', '#d6d0c2'], head: '#e3b9a6', figure: '#3f3f3e' },
+    mist:   { bg: '#fafaf7', tiles: ['#e6eef0', '#e3ebe7', '#e9ecf2', '#edeae9', '#e2eceb', '#eceff0', '#e5e9ee', '#eef0eb'], head: '#e3ebe7', figure: '#5c5c5a' },
+    stone:  { bg: '#f6f6f3', tiles: ['#e8e8e5', '#dedddb', '#e2e2e0', '#d6d6d3', '#dff4f6', '#c4f8fc', '#ebebe8', '#d1d1ce'], head: '#dedddb', figure: '#3f3f3e' },
+  };
+  const lines = ['#d6d6d3', '#9a9a97', '#7a7a78', '#5c5c5a'], lineNames = ['grey 200', 'grey 400', 'grey 500', 'grey 600'];
+  const state = { palette: 'sorbet', tile: 'mosaic', rows: 3, width: 34, sat: 60, line: 1, fig: 'inside', mode: 'cursor', seed: 7 };
+
+  // colour: mix a tile colour with the paper by (100 - sat)%, so 100% is the palette as written, 120% is a touch richer
+  const toRGB = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+  const hex = (c) => '#' + c.map((v) => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, '0')).join('');
+  const mix = (a, b, t) => hex(toRGB(a).map((v, i) => v + (toRGB(b)[i] - v) * t));
+  const soften = (col, bg) => state.sat <= 100 ? mix(col, bg, 1 - state.sat / 100) : mix(col, '#000000', (state.sat - 100) / 100 * 0.25);
+  let rnd = 0; const rand = () => { rnd = (rnd * 9301 + 49297) % 233280; return rnd / 233280; };
+  const pt = (a, r) => [Math.cos(a) * r, Math.sin(a) * r];
+  const P = (xy) => xy.map((v) => v.toFixed(1)).join(',');
+  const el = (n, attrs, parent) => { const e = document.createElementNS(NS, n); for (const k in attrs) e.setAttribute(k, attrs[k]); (parent || serpent).appendChild(e); return e; };
+
+  function build() {
+    serpent.innerHTML = ''; rnd = state.seed * 1000 + 17;
+    const pal = palettes[state.palette], bg = pal.bg, line = lines[state.line];
+    svg.style.setProperty('--figure', pal.figure); document.documentElement.style.setProperty('--bg', bg);
+    const headA = -Math.PI / 2;                      // head at the top
+    const start = headA + 0.09, end = headA + Math.PI * 2 - 0.06;  // tail tip inside the mouth; body closes under the head
+    const W = state.width;
+    const wAt = (t) => 6 + (W - 6) * Math.pow(t, 0.75);   // taper from tail (t=0) to head (t=1)
+    const N = state.tile === 'bands' ? 110 : 84;
+    // tiles: quadrilaterals between inner and outer radius, split into rows; mosaic shifts alternate rows by half a cell
+    for (let i = 0; i < N; i++) {
+      const t0 = i / N, t1 = (i + 1) / N, a0 = start + (end - start) * t0, a1 = start + (end - start) * t1;
+      const w0 = wAt(t0), w1 = wAt(t1);
+      const rows = state.tile === 'bands' ? 1 : state.rows;
+      for (let r = 0; r < rows; r++) {
+        const f0 = r / rows, f1 = (r + 1) / rows;
+        const shift = (state.tile === 'mosaic' && r % 2) ? 0.5 : 0;
+        const b0 = a0 + (a1 - a0) * shift, b1 = a1 + (a1 - a0) * shift;
+        const col = soften(pal.tiles[Math.floor(rand() * pal.tiles.length)], bg);
+        if (state.tile === 'scales') {
+          const mid = (b0 + b1) / 2, rr = R - w0 / 2 + w0 * (f0 + f1) / 2, rad = Math.max(2.2, (w0 / rows) * 0.62);
+          const [cx, cy] = pt(mid, rr);
+          el('circle', { cx: cx.toFixed(1), cy: cy.toFixed(1), r: rad.toFixed(1), fill: col, stroke: line, 'stroke-width': 0.7 });
+        } else {
+          const d = `M${P(pt(b0, R - w0 / 2 + w0 * f0))} L${P(pt(b1, R - w1 / 2 + w1 * f0))} L${P(pt(b1, R - w1 / 2 + w1 * f1))} L${P(pt(b0, R - w0 / 2 + w0 * f1))} Z`;
+          el('path', { d, fill: col, stroke: line, 'stroke-width': 0.8, 'stroke-linejoin': 'round' });
+        }
+      }
+    }
+    if (state.tile === 'scales') { // a soft body under the scales so the ring reads as one
+      const d = []; for (let i = 0; i <= N; i++) { const t = i / N, a = start + (end - start) * t; d.push(pt(a, R + wAt(t) / 2)); }
+      const inner = []; for (let i = N; i >= 0; i--) { const t = i / N, a = start + (end - start) * t; inner.push(pt(a, R - wAt(t) / 2)); }
+      const body = el('path', { d: 'M' + d.map(P).join(' L') + ' L' + inner.map(P).join(' L') + ' Z', fill: soften(pal.tiles[0], bg), stroke: line, 'stroke-width': 0.8 });
+      serpent.prepend(body);
+    }
+    // head: a leaf-shaped head along the tangent, mouth open over the tail, tongue forward
+    const [hx, hy] = pt(headA, R); const ang = (headA + Math.PI / 2) * 180 / Math.PI;
+    const L = W * 2.6, H = W * 1.5;
+    const g = el('g', { transform: `translate(${hx.toFixed(1)},${hy.toFixed(1)}) rotate(${ang.toFixed(1)})` });
+    el('path', { d: `M${-L * 0.5},0 C${-L * 0.5},${-H / 2} ${L * 0.05},${-H / 2} ${L * 0.5},${-H * 0.2} L${L * 0.2},0 L${L * 0.5},${H * 0.2} C${L * 0.05},${H / 2} ${-L * 0.5},${H / 2} ${-L * 0.5},0 Z`, fill: soften(pal.head, bg), stroke: line, 'stroke-width': 1 }, g);
+    el('circle', { cx: (L * 0.08).toFixed(1), cy: (-H * 0.16).toFixed(1), r: Math.max(1.6, W * 0.07), fill: line }, g);
+    el('path', { d: `M${L * 0.48},0 L${L * 0.74},${-H * 0.06} M${L * 0.66},${-H * 0.035} L${L * 0.76},${H * 0.05}`, fill: 'none', stroke: line, 'stroke-width': 1.1, 'stroke-linecap': 'round' }, g);
+  }
+
+  // motion: inside the ring the figure walks counter-clockwise so his feet stay on the inner surface
+  let progress = 0.55, target = 0.55, last = performance.now(), idle = 0, hovering = false, spin = 0;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function place(p) {
+    if (state.fig === 'none') { figure.style.display = 'none'; return; } figure.style.display = '';
+    const W = state.width, inside = state.fig === 'inside';
+    const a = inside ? -Math.PI / 2 - p * Math.PI * 2 : -Math.PI / 2 + p * Math.PI * 2;
+    const r = inside ? R - W / 2 + 1 : R + W / 2 - 1;
+    const [x, y] = pt(a, r);
+    const deg = inside ? Math.atan2(-Math.cos(a), Math.sin(a)) * 180 / Math.PI : (a + Math.PI / 2) * 180 / Math.PI;
+    figure.setAttribute('transform', `translate(${x.toFixed(2)},${y.toFixed(2)}) rotate(${deg.toFixed(2)}) scale(0.9)`);
+    stone.setAttribute('transform', `rotate(${(spin % 360).toFixed(1)} 44 -16)`);
+  }
+  function tick(now) {
+    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    if (!reduced && state.mode !== 'still') {
+      if (state.mode === 'loop') { progress += dt / 40; spin += dt / 40 * 360 * 11; }
+      else { idle += dt; if (!hovering && idle > 1.2) target += dt / 100; const diff = target - progress; progress += diff * Math.min(1, dt * 4); spin += diff * Math.min(1, dt * 4) * 360 * 11; }
+    }
+    place(((progress % 1) + 1) % 1); requestAnimationFrame(tick);
+  }
+  stage.addEventListener('pointermove', (ev) => { if (state.mode !== 'cursor') return; const r = stage.getBoundingClientRect(); hovering = true; idle = 0; target = Math.floor(target) + (ev.clientX - r.left) / r.width; });
+  stage.addEventListener('pointerleave', () => { hovering = false; });
+
+  const sync = () => {
+    $('#rowsOut').value = state.rows; $('#widthOut').value = state.width; $('#satOut').value = state.sat + '%'; $('#lineOut').value = lineNames[state.line];
+    $('#hint').textContent = state.mode === 'cursor' ? 'cursor drives him · idle: slow drift' : state.mode === 'loop' ? 'looping' : 'still';
+    build(); place(((progress % 1) + 1) % 1);
+  };
+  $('#presets').addEventListener('click', (ev) => { const b = ev.target.closest('button'); if (!b) return; state.palette = b.dataset.preset; $('#presets').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); sync(); });
+  ['rows', 'width', 'sat', 'line'].forEach((k) => $('#' + k).addEventListener('input', (ev) => { state[k] = parseInt(ev.target.value, 10); sync(); }));
+  $('#tileMode').addEventListener('change', (ev) => { state.tile = ev.target.value; sync(); });
+  $('#figMode').addEventListener('change', (ev) => { state.fig = ev.target.value; sync(); });
+  $('#motionMode').addEventListener('change', (ev) => { state.mode = ev.target.value; sync(); });
+  $('#text').addEventListener('change', (ev) => { $('#overlay').hidden = !ev.target.checked; });
+  $('#reseed').addEventListener('change', () => { state.seed = Math.floor(Math.random() * 1000); sync(); });
+  sync(); requestAnimationFrame(tick);
+})();
+</script>
