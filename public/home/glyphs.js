@@ -5,18 +5,23 @@
   const S = 200;
 
   // The display font whose outlines draw the title, the "?" and the section titles.
-  // Instrument Serif (OFL) stands in for PP Pangaia: Pangaia needs a Pangram web licence and must
-  // never be committed to this public repo. With a licence and a private host, set DISPLAY = "pangaia".
-  const DISPLAY = "instrument";
+  // PP Pangaia is hosted outside this public repo (its licence forbids putting the files here).
+  // If it can't be fetched (server down, missing CORS header), Instrument Serif (OFL) stands in.
+  const DISPLAY = "pangaia";
+  const PANGAIA = "https://elisabetdelgadomas.com/file/ekinweb/font/";
   const FONTS = {
+    pangaia: { label: "PP Pangaia Medium", regular: PANGAIA + "PPPangaia-Medium.otf", italic: PANGAIA + "PPPangaia-MediumItalic.otf", licence: "Pangram web licence" },
     instrument: { label: "Instrument Serif", regular: "fonts/glyph/instrument-serif.ttf", italic: "fonts/glyph/instrument-serif-italic.ttf", licence: "OFL" },
-    pangaia: { label: "PP Pangaia Medium", regular: "fonts/licensed/PPPangaia-Medium.otf", italic: "fonts/licensed/PPPangaia-MediumItalic.otf", licence: "Pangram EULA" },
   };
+  const FALLBACK = { [FONTS.pangaia.regular]: FONTS.instrument.regular, [FONTS.pangaia.italic]: FONTS.instrument.italic };
 
   const cache = new Map();
   const loadFont = async (url) => {
     if (!url) return null;
-    if (!cache.has(url)) cache.set(url, fetch(url).then((r) => r.arrayBuffer()).then((b) => opentype.parse(b)));
+    if (!cache.has(url)) {
+      const get = (u) => fetch(u).then((r) => { if (!r.ok) throw new Error(`${r.status} ${u}`); return r.arrayBuffer(); }).then((b) => opentype.parse(b));
+      cache.set(url, get(url).catch((err) => { if (!FALLBACK[url]) throw err; console.warn("Display font unavailable, using Instrument Serif:", err.message); return get(FALLBACK[url]); }));
+    }
     return cache.get(url);
   };
 
