@@ -1,0 +1,36 @@
+/* Home C · Contents (from prototypes/home-c.html, unchanged): the home as an open book. */
+  .spread { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 0; padding-block: var(--space-9) var(--space-10); }
+  .spread::before { /* the fold */ content: ""; position: absolute; top: var(--space-9); bottom: var(--space-8); left: 50%; width: 1px; background: var(--rule);
+    box-shadow: -18px 0 28px -22px rgba(0,0,0,.18), 18px 0 28px -22px rgba(0,0,0,.18); }
+  .page { position: relative; padding: 0 clamp(1.2rem, 4vw, 4.5rem); }
+  .page-left .inner { position: sticky; top: 6rem; }
+  .folio { display: block; margin-top: var(--space-8); text-align: center; font-size: var(--step--1); color: var(--text-muted); font-variant-numeric: tabular-nums; }
+  .page-left .ink { font-size: clamp(1.5rem, 1rem + 1.7vw, 2.6rem); margin: var(--space-5) 0 var(--space-7); }
+  .page-left .planes-stage { aspect-ratio: 2 / 3; min-height: 30rem; margin-top: var(--space-5); }
+  .small-bio { display: grid; grid-template-columns: 5.5rem 1fr; gap: var(--space-4); align-items: start; margin-bottom: var(--space-8); }
+  .small-bio .bio { font-size: var(--step--1); line-height: 1.55; margin-bottom: var(--space-3); }
+  .bio-links { display: flex; align-items: center; gap: var(--space-4); }
+  .q-label { display: block; }
+  .part { margin-bottom: var(--space-9); }
+  .part .title-stage { max-width: 24rem; margin: var(--space-5) 0 var(--space-5); }
+  .toc { display: grid; }
+  .toc-row { display: grid; grid-template-columns: auto 1fr auto; gap: var(--space-3); align-items: baseline; padding: var(--space-4) 0; border-top: 1px solid var(--rule); color: inherit; text-decoration: none; }
+  .toc-title { font-family: var(--font-display); font-weight: var(--display-weight); font-size: var(--step-1); line-height: 1.15; }
+  .toc-leader { border-bottom: 1px dotted var(--grey-400); transform: translateY(-0.3em); min-width: 1rem; }
+  .toc-meta { font-size: var(--step--1); color: var(--text-muted); font-variant-numeric: tabular-nums; }
+  .toc-note { grid-column: 1 / -1; margin-top: var(--space-2); padding-left: var(--space-3); border-left: 1px solid var(--rule); font-family: var(--font-reading); font-style: italic; font-size: var(--step--1); color: var(--grey-600); transition: border-color var(--dur-2) var(--ease-default), background var(--dur-2) var(--ease-default); }
+  .toc-row:hover .toc-title, .toc-row:focus-visible .toc-title { background: linear-gradient(transparent 62%, var(--blue) 62%, var(--blue) 92%, transparent 92%); }
+  .toc-row:hover .toc-note, .toc-row:focus-visible .toc-note { border-left-color: var(--blue-deep); background: color-mix(in srgb, var(--blue) 35%, transparent); color: var(--grey-700); }
+  .toc-row.is-upcoming { pointer-events: none; }
+  .toc-row.is-upcoming .toc-title, .toc-row.is-upcoming .toc-meta { color: var(--grey-300); }
+  /* brand icons beside the portrait (LinkedIn from Simple Icons, CC0; Forbes as a Pangaia "F" tile) */
+  .social { display: flex; gap: var(--space-1); margin-left: auto; }
+  .social a { display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 4px; color: var(--ink); transition: background var(--dur-2) var(--ease-default); }
+  .social a:hover, .social a:focus-visible { background: var(--blue); }
+  .social svg { width: 1.15rem; height: 1.15rem; fill: currentColor; }
+  @media (max-width: 900px) {
+    .spread { grid-template-columns: 1fr; }
+    .spread::before { display: none; }
+    .page-left .inner { position: static; }
+    .page-right { margin-top: var(--space-8); }
+  }

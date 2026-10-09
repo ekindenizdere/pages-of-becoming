@@ -1,0 +1,91 @@
+/* Lab chrome: the frame around prototypes. Borrowed structure from the references:
+   corner blocks, short top menu, thin bottom bar with counter + motion toggle. */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  font-weight: var(--ui-weight);
+  font-stretch: 100%;
+  line-height: 1.5;
+}
+img, svg, canvas { display: block; max-width: 100%; }
+button, select, input { font: inherit; color: inherit; }
+
+.lab-top {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-4);
+  padding: var(--space-4) var(--grid-margin);
+  background: color-mix(in srgb, var(--paper) 82%, transparent);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: var(--line) solid var(--rule);
+  font-size: var(--step--1);
+}
+.lab-top a { color: inherit; text-decoration: none; }
+.lab-top nav { display: flex; gap: var(--space-5); flex-wrap: wrap; }
+.lab-top nav a { color: var(--text-muted); }
+.lab-top nav a[aria-current="page"], .lab-top nav a:hover { color: var(--ink); }
+.lab-brand { font-family: var(--font-display); font-size: var(--step-1); letter-spacing: -0.01em; }
+.lab-brand em { font-style: italic; font-size: 0.7em; }
+
+.lab-bottom {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+  display: flex; justify-content: space-between; align-items: center; gap: var(--space-4);
+  padding: var(--space-3) var(--grid-margin);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-top: var(--line) solid var(--rule);
+  font-family: var(--font-mono); font-size: var(--step--2); letter-spacing: 0.02em;
+}
+.lab-bottom .counter { display: flex; gap: var(--space-4); align-items: center; }
+.lab-bottom .ticks { display: flex; gap: 3px; height: 14px; align-items: stretch; }
+.lab-bottom .ticks i { width: 1px; background: var(--grey-300); }
+.lab-bottom .ticks i.on { background: var(--ink); }
+.lab-toggle {
+  border: var(--line) solid var(--rule); background: transparent; border-radius: 999px;
+  padding: 0.3em 0.9em; cursor: pointer;
+}
+.lab-toggle[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+.lab-main { padding: 0 var(--grid-margin) var(--space-10); }
+
+.lab-section {
+  position: relative;
+  padding: var(--space-9) 0 var(--space-8);
+  border-bottom: var(--line) solid var(--rule);
+}
+.lab-head {
+  display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--grid-gutter);
+  align-items: start; margin-bottom: var(--space-7);
+}
+.lab-num { grid-column: 1 / span 2; font-family: var(--font-mono); font-size: var(--step--1); color: var(--text-muted); }
+.lab-title { grid-column: 3 / span 6; margin: 0; font-family: var(--font-display); font-weight: 400; font-size: var(--step-3); line-height: 1.05; letter-spacing: -0.015em; }
+.lab-title em { font-style: italic; }
+.lab-note { grid-column: 9 / span 4; margin: 0; font-size: var(--step--1); color: var(--text-muted); line-height: 1.55; }
+.lab-note b { color: var(--ink); font-weight: 500; }
+@media (max-width: 800px) {
+  .lab-num, .lab-title, .lab-note { grid-column: 1 / -1; }
+  .lab-top nav { display: none; }
+}
+
+.lab-controls {
+  display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-6); align-items: center;
+  margin-top: var(--space-6);
+  font-family: var(--font-mono); font-size: var(--step--2); color: var(--text-muted);
+}
+.lab-controls label { display: inline-flex; gap: var(--space-2); align-items: center; }
+.lab-controls input[type="range"] { accent-color: var(--ink); width: 9rem; }
+.lab-controls select {
+  border: var(--line) solid var(--rule); background: var(--paper); border-radius: 4px; padding: 0.25em 0.5em;
+}
+.lab-btn {
+  border: var(--line) solid var(--ink); background: transparent; border-radius: 999px;
+  padding: 0.35em 1em; cursor: pointer; font-family: var(--font-mono); font-size: var(--step--2);
+}
+.lab-btn:hover { background: var(--blue); }
+
+.corner-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--ink); display: inline-block; }
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
