@@ -10,7 +10,7 @@
   // quotes on the planes: author first, citation last
   // quotes on the planes: the text first, then one line of author, work and year
   const quote = (author, text, cite, small) => `<p class="pr${small ? " pr-s" : ""}">${text}</p><small class="cite"><span class="au">${author}</span>${cite ? `, ${cite}` : ""}</small>`;
-  const citeOf = (q) => q.cite !== undefined ? q.cite : [q.work, q.year].filter(Boolean).join(", ") + (q.page ? `, p. ${q.page}` : "");
+  const citeOf = (q) => q.cite !== undefined ? q.cite : [q.work, q.year].filter(Boolean).join(", ");
   // The three prototype positions (left, width, depth) repeat down the stage as a rhythm; the quotes come from
   // the commonplace database (src/data/quotes.json) when the page provides it, four at random per visit, different authors.
   const RHYTHM = [{ l: "36%", w: "62%", z: 120 }, { l: "0%", w: "72%", z: 70 }, { l: "24%", w: "76%", z: 160 }];

@@ -1,5 +1,5 @@
 {
-  "_readme": "Commonplace database. Fields: author, work, year (of the work), text; optional page, note, show:false (kept but never displayed). The About page draws a random handful of the shorter entries on every visit. Order does not matter.",
+  "_readme": "Commonplace database. Fields: author, work, year (of the work), text; optional page (kept for reference, never displayed), note, show:false (kept but never displayed). The About page draws a random handful of the shorter entries on every visit. Order does not matter.",
   "quotes": [
     {
       "author": "Thomas Nagel",
