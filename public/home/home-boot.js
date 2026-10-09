@@ -12,10 +12,12 @@
   const quote = (author, text, cite, small) => `<p class="pr${small ? " pr-s" : ""}">${text}</p><small class="cite"><span class="au">${author}</span>${cite ? `, ${cite}` : ""}</small>`;
   const citeOf = (q) => q.cite !== undefined ? q.cite : [q.work, q.year].filter(Boolean).join(", ") + (q.page ? `, p. ${q.page}` : "");
   // The three prototype positions (left, width, depth) repeat down the stage as a rhythm; the quotes come from
-  // the commonplace database (src/data/quotes.json) when the page provides it, six at random per visit.
+  // the commonplace database (src/data/quotes.json) when the page provides it, four at random per visit, different authors.
   const RHYTHM = [{ l: "36%", w: "62%", z: 120 }, { l: "0%", w: "72%", z: 70 }, { l: "24%", w: "76%", z: 160 }];
   const pool = window.POB_QUOTES || window.POB_I18N.quotes;
-  const picked = pool === window.POB_I18N.quotes ? pool : pool.slice().sort(() => Math.random() - 0.5).slice(0, 6);
+  // four per visit, each from a different author
+  const pickFour = (all) => { const seen = new Set(), out = []; for (const q of all.slice().sort(() => Math.random() - 0.5)) { if (seen.has(q.author)) continue; seen.add(q.author); out.push(q); if (out.length === 4) break; } return out; };
+  const picked = pool === window.POB_I18N.quotes ? pool : pickFour(pool);
   const step = 100 / picked.length;
   const quiet = picked.map((q, i) => {
     const r = RHYTHM[i % RHYTHM.length];
