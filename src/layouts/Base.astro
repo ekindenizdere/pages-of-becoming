@@ -6,10 +6,14 @@ interface Props { title?: string; description?: string; current?: 'opinion' | 'a
 const { title, description = 'Essays on philosophy, cognitive science and science by Ekin Deniz Dere.', current, lang = 'en', noindex = false, langs = [] } = Astro.props;
 const langName: Record<string, string> = { en: 'English', de: 'Deutsch', tr: 'Türkçe' };
 const fullTitle = title ? `${title} · Pages of Becoming` : 'Pages of Becoming';
+import { homeText, type Lang } from '../home-text';
+const L = (['de', 'tr'].includes(lang) ? lang : 'en') as Lang;
+const home = url(L === 'en' ? '' : `${L}/`);
+// Translated pages point to the sections of their own home page; English keeps the section pages.
 const nav = [
-  { key: 'opinion', href: url('opinion/'), label: 'Opinion Pieces' },
-  { key: 'articles', href: url('articles/'), label: 'Articles' },
-] as const;
+  { key: 'opinion', href: L === 'en' ? url('opinion/') : `${home}#opinion`, label: homeText[L].opinion },
+  { key: 'articles', href: L === 'en' ? url('articles/') : `${home}#articles`, label: homeText[L].articles },
+];
 ---
 <!doctype html>
 <html lang={lang}>
@@ -31,12 +35,12 @@ const nav = [
   <a class="skip" href="#main">Skip to content</a>
   <div class="wrap">
     <header class="site-head">
-      <a class="brand" href={url()}>Pages <em>of</em> Becoming</a>
+      <a class="brand" href={home}>Pages <em>of</em> Becoming</a>
       <nav class="site-nav" aria-label="Main">
         {nav.map((n) => <a href={n.href} aria-current={current === n.key ? 'page' : undefined}>{n.label}</a>)}
       </nav>
       {langs.length > 1 && (
-        <nav class="lang-switch" aria-label="Language">
+        <nav class="lang-switch" aria-label={homeText[L].language}>
           {langs.map((l) => (
             <a href={l.href} hreflang={l.lang} lang={l.lang} title={langName[l.lang]} aria-current={l.lang === lang ? 'true' : undefined}>{l.lang.toUpperCase()}</a>
           ))}
@@ -46,7 +50,7 @@ const nav = [
     <main id="main"><slot /></main>
     <footer class="site-foot">
       <span>© {new Date().getFullYear()} Ekin Deniz Dere</span>
-      <span>The usual confusion but framed professionally</span>
+      <span>{homeText[L].sub}</span>
     </footer>
   </div>
 </body>

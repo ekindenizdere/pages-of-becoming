@@ -9,10 +9,12 @@
   document.querySelectorAll("[data-question]").forEach((n) => HOME.questionTitle(n, n.dataset.question));
   // quotes on the planes: author first, citation last
   const quote = (author, text, cite, small) => `<small class="au">${author}</small><p class="pr${small ? " pr-s" : ""}">${text}</p><small class="cite">${cite}</small>`;
+  // quote wording per language comes from the page (src/home-text.ts)
+  const [qa, qb, qc] = window.POB_I18N.quotes;
   const quiet = [
-    { l: "36%", t: "2%", w: "62%", z: 120, html: quote("Thomas Nagel", "There is no view from nowhere.", "1986, paraphrase", true) },
-    { l: "0%", t: "22%", w: "72%", z: 70, html: quote("Francisco J. Varela", "Our current notions about evolution and brain will be as distant to our grandchildren as this animistic cosmology is to us today.", "1987, p. 49", true) },
-    { l: "24%", t: "52%", w: "76%", z: 160, html: quote("Howard H. Pattee", "Since we are free to make our own syntactic rules we are also free to interpret inherently simple events as messages in our own elaborate symbolic systems, and indeed this is what has generated all mythologies and probably several sciences.", "1977, p. 262", true) },
+    { l: "36%", t: "2%", w: "62%", z: 120, html: quote(qa.author, qa.text, qa.cite, true) },
+    { l: "0%", t: "22%", w: "72%", z: 70, html: quote(qb.author, qb.text, qb.cite, true) },
+    { l: "24%", t: "52%", w: "76%", z: 160, html: quote(qc.author, qc.text, qc.cite, true) },
   ];
   document.querySelectorAll("[data-planes]").forEach((n) => HOME.planes(n, n.dataset.planes === "quiet" ? quiet : [
     { l: "4%", t: "8%", w: "34%", z: 50, html: `<small>( 01 ) The question</small><p class="pq">what does it mean to <em>be</em> who we are?</p>` },

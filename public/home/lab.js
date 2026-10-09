@@ -15,7 +15,8 @@
     const btn = document.querySelector("[data-motion-toggle]");
     if (btn) {
       btn.setAttribute("aria-pressed", String(LAB.motion));
-      btn.textContent = `Motion ${LAB.motion ? "on" : "off"}`;
+      const M = (window.POB_I18N && window.POB_I18N.motion) || ["Motion on", "Motion off"];
+      btn.textContent = LAB.motion ? M[0] : M[1];
     }
     listeners.forEach((cb) => cb(LAB.motion));
   };

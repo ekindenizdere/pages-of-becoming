@@ -34,3 +34,9 @@
     .page-left .inner { position: static; }
     .page-right { margin-top: var(--space-8); }
   }
+
+/* Language switch in the home header, and the machine-translation note under the bio */
+.site-top .lang-switch { display: inline-flex; gap: var(--space-3); margin-left: var(--space-3); }
+.site-top .lang-switch a { color: var(--text-muted); letter-spacing: 0.04em; }
+.site-top .lang-switch a[aria-current="true"] { color: var(--ink); background-size: 100% 1px; }
+.small-bio .translation-note { margin: 0.4rem 0 0; color: var(--text-muted); }
