@@ -6,6 +6,9 @@ import '../styles/tokens.css';
 import { getCollection } from 'astro:content';
 import { pieces, pieceUrl, minutes, url } from '../lib';
 import { homeText, type Lang } from '../home-text';
+import quotesDb from '../data/quotes.json';
+// The commonplace: a random handful of the shorter entries is shown on each visit (picked in the browser).
+const quotes = quotesDb.quotes.filter((q) => q.show !== false && q.text.length <= 260);
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -112,7 +115,7 @@ const h = (path: string) => url(`home/${path}?v=${build}`);
   <button class="lab-toggle" type="button" data-motion-toggle aria-pressed="true">{t.motion[0]}</button>
 </footer>
 
-<script is:inline define:vars={{ data, i18n: { min: t.min, becoming: t.becoming, motion: t.motion, quotes: t.quotes } }}>window.POB_PIECES = data; window.POB_I18N = i18n;</script>
+<script is:inline define:vars={{ data, quotes, i18n: { min: t.min, becoming: t.becoming, motion: t.motion, quotes: t.quotes } }}>window.POB_PIECES = data; window.POB_I18N = i18n; window.POB_QUOTES = quotes;</script>
 <script is:inline src={h('vendor/opentype.min.js')}></script>
 <script is:inline src={h('vendor/gsap.min.js')}></script>
 <script is:inline src={h('vendor/ScrollTrigger.min.js')}></script>

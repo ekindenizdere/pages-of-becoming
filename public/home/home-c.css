@@ -62,3 +62,5 @@
 .about-page .site-top nav a[aria-current="page"] { background-size: 100% 1px; }
 /* Without reading times the dotted leader has nothing to lead to; it stays only for "becoming" */
 .toc-row:has(.toc-meta:empty) .toc-leader, .toc-meta:empty { display: none; }
+/* The commonplace stage grows with the number of cards it holds (three in the prototype) */
+.page-left .planes-stage { --cards: 3; aspect-ratio: auto; height: calc(10rem * var(--cards)); min-height: 30rem; }
