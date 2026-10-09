@@ -51,3 +51,6 @@
 .page-left .small-bio .social { margin-left: 0; }
 /* Home header without the small mark (the hero carries the title): the links sit on the right */
 .home .site-top { justify-content: flex-end; }
+/* Long German and Turkish compounds in the large left-page text hyphenate instead of widening the page */
+.page-left { min-width: 0; }
+.page-left .ink, .left-title { hyphens: auto; -webkit-hyphens: auto; overflow-wrap: break-word; }
