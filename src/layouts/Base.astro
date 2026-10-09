@@ -2,13 +2,12 @@
 import '../styles/global.css';
 import { url } from '../lib';
 
-interface Props { title?: string; description?: string; current?: 'opinion' | 'articles' | 'about' }
+interface Props { title?: string; description?: string; current?: 'opinion' | 'articles' }
 const { title, description = 'Essays on philosophy, cognitive science and science by Ekin Deniz Dere.', current } = Astro.props;
 const fullTitle = title ? `${title} · Pages of Becoming` : 'Pages of Becoming';
 const nav = [
   { key: 'opinion', href: url('opinion/'), label: 'Opinion Pieces' },
   { key: 'articles', href: url('articles/'), label: 'Articles' },
-  { key: 'about', href: url('about/'), label: 'About' },
 ] as const;
 ---
 <!doctype html>
