@@ -10,7 +10,7 @@
   const DISPLAY = "pangaia";
   const PANGAIA = "https://elisabetdelgadomas.com/file/ekinweb/font/";
   const FONTS = {
-    pangaia: { label: "PP Pangaia Medium", regular: PANGAIA + "PPPangaia-Medium.otf", italic: PANGAIA + "PPPangaia-MediumItalic.otf", licence: "Pangram web licence" },
+    pangaia: { label: "PP Pangaia Medium", regular: PANGAIA + "PPPangaia-Medium.otf?v=2", italic: PANGAIA + "PPPangaia-MediumItalic.otf?v=2", licence: "Pangram web licence" },
     instrument: { label: "Instrument Serif", regular: "fonts/glyph/instrument-serif.ttf", italic: "fonts/glyph/instrument-serif-italic.ttf", licence: "OFL" },
   };
   const FALLBACK = { [FONTS.pangaia.regular]: FONTS.instrument.regular, [FONTS.pangaia.italic]: FONTS.instrument.italic };
