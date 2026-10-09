@@ -64,3 +64,4 @@
 .toc-row:has(.toc-meta:empty) .toc-leader, .toc-meta:empty { display: none; }
 /* The commonplace stage: height is set by the cards it holds (see HOME.planes) */
 .page-left .planes-stage { aspect-ratio: auto; min-height: 30rem; }
+.card-plane .cite .au { display: inline; margin: 0; }

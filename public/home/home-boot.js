@@ -8,7 +8,9 @@
   document.querySelectorAll("[data-config]").forEach((n) => HOME.configTitle(n, n.dataset.config));
   document.querySelectorAll("[data-question]").forEach((n) => HOME.questionTitle(n, n.dataset.question));
   // quotes on the planes: author first, citation last
-  const quote = (author, text, cite, small) => `<small class="au">${author}</small><p class="pr${small ? " pr-s" : ""}">${text}</p><small class="cite">${cite}</small>`;
+  // quotes on the planes: the text first, then one line of author, work and year
+  const quote = (author, text, cite, small) => `<p class="pr${small ? " pr-s" : ""}">${text}</p><small class="cite"><span class="au">${author}</span>${cite ? `, ${cite}` : ""}</small>`;
+  const citeOf = (q) => q.cite !== undefined ? q.cite : [q.work, q.year].filter(Boolean).join(", ") + (q.page ? `, p. ${q.page}` : "");
   // The three prototype positions (left, width, depth) repeat down the stage as a rhythm; the quotes come from
   // the commonplace database (src/data/quotes.json) when the page provides it, six at random per visit.
   const RHYTHM = [{ l: "36%", w: "62%", z: 120 }, { l: "0%", w: "72%", z: 70 }, { l: "24%", w: "76%", z: 160 }];
@@ -17,7 +19,7 @@
   const step = 100 / picked.length;
   const quiet = picked.map((q, i) => {
     const r = RHYTHM[i % RHYTHM.length];
-    return { l: r.l, t: `${(2 + i * step * 0.92).toFixed(1)}%`, w: r.w, z: r.z, html: quote(q.author, q.text, q.cite, true) };
+    return { l: r.l, t: `${(2 + i * step * 0.92).toFixed(1)}%`, w: r.w, z: r.z, html: quote(q.author, q.text, citeOf(q), true) };
   });
   document.querySelectorAll("[data-planes]").forEach((n) => HOME.planes(n, n.dataset.planes === "quiet" ? quiet : [
     { l: "4%", t: "8%", w: "34%", z: 50, html: `<small>( 01 ) The question</small><p class="pq">what does it mean to <em>be</em> who we are?</p>` },
