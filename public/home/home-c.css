@@ -69,5 +69,5 @@
 .quote-controls { display: grid; justify-items: center; gap: var(--space-3); margin-top: var(--space-5); }
 .quote-controls button { all: unset; cursor: pointer; width: 2.25rem; height: 2.25rem; display: grid; place-items: center; border-radius: 50%; color: var(--grey-500); font-family: var(--font-sans); font-size: 1.1rem; line-height: 1; border: 1px solid var(--rule); transition: color var(--dur-2) var(--ease-default), border-color var(--dur-2) var(--ease-default), background var(--dur-2) var(--ease-default); }
 .quote-controls button:hover, .quote-controls button:focus-visible { color: var(--ink); border-color: var(--grey-400); background: var(--blue); outline: none; }
-.quote-controls { grid-template-columns: auto auto; column-gap: var(--space-4); }
+.quote-controls { grid-template-columns: auto auto; justify-content: center; column-gap: var(--space-4); }
 .quote-controls .quote-note { grid-column: 1 / -1; margin: var(--space-2) 0 0; font-family: var(--font-reading); font-style: italic; font-size: var(--step--1); color: var(--grey-600); text-align: center; max-width: 30rem; }
