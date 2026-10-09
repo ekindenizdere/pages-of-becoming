@@ -615,15 +615,15 @@
     {
       "author": "C. G. Jung",
       "work": "Memories, Dreams, Reflections",
-      "year": "1962",
-      "page": "165",
-      "text": "Nirdvandva, freedom from opposites, is the Orient’s remedy for this. I have not forgotten that. The pendulum of the mind oscillates between sense and nonsense, not between right and wrong.",
-      "note": "page as recorded; edition to be confirmed"
+      "year": "1963",
+      "page": "185",
+      "text": "Nirdvandva (freedom from opposites) is the Orient’s remedy for this. I have not forgotten that. The pendulum of the mind oscillates between sense and nonsense, not between right and wrong. The numinosum is dangerous because it lures men to extremes. I saw that a modest truth is regarded as the truth, and a minor mistake is equated with a fatal error. Tout passe: yesterday’s truth is today’s deception, and yesterday’s false inference may be tomorrow’s revelation.",
+      "note": "Vintage Books 1995, tr. R. and C. Winston; original German 1962, English 1963"
     },
     {
       "author": "C. G. Jung",
       "work": "Memories, Dreams, Reflections",
-      "year": "1962",
+      "year": "1963",
       "page": "405",
       "text": "A person should have a solid portion of solitude and not mistake it for loneliness. Solitude is for the soul what diet is for the body.",
       "show": false,
@@ -635,7 +635,7 @@
       "year": "2025",
       "page": "88",
       "text": "I have made up so many love stories, now I feel fictional.",
-      "note": "Penguin Archive edition; translator to be confirmed (Coleman Barks?)"
+      "note": "Penguin Classics (Penguin Archive) 2025; translator to be confirmed"
     },
     {
       "author": "Rumi",
@@ -643,7 +643,7 @@
       "year": "2025",
       "page": "90",
       "text": "The Absolute works with nothing. The workshop, the materials, are what does not exist.",
-      "note": "Penguin Archive edition; translator to be confirmed (Coleman Barks?)"
+      "note": "Penguin Classics (Penguin Archive) 2025; translator to be confirmed"
     },
     {
       "author": "T. S. Eliot",
@@ -665,6 +665,53 @@
       "year": "c. 4th c. BC",
       "text": "Nothing in the world is as soft and yielding as water. Yet for dissolving the hard and inflexible, nothing can surpass it.",
       "note": "wording follows the Stephen Mitchell translation (1988); to be confirmed"
+    },
+    {
+      "author": "Rumi",
+      "work": "Where Everything Is Music, “Tending Two Shops”",
+      "year": "2025",
+      "page": "98–99",
+      "text": "Don’t run around this world looking for a hole to hide in… There are wild beasts in every cave… Live in the nowhere that you came from, even though you have an address here… You own two shops, and you run back and forth.",
+      "note": "excerpt with omissions; Penguin Classics 2025"
+    },
+    {
+      "author": "Rüdiger Safranski",
+      "work": "Wie viel Wahrheit braucht der Mensch?",
+      "year": "1990",
+      "page": "18",
+      "text": "Das eigene Selbst erhält eine neue Bedeutung … es ist ein diskontinuierliches Ereignisgeschehen, das man zulassen muss. Das Selbst gibt einem nicht Halt, es schickt einen auf die Reise ins Ungewisse.",
+      "note": "Piper; subtitle: Über das Denkbare und das Lebbare"
+    },
+    {
+      "author": "Rüdiger Safranski",
+      "work": "Wie viel Wahrheit braucht der Mensch?",
+      "year": "1990",
+      "page": "9",
+      "text": "Man muss also außer sich sein, um an sich selbst die Frage nach der eigenen Wahrheit richten zu können. Man will die Wahrheit über sich herausbekommen, um endlich in den Besitz seiner selbst zu gelangen. Man will bei sich selbst zu Hause sein. Die prekäre Situation der Wahrheitssuche ist die des Außerhalb. Man ist von sich getrennt, und das Trennende ist das Bewusstsein. Nicht das Sein, nur das Bewusstsein stellt Wahrheitsfragen. Weil das Bewusstsein trennt, wird es auch als Schmerz empfunden. Es raubt uns die unmittelbare Leichtigkeit des Seins.",
+      "note": "Piper"
+    },
+    {
+      "author": "Martin Heidegger",
+      "work": "Being and Time",
+      "year": "1927",
+      "page": "27",
+      "text": "In the analysis of Dasein, that entity which each of us is himself and which includes inquiring as one of the possibilities of its Being, is made the theme.",
+      "note": "tr. Macquarrie and Robinson, Harper & Row 1962"
+    },
+    {
+      "author": "Anaïs Nin",
+      "work": "Seduction of the Minotaur",
+      "year": "1961",
+      "page": "124",
+      "text": "We do not see things as they are, we see them as we are.",
+      "note": "Swallow Press"
+    },
+    {
+      "author": "Rainer Maria Rilke",
+      "work": "Letters to a Young Poet",
+      "year": "1903",
+      "text": "Be patient toward all that is unsolved in your heart and try to love the questions themselves.",
+      "note": "letter of 16 July 1903; tr. M. D. Herter Norton, Norton 1934"
     }
   ]
 }
