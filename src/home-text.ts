@@ -31,7 +31,7 @@ export const homeText: Record<Lang, HomeText> = {
       { author: 'Francisco J. Varela', text: 'Our current notions about evolution and brain will be as distant to our grandchildren as this animistic cosmology is to us today.', cite: '1987, p. 49' },
       { author: 'Howard H. Pattee', text: 'Since we are free to make our own syntactic rules we are also free to interpret inherently simple events as messages in our own elaborate symbolic systems, and indeed this is what has generated all mythologies and probably several sciences.', cite: '1977, p. 262' },
     ],
-    commonplace: { other: 'Other quotes', more: 'One more', enough: 'That’s four. The notebook is closed for today; go read a book. The quotes will keep.' },
+    commonplace: { other: 'Other quotes', more: 'One more', enough: 'You could also read a book.' },
   },
   de: {
     description: 'Essays über Philosophie, Kognitionswissenschaft und Wissenschaft von Ekin Deniz Dere.',
@@ -50,7 +50,7 @@ export const homeText: Record<Lang, HomeText> = {
       { author: 'Francisco J. Varela', text: 'Unsere heutigen Vorstellungen von Evolution und Gehirn werden unseren Enkeln so fern sein, wie uns heute diese animistische Kosmologie ist.', cite: '1987, S. 49' },
       { author: 'Howard H. Pattee', text: 'Da wir frei sind, unsere eigenen syntaktischen Regeln aufzustellen, steht es uns auch frei, an sich einfache Ereignisse als Botschaften in unseren eigenen ausgefeilten Symbolsystemen zu deuten, und eben das hat alle Mythologien und wahrscheinlich mehrere Wissenschaften hervorgebracht.', cite: '1977, S. 262' },
     ],
-    commonplace: { other: 'Andere Zitate', more: 'Eins mehr', enough: 'Das war das vierte Mal. Das Notizbuch ist für heute zu; geh ein Buch lesen. Die Zitate laufen nicht weg.' },
+    commonplace: { other: 'Andere Zitate', more: 'Eins mehr', enough: 'Du könntest auch ein Buch lesen.' },
   },
   tr: {
     description: 'Ekin Deniz Dere’den felsefe, bilişsel bilim ve bilim üzerine denemeler.',
@@ -69,6 +69,6 @@ export const homeText: Record<Lang, HomeText> = {
       { author: 'Francisco J. Varela', text: 'Evrim ve beyin hakkındaki bugünkü kavrayışlarımız torunlarımıza, bu animistik kozmolojinin bugün bize olduğu kadar uzak gelecek.', cite: '1987, s. 49' },
       { author: 'Howard H. Pattee', text: 'Kendi sözdizimsel kurallarımızı koymakta özgür olduğumuza göre, özünde basit olayları kendi karmaşık sembolik sistemlerimizde birer mesaj olarak yorumlamakta da özgürüz; bütün mitolojileri ve muhtemelen birkaç bilimi doğuran da tam olarak budur.', cite: '1977, s. 262' },
     ],
-    commonplace: { other: 'Başka alıntılar', more: 'Bir tane daha', enough: 'Dördüncü oldu. Defter bugünlük kapandı; git bir kitap oku. Alıntılar kaçmıyor.' },
+    commonplace: { other: 'Başka alıntılar', more: 'Bir tane daha', enough: 'Bir kitap da okuyabilirsin.' },
   },
 };
