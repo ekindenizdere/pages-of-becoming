@@ -1,0 +1,16 @@
+---
+// Placeholder home. The designed home page (prototype "C · Contents") replaces this.
+import Base from '../layouts/Base.astro';
+import PieceList from '../components/PieceList.astro';
+import { pieces } from '../lib';
+const all = await pieces();
+const published = all.filter((p) => p.data.status === 'published');
+const upcoming = all.filter((p) => p.data.status === 'upcoming');
+---
+<Base>
+  <h1 class="page-title">Pages <em>of</em> Becoming</h1>
+  <p class="label">( 01 ) Pages</p>
+  <PieceList items={published} showKind />
+  <p class="label" style="margin-top: var(--space-8)">( 02 ) Upcoming</p>
+  <PieceList items={upcoming} showKind />
+</Base>

@@ -1,0 +1,34 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { pieces, pieceUrl, url, kindLabel, minutes, type Piece } from '../../lib';
+
+export async function getStaticPaths() {
+  const all = await pieces();
+  return all
+    .filter((p) => p.data.status === 'published')
+    .map((p, _i, list) => {
+      const same = list.filter((q) => q.data.kind === p.data.kind);
+      const i = same.indexOf(p);
+      return { params: { slug: p.id }, props: { piece: p, prev: same[i - 1], next: same[i + 1] } };
+    });
+}
+interface Props { piece: Piece; prev?: Piece; next?: Piece }
+const { piece, prev, next } = Astro.props;
+const { Content } = await render(piece);
+const section = piece.data.kind === 'opinion' ? { href: url('opinion/'), label: 'Opinion Pieces' } : { href: url('articles/'), label: 'Articles' };
+---
+<Base title={piece.data.title} current={piece.data.kind === 'opinion' ? 'opinion' : 'articles'}>
+  <article>
+    <header class="piece-head">
+      <p class="label"><a href={section.href}>{kindLabel[piece.data.kind]}</a> · {minutes(piece)} min read</p>
+      <h1>{piece.data.title}</h1>
+      {piece.data.dedication && <p class="dedication">{piece.data.dedication}</p>}
+    </header>
+    <div class="prose"><Content /></div>
+  </article>
+  <nav class="piece-nav" aria-label="More pieces">
+    <span>{prev && <a href={pieceUrl(prev)}>← {prev.data.title}</a>}</span>
+    <span>{next ? <a href={pieceUrl(next)}>{next.data.title} →</a> : <a href={section.href}>All {section.label.toLowerCase()} →</a>}</span>
+  </nav>
+</Base>

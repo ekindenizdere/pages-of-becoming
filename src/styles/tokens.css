@@ -1,0 +1,96 @@
+/* Pages of Becoming — design tokens (draft 1, foundations lab).
+   These are the single source of truth that will later move into the Astro build. */
+:root {
+  /* Colour: monochrome rules, blue highlights (pink dropped 2026-09-28) */
+  --ink: #0b0b0c;
+  --paper: #fafaf7;
+  --white: #ffffff;
+  --grey-50: #f2f2ef;
+  --grey-100: #e8e8e5;
+  --grey-200: #d6d6d3;
+  --grey-300: #b9b9b6;
+  --grey-400: #9a9a97;
+  --grey-500: #7a7a78;
+  --grey-600: #5c5c5a;
+  --grey-700: #3f3f3e;
+  --grey-800: #252525;
+  --stone: #e2e2e0;           /* Runway-style relief ground */
+  --stone-shadow: #c9c9c6;
+  --blue: #c4f8fc;            /* the highlight */
+  --blue-soft: #e3fcfe;
+  --blue-deep: #0a6f79;       /* same hue, readable (≥ 4.5:1 on paper) */
+
+  --text: var(--ink);
+  --text-muted: var(--grey-600);
+  --text-faint: var(--grey-400);
+  --rule: color-mix(in srgb, var(--ink) 14%, transparent);
+  --glass: color-mix(in srgb, var(--paper) 55%, transparent);
+  --selection: var(--blue);
+  --focus: var(--blue-deep);
+
+  /* Type families */
+  --font-display: "PP Pangaia", "Instrument Serif", Georgia, serif;  /* Pangaia loads only once a web licence and a host exist; Instrument Serif (OFL) stands in */
+  --display-weight: 500;
+  --font-reading: "Newsreader", "Source Serif 4", Georgia, serif;
+  --font-sans: "Instrument Sans", system-ui, sans-serif;  /* chosen: Regular 400 · wdth 100 */
+  --ui-weight: 400;
+  --font-mono: "Instrument Sans", system-ui, sans-serif;  /* no mono: labels use Instrument Sans + tabular figures */
+
+  /* Type scale: fluid, ratio ≈ 1.333 (perfect fourth) between 360px and 1440px */
+  --step--2: clamp(0.70rem, 0.68rem + 0.08vw, 0.75rem);
+  --step--1: clamp(0.83rem, 0.80rem + 0.12vw, 0.9rem);
+  --step-0: clamp(1.06rem, 1.00rem + 0.25vw, 1.25rem);
+  --step-1: clamp(1.33rem, 1.22rem + 0.45vw, 1.66rem);
+  --step-2: clamp(1.77rem, 1.56rem + 0.85vw, 2.22rem);
+  --step-3: clamp(2.36rem, 1.98rem + 1.55vw, 2.96rem);
+  --step-4: clamp(3.15rem, 2.48rem + 2.8vw, 3.95rem);
+  --step-5: clamp(4.2rem, 3rem + 5vw, 6rem);
+  --step-hero: clamp(4.5rem, 1.5rem + 12vw, 13rem);
+
+  /* Space: 4px base, used in steps that double-ish */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+  --space-11: 12rem;
+
+  /* Grid */
+  --grid-columns: 12;
+  --grid-gutter: clamp(1rem, 0.6rem + 1.5vw, 2rem);
+  --grid-margin: clamp(1rem, 0.2rem + 3.5vw, 3.5rem);
+  --measure: 38rem;           /* reading line length ≈ 66 characters */
+
+  /* Lines */
+  --hairline: 0.5px;
+  --line: 1px;
+
+  /* Motion: four temperaments */
+  --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);    /* arrives and rests (expo out) */
+  --ease-breath: cubic-bezier(0.45, 0, 0.55, 1);   /* ambient, looping (sine in-out) */
+  --ease-ink: cubic-bezier(0.65, 0, 0.35, 1);      /* deliberate change of state */
+  --ease-turn: cubic-bezier(0.7, 0, 0.2, 1);       /* a page turning: slow start, quick, slow end */
+  /* chosen 2026-09-28: Turn for every change of state, Breath for anything ambient */
+  --ease-default: var(--ease-turn);
+  --ease-ambient: var(--ease-breath);
+  --dur-1: 160ms;
+  --dur-2: 320ms;
+  --dur-3: 640ms;
+  --dur-4: 1200ms;
+  --dur-5: 2400ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur-1: 0ms; --dur-2: 0ms; --dur-3: 0ms; --dur-4: 0ms; --dur-5: 0ms; }
+}
+
+/* labels and numbers: tabular figures so counters don't jitter */
+.num, [data-counter] { font-variant-numeric: tabular-nums; }
+
+::selection { background: var(--selection); color: var(--ink); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }

@@ -1,0 +1,26 @@
+---
+import { pieceUrl, minutes, kindLabel, type Piece } from '../lib';
+interface Props { items: Piece[]; showKind?: boolean }
+const { items, showKind = false } = Astro.props;
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+<ol class="pieces">
+  {items.map((p, i) => (
+    <li>
+      {p.data.status === 'published' ? (
+        <a href={pieceUrl(p)}>
+          <span class="label">( {pad(i + 1)} )</span>
+          <span class="t">{p.data.title}</span>
+          <span class="meta">{showKind && `${kindLabel[p.data.kind]} · `}{minutes(p)} min</span>
+        </a>
+      ) : (
+        <div class="soon" aria-label={`${p.data.title}, upcoming`}>
+          <span class="label">( {pad(i + 1)} )</span>
+          <span class="t">{p.data.title}</span>
+          <span class="meta">{showKind && `${kindLabel[p.data.kind]} · `}Upcoming</span>
+          {p.data.teaser && <p class="teaser">{p.data.teaser}</p>}
+        </div>
+      )}
+    </li>
+  ))}
+</ol>

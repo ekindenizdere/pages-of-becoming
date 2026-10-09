@@ -1,0 +1,10 @@
+---
+import Base from '../layouts/Base.astro';
+import PieceList from '../components/PieceList.astro';
+import { pieces } from '../lib';
+const items = await pieces('article');
+---
+<Base title="Articles" current="articles">
+  <h1 class="page-title">Articles</h1>
+  <PieceList items={items} />
+</Base>
