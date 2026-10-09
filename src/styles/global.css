@@ -18,13 +18,13 @@ a { color: inherit; }
 
 /* Frame */
 .site-head {
-  display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-5);
+  display: flex; justify-content: flex-start; align-items: baseline; gap: var(--space-5);
   flex-wrap: wrap; padding-block: var(--space-5);
   border-bottom: var(--line) solid var(--rule);
 }
 .brand { font-family: var(--font-display); font-weight: var(--display-weight); font-size: var(--step-1); text-decoration: none; line-height: 1; }
 .brand em { font-style: italic; font-size: 0.8em; }
-.site-nav { display: flex; gap: var(--space-5); font-size: var(--step--1); }
+.site-nav { display: flex; gap: var(--space-5); font-size: var(--step--1); margin-left: auto; }
 .site-nav a { text-decoration: none; color: var(--text-muted); }
 .site-nav a:hover, .site-nav a[aria-current="page"] { color: var(--ink); }
 .site-nav a[aria-current="page"] { background: linear-gradient(transparent 62%, var(--blue) 62%); }
@@ -93,11 +93,11 @@ a { color: inherit; }
 .translation-note a { color: var(--blue-deep); }
 
 /* Language switch (piece pages) */
-.lang-switch { display: flex; gap: var(--space-3); font-size: var(--step--1); margin-left: auto; }
-.site-nav + .lang-switch { margin-left: 0; }
-.lang-switch a { text-decoration: none; color: var(--text-muted); letter-spacing: 0.04em; }
-.lang-switch a:hover { color: var(--ink); }
-.lang-switch a[aria-current="true"] { color: var(--ink); background: linear-gradient(transparent 62%, var(--blue) 62%); }
+.lang-switch { display: flex; align-items: baseline; gap: var(--space-3); font-size: var(--step--1); padding-left: var(--space-5); position: relative; letter-spacing: 0.06em; font-variant-numeric: tabular-nums; }
+.lang-switch::before { content: ""; position: absolute; left: 0; top: 0.15em; bottom: 0.1em; width: 1px; background: var(--grey-300); }
+.lang-switch a { text-decoration: none; color: var(--grey-500); padding-bottom: 2px; background: linear-gradient(var(--blue-deep), var(--blue-deep)) left bottom / 0 1px no-repeat; transition: background-size var(--dur-3) var(--ease-default); }
+.lang-switch a:hover { color: var(--ink); background-size: 100% 1px; }
+.lang-switch a[aria-current="true"] { color: var(--ink); background-size: 100% 1px; }
 
 .skip { position: absolute; left: -9999px; }
 .skip:focus { left: var(--space-4); top: var(--space-4); background: var(--paper); padding: var(--space-2) var(--space-3); }

@@ -36,9 +36,13 @@
   }
 
 /* Language switch in the home header, and the machine-translation note under the bio */
-.site-top .lang-switch { display: inline-flex; gap: var(--space-3); margin-left: var(--space-3); }
-.site-top .lang-switch a { color: var(--text-muted); letter-spacing: 0.04em; }
+/* Languages: set apart from the sections by a 1px tick (the bottom-bar motif); the current one keeps the nav's drawn underline */
+.site-top .lang-switch { display: inline-flex; align-items: baseline; gap: var(--space-3); padding-left: var(--space-5); position: relative; font-variant-numeric: tabular-nums; letter-spacing: 0.06em; }
+.site-top .lang-switch::before { content: ""; position: absolute; left: 0; top: 0.15em; bottom: 0.1em; width: 1px; background: var(--grey-300); }
+.site-top .lang-switch a { color: var(--grey-500); }
+.site-top .lang-switch a:hover { color: var(--ink); }
 .site-top .lang-switch a[aria-current="true"] { color: var(--ink); background-size: 100% 1px; }
+@media (max-width: 700px) { .site-top .lang-switch { padding-left: 0; } .site-top .lang-switch::before { display: none; } }
 .page-left .translation-note { margin: 0 0 var(--space-4); color: var(--text-muted); }
 /* Left page: the subtitle as its title; portrait and links sit in a slim row; the bio reads like the question paragraph */
 .left-title { font-family: var(--font-display); font-weight: var(--display-weight); font-size: var(--step-3); line-height: 1.05; letter-spacing: -0.01em; margin: 0 0 var(--space-6); }
