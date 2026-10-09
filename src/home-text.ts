@@ -5,7 +5,7 @@ export type Lang = 'en' | 'de' | 'tr';
 type Quote = { author: string; text: string; cite: string };
 interface HomeText {
   description: string; language: string; opinion: string; articles: string;
-  sub: string; cornerTl: string; count: (pages: number, upcoming: number) => string; open: string;
+  sub: string;
   contents: string; portraitAlt: string; bio: string; note?: string;
   elsewhere: string; linkedin: string; forbes: string;
   question: string; inkA: string; inkB: string;
@@ -18,8 +18,6 @@ export const homeText: Record<Lang, HomeText> = {
     description: 'Essays on philosophy, cognitive science and science by Ekin Deniz Dere.',
     language: 'Language', opinion: 'Opinion Pieces', articles: 'Articles',
     sub: 'The usual confusion but framed professionally',
-    cornerTl: 'Writing as a form of thinking.',
-    count: (p, u) => `${p} pages · ${u} becoming`, open: '( open )',
     contents: 'Contents', portraitAlt: 'Portrait of Ekin Deniz Dere',
     bio: 'I’m Ekin Deniz Dere, a cognitive scientist and science communicator mainly interested in how people and artificial systems make sense of the worlds they create through various forms of interactivity.',
     elsewhere: 'Ekin elsewhere', linkedin: 'Ekin Deniz Dere on LinkedIn', forbes: 'Ekin Deniz Dere’s articles on Forbes Austria',
@@ -37,8 +35,6 @@ export const homeText: Record<Lang, HomeText> = {
     description: 'Essays über Philosophie, Kognitionswissenschaft und Wissenschaft von Ekin Deniz Dere.',
     language: 'Sprache', opinion: 'Meinungsbeiträge', articles: 'Artikel',
     sub: 'Die übliche Verwirrung, nur professionell gerahmt',
-    cornerTl: 'Schreiben als eine Form des Denkens.',
-    count: (p, u) => `${p} Seiten · ${u} im Werden`, open: '( öffnen )',
     contents: 'Inhalt', portraitAlt: 'Porträt von Ekin Deniz Dere',
     bio: 'Ich bin Ekin Deniz Dere, Kognitionswissenschaftlerin und Wissenschaftskommunikatorin. Mich interessiert vor allem, wie Menschen und künstliche Systeme den Welten Sinn geben, die sie durch verschiedene Formen der Interaktivität erschaffen.',
     note: 'Automatisch übersetzt. Das Original ist auf Englisch.',
@@ -57,8 +53,6 @@ export const homeText: Record<Lang, HomeText> = {
     description: 'Ekin Deniz Dere’den felsefe, bilişsel bilim ve bilim üzerine denemeler.',
     language: 'Dil', opinion: 'Görüş Yazıları', articles: 'Makaleler',
     sub: 'Her zamanki karmaşa, ama profesyonelce çerçevelenmiş',
-    cornerTl: 'Düşünmenin bir biçimi olarak yazmak.',
-    count: (p, u) => `${p} sayfa · ${u} oluşta`, open: '( aç )',
     contents: 'İçindekiler', portraitAlt: 'Ekin Deniz Dere’nin portresi',
     bio: 'Ben Ekin Deniz Dere; bilişsel bilimci ve bilim iletişimcisiyim. Asıl ilgimi çeken, insanların ve yapay sistemlerin çeşitli etkileşim biçimleriyle yarattıkları dünyaları nasıl anlamlandırdığı.',
     note: 'Otomatik çeviridir. Özgün metin İngilizcedir.',

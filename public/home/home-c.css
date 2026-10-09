@@ -49,3 +49,5 @@
 .page-left .small-bio { grid-template-columns: 5.5rem auto; align-items: end; margin-bottom: var(--space-6); }
 .page-left .ink + .ink { margin-top: 0; }
 .page-left .small-bio .social { margin-left: 0; }
+/* Home header without the small mark (the hero carries the title): the links sit on the right */
+.home .site-top { justify-content: flex-end; }

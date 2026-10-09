@@ -69,7 +69,6 @@ const h = (path: string) => url(`home/${path}?v=${build}`);
 </head>
 <body class="home">
 <header class="site-top">
-  <a class="mark" href={langs.find((l) => l.lang === lang)!.href}>Pages <em>of</em> Becoming</a>
   <nav><a class="opt" href="#opinion">{t.opinion}</a><a class="opt" href="#articles">{t.articles}</a>
     <span class="lang-switch" role="group" aria-label={t.language}>{langs.map((l) => <a href={l.href} hreflang={l.lang} lang={l.lang} aria-current={l.lang === lang ? 'true' : undefined}>{l.lang.toUpperCase()}</a>)}</span>
   </nav>
@@ -80,16 +79,12 @@ const h = (path: string) => url(`home/${path}?v=${build}`);
     <h1 class="visually-hidden">Pages of Becoming: {t.sub}</h1>
     <div class="hero-bg"></div>
     <div class="hero-title" aria-hidden="true"><span class="line l1">Pages<span class="of">of</span></span><span class="line l2"><span class="hero-becoming"></span></span></div>
-    <span class="hero-corner tl">{t.cornerTl}</span>
-    <span class="hero-corner tr">{t.count(published.length, upcoming.length)}</span>
-    <span class="hero-corner br">{t.open}</span>
   </section>
 
   <section class="lab-section wrap" data-name={t.contents} id="contents">
     <div class="spread">
       <div class="page page-left">
         <div class="inner" data-sticky>
-          <h2 class="left-title">{t.sub}</h2>
           <div class="small-bio" id="ekin">
             <img class="portrait" src={url('images/ekin-portrait.jpg')} alt={t.portraitAlt}>
             <div>
@@ -105,6 +100,7 @@ const h = (path: string) => url(`home/${path}?v=${build}`);
               </div>
             </div>
           </div>
+          <h2 class="left-title">{t.sub}</h2>
           {t.note && <p class="label translation-note">{t.note}</p>}
           <p class="ink" data-ink>{t.bio}</p>
           <p class="ink" data-ink>{t.inkA} <mark class="hl">{t.inkB}</mark></p>
