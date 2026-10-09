@@ -78,7 +78,6 @@ const h = (path: string) => url(`home/${path}`);
     <h1 class="visually-hidden">Pages of Becoming: {t.sub}</h1>
     <div class="hero-bg"></div>
     <div class="hero-title" aria-hidden="true"><span class="line l1">Pages<span class="of">of</span></span><span class="line l2"><span class="hero-becoming"></span></span></div>
-    <p class="hero-sub">{t.sub}</p>
     <span class="hero-corner tl">{t.cornerTl}</span>
     <span class="hero-corner tr">{t.count(published.length, upcoming.length)}</span>
     <span class="hero-corner br">{t.open}</span>
@@ -88,11 +87,10 @@ const h = (path: string) => url(`home/${path}`);
     <div class="spread">
       <div class="page page-left">
         <div class="inner" data-sticky>
+          <h2 class="left-title">{t.sub}</h2>
           <div class="small-bio" id="ekin">
             <img class="portrait" src={url('images/ekin-portrait.jpg')} alt={t.portraitAlt}>
             <div>
-              <p class="bio">{t.bio}</p>
-              {t.note && <p class="label translation-note">{t.note}</p>}
               <div class="bio-links">
               <nav class="social" aria-label={t.elsewhere}>
               <a href="https://www.linkedin.com/in/ekin-deniz-dere-70929b154" target="_blank" rel="noopener noreferrer" aria-label={t.linkedin}>
@@ -105,14 +103,15 @@ const h = (path: string) => url(`home/${path}`);
               </div>
             </div>
           </div>
-          <span class="label q-label">( i ) {t.question}</span>
+          {t.note && <p class="label translation-note">{t.note}</p>}
+          <p class="ink" data-ink>{t.bio}</p>
           <p class="ink" data-ink>{t.inkA} <mark class="hl">{t.inkB}</mark></p>
           <div class="planes-stage" data-planes="quiet"></div>
           <span class="folio">— 1 —</span>
         </div>
       </div>
       <div class="page page-right">
-        <span class="label">( ii ) {t.contents}</span>
+        <span class="label">{t.contents}</span>
         <div class="part" id="opinion">
           <div class="title-stage" data-cap="shared" data-config={t.opinion} role="img" aria-label={t.opinion}></div>
           <div class="toc" data-list="opinion" data-style="contents"></div>

@@ -39,4 +39,8 @@
 .site-top .lang-switch { display: inline-flex; gap: var(--space-3); margin-left: var(--space-3); }
 .site-top .lang-switch a { color: var(--text-muted); letter-spacing: 0.04em; }
 .site-top .lang-switch a[aria-current="true"] { color: var(--ink); background-size: 100% 1px; }
-.small-bio .translation-note { margin: 0.4rem 0 0; color: var(--text-muted); }
+.page-left .translation-note { margin: 0 0 var(--space-4); color: var(--text-muted); }
+/* Left page: the subtitle as its title; portrait and links sit in a slim row; the bio reads like the question paragraph */
+.left-title { font-family: var(--font-display); font-weight: var(--display-weight); font-size: var(--step-3); line-height: 1.05; letter-spacing: -0.01em; margin: 0 0 var(--space-6); }
+.page-left .small-bio { grid-template-columns: 5.5rem auto; align-items: end; margin-bottom: var(--space-6); }
+.page-left .ink + .ink { margin-top: 0; }
