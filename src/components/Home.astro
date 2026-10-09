@@ -46,7 +46,9 @@ const data = {
 
 const description = t.description;
 const langs = (['en', 'de', 'tr'] as const).map((l) => ({ lang: l, href: url(l === 'en' ? '' : `${l}/`) }));
-const h = (path: string) => url(`home/${path}`);
+// Build stamp on the home scripts and styles, so every publish reaches visitors without a stale cache.
+const build = Date.now().toString(36);
+const h = (path: string) => url(`home/${path}?v=${build}`);
 ---
 <!doctype html>
 <html lang={lang}>
