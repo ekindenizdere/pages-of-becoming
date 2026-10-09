@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import { url } from '../lib';
 
-interface Props { title?: string; description?: string; current?: 'opinion' | 'articles'; lang?: string; noindex?: boolean; langs?: { lang: string; href: string }[] }
+interface Props { title?: string; description?: string; current?: 'opinion' | 'articles' | 'about'; lang?: string; noindex?: boolean; langs?: { lang: string; href: string }[] }
 const { title, description = 'Essays on philosophy, cognitive science and science by Ekin Deniz Dere.', current, lang = 'en', noindex = false, langs = [] } = Astro.props;
 const langName: Record<string, string> = { en: 'English', de: 'Deutsch', tr: 'Türkçe' };
 const fullTitle = title ? `${title} · Pages of Becoming` : 'Pages of Becoming';
@@ -13,6 +13,7 @@ const home = url(L === 'en' ? '' : `${L}/`);
 const nav = [
   { key: 'opinion', href: L === 'en' ? url('opinion/') : `${home}#opinion`, label: homeText[L].opinion },
   { key: 'articles', href: L === 'en' ? url('articles/') : `${home}#articles`, label: homeText[L].articles },
+  { key: 'about', href: `${home}about/`, label: homeText[L].about },
 ];
 ---
 <!doctype html>

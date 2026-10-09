@@ -4,7 +4,7 @@ export type Lang = 'en' | 'de' | 'tr';
 
 type Quote = { author: string; text: string; cite: string };
 interface HomeText {
-  description: string; language: string; opinion: string; articles: string;
+  description: string; language: string; opinion: string; articles: string; about: string;
   sub: string;
   contents: string; portraitAlt: string; bio: string; note?: string;
   elsewhere: string; linkedin: string; forbes: string;
@@ -16,7 +16,7 @@ interface HomeText {
 export const homeText: Record<Lang, HomeText> = {
   en: {
     description: 'Essays on philosophy, cognitive science and science by Ekin Deniz Dere.',
-    language: 'Language', opinion: 'Opinion Pieces', articles: 'Articles',
+    language: 'Language', opinion: 'Opinion Pieces', articles: 'Articles', about: 'About',
     sub: 'The usual confusion but framed professionally',
     contents: 'Contents', portraitAlt: 'Portrait of Ekin Deniz Dere',
     bio: 'I’m Ekin Deniz Dere, a cognitive scientist and science communicator mainly interested in how people and artificial systems make sense of the worlds they create through various forms of interactivity.',
@@ -33,7 +33,7 @@ export const homeText: Record<Lang, HomeText> = {
   },
   de: {
     description: 'Essays über Philosophie, Kognitionswissenschaft und Wissenschaft von Ekin Deniz Dere.',
-    language: 'Sprache', opinion: 'Meinungsbeiträge', articles: 'Artikel',
+    language: 'Sprache', opinion: 'Meinungsbeiträge', articles: 'Artikel', about: 'Über',
     sub: 'Die übliche Verwirrung, nur professionell gerahmt',
     contents: 'Inhalt', portraitAlt: 'Porträt von Ekin Deniz Dere',
     bio: 'Ich bin Ekin Deniz Dere, Kognitionswissenschaftlerin und Wissenschaftskommunikatorin. Mich interessiert vor allem, wie Menschen und künstliche Systeme den Welten Sinn geben, die sie durch verschiedene Formen der Interaktivität erschaffen.',
@@ -51,7 +51,7 @@ export const homeText: Record<Lang, HomeText> = {
   },
   tr: {
     description: 'Ekin Deniz Dere’den felsefe, bilişsel bilim ve bilim üzerine denemeler.',
-    language: 'Dil', opinion: 'Görüş Yazıları', articles: 'Makaleler',
+    language: 'Dil', opinion: 'Görüş Yazıları', articles: 'Makaleler', about: 'Hakkında',
     sub: 'Her zamanki karmaşa, ama profesyonelce çerçevelenmiş',
     contents: 'İçindekiler', portraitAlt: 'Ekin Deniz Dere’nin portresi',
     bio: 'Ben Ekin Deniz Dere; bilişsel bilimci ve bilim iletişimcisiyim. Asıl ilgimi çeken, insanların ve yapay sistemlerin çeşitli etkileşim biçimleriyle yarattıkları dünyaları nasıl anlamlandırdığı.',
