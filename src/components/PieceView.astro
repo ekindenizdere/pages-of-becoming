@@ -11,10 +11,10 @@ import '../styles/piece.css';
 
 interface Neighbour { title: string; href: string }
 interface Props {
-  lang: Lang; slug: string; kind: 'opinion' | 'article' | 'story'; title: string; dedication?: string;
+  lang: Lang; slug: string; kind: 'opinion' | 'article' | 'story'; title: string; dedication?: string; series?: string; chapter?: number;
   langs: { lang: string; href: string }[]; prev?: Neighbour; next?: Neighbour; section: { href: string; label: string };
 }
-const { lang, slug, kind, title, dedication, langs, prev, next, section } = Astro.props;
+const { lang, slug, kind, title, dedication, series, chapter, langs, prev, next, section } = Astro.props;
 const t = pieceText[lang];
 const prefix = lang === 'en' ? '' : `${lang}/`;
 // everything the page's script needs, in this language
@@ -26,6 +26,8 @@ const client = {
   text: { alsoIn: t.alsoIn, onlyHere: t.onlyHere, openMap: t.openMap, close: t.close, note: t.note },
   ety: Object.fromEntries(ETYMOLOGY.map((e) => [e.key, e.cards[lang] ?? e.cards.en])),
 };
+const chapterWord = { en: 'Chapter', de: 'Kapitel', tr: 'Bölüm' }[lang];
+const seriesLine = series ? (chapter ? `${series}, ${chapterWord} ${chapter}` : series) : undefined;
 const words = title.split(' ');
 // Configuration opening: each letter starts from its own scattered place (steady pseudo-random, the same on every visit)
 let ci = 0;
@@ -47,6 +49,7 @@ const scatter = () => { const i = ci++; return `--i:${i};--dx:${(r(i, 1) * 1.6).
       <h1 aria-label={title}><span aria-hidden="true">{words.map((w, i) => (
         <Fragment><span class="w">{[...w].map((c) => <span class="ch" style={scatter()}>{c}</span>)}</span>{i < words.length - 1 ? ' ' : ''}</Fragment>
       ))}</span></h1>
+      {seriesLine && <p class="dedication">{seriesLine}</p>}
       {dedication && <p class="dedication">{dedication}</p>}
       {t.auto && <p class="tnote">{t.auto[0]}<a href={url(`pieces/${slug}/`)} hreflang="en">{t.auto[1]}</a>{t.auto[2]}</p>}
     </header>

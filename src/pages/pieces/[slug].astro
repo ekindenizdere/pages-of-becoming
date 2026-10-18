@@ -21,7 +21,7 @@ const section = piece.data.kind === 'opinion' ? { href: url('opinion/'), label: 
   : piece.data.kind === 'story' ? { href: url('stories/'), label: 'Stories' } : { href: url('articles/'), label: 'Articles' };
 const n = (p?: Piece) => (p ? { title: p.data.title, href: pieceUrl(p) } : undefined);
 ---
-<PieceView lang="en" slug={piece.id} kind={piece.data.kind} title={piece.data.title} dedication={piece.data.dedication}
+<PieceView lang="en" slug={piece.id} kind={piece.data.kind} title={piece.data.title} dedication={piece.data.dedication} series={piece.data.series} chapter={piece.data.chapter}
   langs={langs} prev={n(prev)} next={n(next)} section={section}>
   <Content />
 </PieceView>

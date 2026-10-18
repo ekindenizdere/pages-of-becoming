@@ -175,7 +175,7 @@ function load() {
       texts[lang] = body.replace(/^\[\^\d+\]:\s*/gm, '').replace(/\[\^\d+\]/g, '');
     }
     return { slug, kind: meta.kind, status: meta.status, order: Number(meta.order), titles, texts };
-  }).filter((p) => p.status === 'published').sort((a, b) => (a.kind + a.order).localeCompare(b.kind + b.order));
+  }).filter((p) => p.status === 'published' && p.kind !== 'story').sort((a, b) => (a.kind + a.order).localeCompare(b.kind + b.order));
 
   const strip = (t) => IDIOMS.reduce((s, rx) => s.replace(rx, ' '), t);
   const find = (piece, lang, rx) => {

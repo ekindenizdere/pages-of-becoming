@@ -109,6 +109,9 @@ export default function rehypePiece() {
     // editorial italics: titles of works, foreign terms
     const terms = [...ITALIC_TERMS].sort((a, b) => b.length - a.length).map(escape).join('|');
     transform(tree, new RegExp(`(?<![\\p{L}\\p{N}_])(?:${terms})(?![\\p{L}\\p{N}_])`, 'gu'), (s) => el('em', { className: ['ed'] }, [text(s)]), { skip: ['ed'] });
+    // stories are told, not argued: no people, concepts or etymology cards, and they stay off the map
+    const story = file.data?.astro?.frontmatter?.kind === 'story';
+    if (!story) {
     // people: every one, as a tribute
     for (const [key, , rx] of PEOPLE) {
       transform(tree, compile(personPattern(rx, lang)), (s) => el('span', { className: ['c', 'c-person'], dataC: key }, [text(s)]), { skip: ['c'] });
@@ -126,6 +129,7 @@ export default function rehypePiece() {
         transform(tree, compile(escape(w)), (s) => el('span', { className: ['ety'], dataEty: key, tabIndex: 0, role: 'button', ariaHasPopup: 'dialog' }, [text(s)]),
           { skip: ['ety'], state: { done: false } });
       }
+    }
     }
     markFirst(tree);
     if (notes) markFirst(notes);

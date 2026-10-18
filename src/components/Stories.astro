@@ -15,7 +15,7 @@ const items = english.map((p) => {
   const x = translated.find((q) => q.data.source === p.id);
   const d = x?.data ?? p.data;
   return {
-    title: d.title, series: d.series, upcoming: p.data.status !== 'published',
+    title: d.title, series: d.series && d.chapter ? `${d.series}, ${({ en: 'Chapter', de: 'Kapitel', tr: 'Bölüm' } as const)[lang]} ${d.chapter}` : d.series, upcoming: p.data.status !== 'published',
     href: x && x.data.status === 'published' ? url(`${lang}/pieces/${p.id}/`) : pieceUrl(p),
   };
 });

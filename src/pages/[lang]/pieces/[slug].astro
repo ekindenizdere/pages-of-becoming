@@ -24,7 +24,7 @@ const section = piece.data.kind === 'opinion' ? { href: `${home}#opinion`, label
   : piece.data.kind === 'story' ? { href: `${home}stories/`, label: homeText[lang].stories } : { href: `${home}#articles`, label: homeText[lang].articles };
 const n = (p?: T) => (p ? { title: p.data.title, href: url(`${lang}/pieces/${p.data.source}/`) } : undefined);
 ---
-<PieceView lang={lang} slug={piece.data.source} kind={piece.data.kind} title={piece.data.title} dedication={piece.data.dedication}
+<PieceView lang={lang} slug={piece.data.source} kind={piece.data.kind} title={piece.data.title} dedication={piece.data.dedication} series={piece.data.series} chapter={piece.data.chapter}
   langs={langs} prev={n(prev)} next={n(next)} section={section}>
   <Content />
 </PieceView>
