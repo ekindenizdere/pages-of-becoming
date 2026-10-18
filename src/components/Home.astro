@@ -9,8 +9,9 @@ import { pieces, pieceUrl, minutes, url } from '../lib';
 import { homeText, type Lang } from '../home-text';
 import MobileMenu from './MobileMenu.astro';
 
-interface Props { lang: Lang }
-const { lang } = Astro.props;
+interface Props { lang: Lang; lab?: boolean }
+// `lab`: the preview at /lab/home/ with the Stories part (handwritten heading) for review; the live home stays as it is
+const { lang, lab = false } = Astro.props;
 const t = homeText[lang];
 
 const all = await pieces();
@@ -43,6 +44,7 @@ const toItem = (p: (typeof all)[number]) => {
 const data = {
   opinion: all.filter((p) => p.data.kind === 'opinion').map(toItem),
   articles: all.filter((p) => p.data.kind === 'article').map(toItem),
+  ...(lab ? { stories: all.filter((p) => p.data.kind === 'story').map(toItem) } : {}),
 };
 
 const description = t.description;
@@ -57,6 +59,7 @@ const h = (path: string) => url(`home/${path}?v=${build}`);
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pages of Becoming</title>
+  {lab && <meta name="robots" content="noindex" />}
   <meta name="description" content={description} />
   <meta property="og:title" content="Pages of Becoming" />
   <meta property="og:description" content={description} />
@@ -99,6 +102,12 @@ const h = (path: string) => url(`home/${path}?v=${build}`);
           <div class="title-stage" data-cap="shared" data-question={t.articles} role="img" aria-label={t.articles}></div>
           <div class="toc" data-list="articles" data-style="contents"></div>
         </div>
+        {lab && (
+          <div class="part" id="stories">
+            <div class="title-stage" data-cap="shared" data-pen={t.stories} role="img" aria-label={t.stories}></div>
+            <div class="toc" data-list="stories" data-style="contents"></div>
+          </div>
+        )}
       </div>
     </div>
   </section>
@@ -115,5 +124,6 @@ const h = (path: string) => url(`home/${path}?v=${build}`);
 <script is:inline src={h('motif.js')}></script>
 <script is:inline src={h('home.js')}></script>
 <script is:inline src={h('home-boot.js')}></script>
+{lab && <script is:inline src={h('pen.js')}></script>}
 </body>
 </html>

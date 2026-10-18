@@ -1,0 +1,128 @@
+---
+// Preview for review (not linked from the site): the story layout with its places.
+// The places are underlined where they first appear (the hairline of Eli's links), the margin that holds notes
+// in the essays holds the route instead, and the stop you are reading about carries the blue band.
+// On phones the route becomes one line under the title. A tap or click on a place opens a small card.
+import { getEntry, render } from 'astro:content';
+import PieceView from '../../components/PieceView.astro';
+import { url } from '../../lib';
+
+const piece = (await getEntry('pieces', 'spanish-adventure-1'))!;
+const { Content } = await render(piece);
+// in the order of the journey; `ahead`: named in the chapter, not reached yet
+const places = [
+  { key: 'bcn', name: 'Barcelona airport', match: ['Barcelona airport'], where: 'El Prat de Llobregat, Barcelona' },
+  { key: 'cas', name: 'Castelldefels', match: ['Castelldefels'], where: 'Baix Llobregat, Barcelona' },
+  { key: 'gin', name: 'Port Ginesta', match: ['Port Ginesta'], where: 'Marina at Les Botigues de Sitges' },
+  { key: 'gar', name: 'Garraf', match: ['Garraf'], where: 'Village of Sitges, below the Garraf Massif' },
+  { key: 'cal', name: 'Calafell', match: ['Calafell'], where: 'Baix Penedès, Tarragona' },
+  { key: 'alt', name: 'Altura', match: ['Altura'], where: 'Alto Palancia, Castellón', ahead: true },
+];
+const langs = [{ lang: 'en', href: url('lab/story/') }];
+---
+<PieceView lang="en" slug={piece.id} kind="story" title={piece.data.title} series={piece.data.series} chapter={piece.data.chapter}
+  langs={langs} section={{ href: url('stories/'), label: 'Stories' }}>
+  <Content />
+  <script is:inline type="application/json" id="lab-places" set:html={JSON.stringify({ places, route: 'Route', ahead: 'ahead', stop: 'Stop' })} />
+  <script is:inline>
+    // runs once the whole page is there (the margin comes after the text)
+    document.addEventListener('DOMContentLoaded', function () {
+      var cfg = JSON.parse(document.getElementById('lab-places').textContent);
+      var prose = document.querySelector('.prose'), reader = document.querySelector('.reader'), head = document.querySelector('.title-block');
+      var places = cfg.places, travelled = places.filter(function (p) { return !p.ahead; });
+      // 1. mark every mention; the first one of each place is underlined
+      var esc = function (s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); };
+      var rx = new RegExp('\\b(' + places.flatMap(function (p) { return p.match; }).sort(function (a, b) { return b.length - a.length; }).map(esc).join('|') + ')\\b', 'g');
+      var keyOf = function (s) { return places.find(function (p) { return p.match.indexOf(s) !== -1; }).key; };
+      var seen = {};
+      var walk = document.createTreeWalker(prose, NodeFilter.SHOW_TEXT, { acceptNode: function (n) { return /^(SCRIPT|STYLE)$/.test(n.parentNode.nodeName) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT; } }), nodes = [];
+      while (walk.nextNode()) nodes.push(walk.currentNode);
+      nodes.forEach(function (n) {
+        var t = n.nodeValue; rx.lastIndex = 0; if (!rx.test(t)) return; rx.lastIndex = 0;
+        var frag = document.createDocumentFragment(), last = 0, m;
+        while ((m = rx.exec(t))) {
+          frag.appendChild(document.createTextNode(t.slice(last, m.index)));
+          var k = keyOf(m[0]), s = document.createElement('span');
+          s.className = 'place' + (seen[k] ? '' : ' first'); s.dataset.place = k; s.textContent = m[0];
+          if (!seen[k]) { s.tabIndex = 0; s.setAttribute('role', 'button'); s.setAttribute('aria-haspopup', 'dialog'); }
+          seen[k] = true; frag.appendChild(s); last = m.index + m[0].length;
+        }
+        frag.appendChild(document.createTextNode(t.slice(last)));
+        n.parentNode.replaceChild(frag, n);
+      });
+      // 2. the route: in the margin on wide screens, one line under the title on phones
+      var li = function (p) { return '<li data-place="' + p.key + '"' + (p.ahead ? ' class="ahead"' : '') + '><span class="n">' + p.name + '</span>' + (p.ahead ? ' <span class="a">' + cfg.ahead + '</span>' : '') + '</li>'; };
+      var route = document.createElement('nav'); route.className = 'route'; route.setAttribute('aria-label', cfg.route);
+      route.innerHTML = '<p class="route-h">' + cfg.route + '</p><ol>' + places.map(li).join('') + '</ol>';
+      // its own cell in the margin column (the essays' notes script owns .margin)
+      var col = document.createElement('div'); col.className = 'route-col'; col.appendChild(route); reader.appendChild(col);
+      var line = document.createElement('p'); line.className = 'route-line';
+      line.innerHTML = places.map(function (p) { return '<span' + (p.ahead ? ' class="ahead"' : '') + '>' + p.name + '</span>'; }).join('<span class="arr" aria-hidden="true"> → </span>');
+      head.appendChild(line);
+      // 3. the stop you are reading about: the last travelled place whose mention passed the reading line
+      // looked up on every update: the essays' script may re-render the text after this runs
+      var isTravelled = function (s) { return travelled.some(function (p) { return p.key === s.dataset.place; }); };
+      var current = null;
+      var update = function () {
+        var y = innerHeight * 0.45, k = null;
+        document.querySelectorAll('.prose .place').forEach(function (s) { if (isTravelled(s) && s.getBoundingClientRect().top < y) k = s.dataset.place; });
+        if (k === current) return; current = k;
+        route.querySelectorAll('li').forEach(function (l) { l.classList.toggle('is-here', l.dataset.place === k); });
+      };
+      // listen in the capture phase so a scrolling container also counts; measure again once fonts and layout settle
+      document.addEventListener('scroll', update, { passive: true, capture: true }); addEventListener('resize', update);
+      addEventListener('load', update); document.fonts.ready.then(update);
+      // 4. hovering a place lights its stop; a click or tap opens a small card
+      var pop = document.createElement('div'); pop.className = 'pop is-side'; pop.setAttribute('role', 'dialog'); pop.hidden = true; document.body.appendChild(pop);
+      var light = function (k, on) { route.querySelectorAll('li[data-place="' + k + '"]').forEach(function (l) { l.classList.toggle('is-lit', on); }); };
+      prose.addEventListener('pointerover', function (e) { var s = e.target.closest('.place'); if (s) light(s.dataset.place, true); });
+      prose.addEventListener('pointerout', function (e) { var s = e.target.closest('.place'); if (s) light(s.dataset.place, false); });
+      var open = function (s) {
+        var p = places.find(function (x) { return x.key === s.dataset.place; }), i = travelled.indexOf(p);
+        pop.innerHTML = '<button class="pop-x" type="button" aria-label="Close">×</button><div class="pop-body"><p class="pl-name">' + p.name + '</p><p class="pl-where">' + p.where + '</p><p class="pl-stop">' + (p.ahead ? 'Ahead: the end of the journey' : cfg.stop + ' ' + (i + 1) + ' of ' + travelled.length) + '</p></div>';
+        var r = s.getBoundingClientRect(), phone = innerWidth <= 700;
+        // phones: a sheet from the bottom, as the essays' cards do; wider screens: beside the word
+        pop.className = 'pop ' + (phone ? 'is-sheet' : 'is-side');
+        pop.hidden = false;
+        if (phone) { pop.style.left = ''; pop.style.top = ''; }
+        else {
+          pop.style.left = Math.max(16, Math.min(r.left + scrollX, scrollX + document.documentElement.clientWidth - pop.offsetWidth - 16)) + 'px';
+          pop.style.top = (r.bottom + scrollY + 10) + 'px';
+        }
+        pop.querySelector('.pop-x').onclick = function () { pop.hidden = true; s.focus(); };
+      };
+      prose.addEventListener('click', function (e) { var s = e.target.closest('.place.first'); if (s) { e.preventDefault(); e.stopPropagation(); open(s); } });
+      prose.addEventListener('keydown', function (e) { var s = e.target.closest && e.target.closest('.place.first'); if (s && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); open(s); } });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') pop.hidden = true; });
+      document.addEventListener('pointerdown', function (e) { if (!pop.hidden && !pop.contains(e.target) && !e.target.closest('.place')) pop.hidden = true; });
+    });
+  </script>
+  <style is:global>
+    .place.first { cursor: pointer; text-decoration: underline; text-decoration-color: var(--blue-deep); text-decoration-thickness: 1px; text-underline-offset: 0.24em; transition: background var(--dur-2) var(--ease-default); }
+    .place.first:hover { background: linear-gradient(transparent 62%, var(--blue) 62%, var(--blue) 92%, transparent 92%); }
+    .place.first:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+    .route-col { grid-column: margin / end; grid-row: 2; position: relative; }
+    .route { position: sticky; top: 7rem; font-family: var(--font-sans); font-size: var(--step--1); color: var(--grey-600); }
+    .route-h { margin: 0 0 var(--space-3); letter-spacing: 0.02em; }
+    .route ol { list-style: none; margin: 0; padding: 0 0 0 var(--space-4); border-left: 1px solid var(--rule); }
+    .route li { position: relative; padding: var(--space-2) 0; line-height: 1.3; transition: color var(--dur-2) var(--ease-default); }
+    .route li::before { content: ""; position: absolute; left: calc(-1 * var(--space-4) - 3.5px); top: calc(var(--space-2) + 0.4em); width: 6px; height: 6px; border-radius: 50%; background: var(--paper); border: 1px solid var(--grey-400); }
+    .route li .n { padding: 0 0.1em; }
+    .route li.is-here, .route li.is-lit { color: var(--ink); }
+    .route li.is-here .n { background: linear-gradient(transparent 62%, var(--blue) 62%, var(--blue) 92%, transparent 92%); }
+    .route li.is-here::before { background: var(--blue-deep); border-color: var(--blue-deep); }
+    .route li.ahead::before { border-style: dashed; }
+    .route li .a { font-style: italic; color: var(--grey-500); }
+    .route-line { display: none; }
+    .pl-name { font-family: var(--font-display); font-weight: var(--display-weight); font-size: var(--step-1); color: var(--ink); margin: 0 0 var(--space-1); }
+    .pl-where { margin: 0; font-style: italic; }
+    .pl-stop { margin: var(--space-3) 0 0; font-family: var(--font-sans); color: var(--grey-600); }
+    /* where the margin folds away, the route becomes one line under the title */
+    @container page (max-width: 859px) {
+      .route-col { display: none; }
+      .route-line { display: block; margin: var(--space-4) 0 0; font-family: var(--font-sans); font-size: var(--step--1); line-height: 1.6; color: var(--grey-600); }
+      .route-line .ahead { font-style: italic; color: var(--grey-500); }
+      .route-line .arr { color: var(--grey-400); }
+    }
+  </style>
+</PieceView>
