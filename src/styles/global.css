@@ -18,6 +18,7 @@ a { color: inherit; }
 
 /* Frame */
 .site-head {
+  position: relative;
   display: flex; justify-content: flex-start; align-items: baseline; gap: var(--space-5);
   flex-wrap: wrap; padding-block: var(--space-5);
   border-bottom: var(--line) solid var(--rule);
@@ -78,3 +79,9 @@ a { color: inherit; }
 
 .skip { position: absolute; left: -9999px; }
 .skip:focus { left: var(--space-4); top: var(--space-4); background: var(--paper); padding: var(--space-2) var(--space-3); }
+
+/* Phone menu placement in the shared header: after the languages, or on the far right when a page has none */
+@media (max-width: 700px) {
+  .site-head > .mm-btn { margin-left: auto; }
+  .site-head .lang-switch + .mm-btn { margin-left: var(--space-4); }
+}

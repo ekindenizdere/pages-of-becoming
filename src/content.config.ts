@@ -7,11 +7,13 @@ const pieces = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/pieces' }),
   schema: z.object({
     title: z.string(),
-    kind: z.enum(['opinion', 'article']),
+    kind: z.enum(['opinion', 'article', 'story']),
     status: z.enum(['published', 'upcoming']),
     order: z.number(),            // position within its section
     dedication: z.string().optional(),
     teaser: z.string().optional(),  // shown for upcoming pieces
+    series: z.string().optional(),  // stories told in chapters: the story's title
+    chapter: z.number().optional(), // and the chapter's number
     date: z.coerce.date().optional(),
     keywords: z.array(z.string()).optional(),  // automatic: the words most particular to this piece (shown small, after the text)
   }),
@@ -22,13 +24,15 @@ const translations = defineCollection({
   loader: glob({ pattern: '{de,tr}/*.md', base: './translations' }),
   schema: z.object({
     title: z.string(),
-    kind: z.enum(['opinion', 'article']),
+    kind: z.enum(['opinion', 'article', 'story']),
     status: z.enum(['published', 'upcoming']),
     order: z.number(),
     lang: z.enum(['de', 'tr']),
     source: z.string(),
     dedication: z.string().optional(),
     teaser: z.string().optional(),
+    series: z.string().optional(),
+    chapter: z.number().optional(),
     keywords: z.array(z.string()).optional(),
   }),
 });

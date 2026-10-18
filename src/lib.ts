@@ -8,7 +8,10 @@ export const url = (path = '') =>
 
 export const pieceUrl = (p: Piece) => url(`pieces/${p.id}/`);
 
-export const kindLabel = { opinion: 'Opinion', article: 'Article' } as const;
+export const kindLabel = { opinion: 'Opinion', article: 'Article', story: 'Story' } as const;
+
+/** Where each kind lives: the key of its section page and menu entry. */
+export const sectionKey = { opinion: 'opinion', article: 'articles', story: 'stories' } as const;
 
 export async function pieces(kind?: Piece['data']['kind']) {
   const all = await getCollection('pieces', (p) => !kind || p.data.kind === kind);

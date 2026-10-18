@@ -2,17 +2,19 @@
 import '../styles/global.css';
 import { url } from '../lib';
 
-interface Props { title?: string; description?: string; current?: 'opinion' | 'articles' | 'about' | 'configurations'; lang?: string; noindex?: boolean; langs?: { lang: string; href: string }[] }
+interface Props { title?: string; description?: string; current?: 'opinion' | 'articles' | 'stories' | 'about' | 'configurations'; lang?: string; noindex?: boolean; langs?: { lang: string; href: string }[] }
 const { title, description = 'Essays on philosophy, cognitive science and science by Ekin Deniz Dere.', current, lang = 'en', noindex = false, langs = [] } = Astro.props;
 const langName: Record<string, string> = { en: 'English', de: 'Deutsch', tr: 'Türkçe' };
 const fullTitle = title ? `${title} · Pages of Becoming` : 'Pages of Becoming';
 import { homeText, type Lang } from '../home-text';
+import MobileMenu from '../components/MobileMenu.astro';
 const L = (['de', 'tr'].includes(lang) ? lang : 'en') as Lang;
 const home = url(L === 'en' ? '' : `${L}/`);
 // Translated pages point to the sections of their own home page; English keeps the section pages.
 const nav = [
   { key: 'opinion', href: L === 'en' ? url('opinion/') : `${home}#opinion`, label: homeText[L].opinion },
   { key: 'articles', href: L === 'en' ? url('articles/') : `${home}#articles`, label: homeText[L].articles },
+  { key: 'stories', href: `${home}stories/`, label: homeText[L].stories },
   { key: 'configurations', href: `${home}configurations/`, label: homeText[L].configurations },
   { key: 'about', href: `${home}about/`, label: homeText[L].about },
 ];
@@ -48,6 +50,7 @@ const nav = [
           ))}
         </nav>
       )}
+      <MobileMenu links={nav.map((n) => ({ href: n.href, label: n.label, current: current === n.key }))} menu={homeText[L].menu} close={homeText[L].close} />
     </header>
     <main id="main"><slot /></main>
     <footer class="site-foot">

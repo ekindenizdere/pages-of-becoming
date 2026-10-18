@@ -1,0 +1,49 @@
+---
+// Stories: the third section, beside Opinion Pieces and Articles. Chapters of one story share a `series` title
+// and carry a `chapter` number; the list shows the series under each chapter's title.
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { pieces, pieceUrl, url } from '../lib';
+import { homeText, type Lang } from '../home-text';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = homeText[lang];
+const english = await pieces('story');
+const translated = lang === 'en' ? [] : await getCollection('translations', (x) => x.data.lang === lang && x.data.kind === 'story');
+const items = english.map((p) => {
+  const x = translated.find((q) => q.data.source === p.id);
+  const d = x?.data ?? p.data;
+  return {
+    title: d.title, series: d.series, upcoming: p.data.status !== 'published',
+    href: x && x.data.status === 'published' ? url(`${lang}/pieces/${p.id}/`) : pieceUrl(p),
+  };
+});
+const langs = (['en', 'de', 'tr'] as const).map((l) => ({ lang: l, href: url(l === 'en' ? 'stories/' : `${l}/stories/`) }));
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+<Base title={t.stories} lang={lang} langs={langs} current="stories">
+  <h1 class="page-title">{t.stories}</h1>
+  {items.length === 0 ? (
+    <p class="stories-empty">{t.storiesEmpty}</p>
+  ) : (
+    <ol class="pieces">
+      {items.map((it, i) => (
+        <li>
+          {it.upcoming ? (
+            <div class="soon"><span class="label">( {pad(i + 1)} )</span><span class="t">{it.title}</span><span class="meta">{t.becoming}</span></div>
+          ) : (
+            <a href={it.href}><span class="label">( {pad(i + 1)} )</span><span class="t">{it.title}</span><span class="meta">{it.series}</span></a>
+          )}
+        </li>
+      ))}
+    </ol>
+  )}
+</Base>
+
+<style>
+  .stories-empty {
+    font-family: var(--font-reading); font-style: italic; font-size: var(--step-1); color: var(--grey-500);
+    margin: 0; padding-block: var(--space-5); border-top: var(--line) solid var(--rule); border-bottom: var(--line) solid var(--rule);
+  }
+</style>

@@ -6,6 +6,7 @@ import '../styles/tokens.css';
 import { getCollection } from 'astro:content';
 import { pieces, pieceUrl, minutes, url } from '../lib';
 import { homeText, type Lang } from '../home-text';
+import MobileMenu from './MobileMenu.astro';
 import quotesDb from '../data/quotes.json';
 // The commonplace: a random handful of the shorter entries is shown on each visit (picked in the browser).
 const quotes = quotesDb.quotes.filter((q) => q.show !== false && q.text.length <= 260);
@@ -74,9 +75,13 @@ const h = (path: string) => url(`home/${path}?v=${build}`);
 <body class="home about-page">
 <header class="site-top">
   <a class="mark" href={home}>Pages <em>of</em> Becoming</a>
-  <nav><a class="opt" href={`${home}#opinion`}>{t.opinion}</a><a class="opt" href={`${home}#articles`}>{t.articles}</a><a class="opt" href={langs.find((l) => l.lang === lang)!.href} aria-current="page">{t.about}</a>
+  <nav><a class="opt" href={`${home}#opinion`}>{t.opinion}</a><a class="opt" href={`${home}#articles`}>{t.articles}</a><a class="opt" href={`${home}stories/`}>{t.stories}</a><a class="opt" href={langs.find((l) => l.lang === lang)!.href} aria-current="page">{t.about}</a>
     <span class="lang-switch" role="group" aria-label={t.language}>{langs.map((l) => <a href={l.href} hreflang={l.lang} lang={l.lang} aria-current={l.lang === lang ? 'true' : undefined}>{l.lang.toUpperCase()}</a>)}</span>
   </nav>
+  <MobileMenu edge menu={t.menu} close={t.close} links={[
+    { href: `${home}#opinion`, label: t.opinion }, { href: `${home}#articles`, label: t.articles },
+    { href: `${home}stories/`, label: t.stories }, { href: langs.find((l) => l.lang === lang)!.href, label: t.about, current: true },
+  ]} />
 </header>
 
 <main class="lab-main">

@@ -17,7 +17,8 @@ interface Props { piece: Piece; prev?: Piece; next?: Piece }
 const { piece, prev, next } = Astro.props;
 const { Content } = await render(piece);
 const langs = await languageLinks(piece.id);
-const section = piece.data.kind === 'opinion' ? { href: url('opinion/'), label: 'Opinion Pieces' } : { href: url('articles/'), label: 'Articles' };
+const section = piece.data.kind === 'opinion' ? { href: url('opinion/'), label: 'Opinion Pieces' }
+  : piece.data.kind === 'story' ? { href: url('stories/'), label: 'Stories' } : { href: url('articles/'), label: 'Articles' };
 const n = (p?: Piece) => (p ? { title: p.data.title, href: pieceUrl(p) } : undefined);
 ---
 <PieceView lang="en" slug={piece.id} kind={piece.data.kind} title={piece.data.title} dedication={piece.data.dedication}

@@ -7,6 +7,7 @@ import '../styles/tokens.css';
 import { getCollection } from 'astro:content';
 import { pieces, pieceUrl, minutes, url } from '../lib';
 import { homeText, type Lang } from '../home-text';
+import MobileMenu from './MobileMenu.astro';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -69,9 +70,14 @@ const h = (path: string) => url(`home/${path}?v=${build}`);
 </head>
 <body class="home">
 <header class="site-top">
-  <nav><a class="opt" href="#opinion">{t.opinion}</a><a class="opt" href="#articles">{t.articles}</a><a class="opt" href={`${langs.find((l) => l.lang === lang)!.href}about/`}>{t.about}</a>
+  <nav><a class="opt" href="#opinion">{t.opinion}</a><a class="opt" href="#articles">{t.articles}</a><a class="opt" href={`${langs.find((l) => l.lang === lang)!.href}stories/`}>{t.stories}</a><a class="opt" href={`${langs.find((l) => l.lang === lang)!.href}about/`}>{t.about}</a>
     <span class="lang-switch" role="group" aria-label={t.language}>{langs.map((l) => <a href={l.href} hreflang={l.lang} lang={l.lang} aria-current={l.lang === lang ? 'true' : undefined}>{l.lang.toUpperCase()}</a>)}</span>
   </nav>
+  <MobileMenu edge menu={t.menu} close={t.close} links={[
+    { href: '#opinion', label: t.opinion }, { href: '#articles', label: t.articles },
+    { href: `${langs.find((l) => l.lang === lang)!.href}stories/`, label: t.stories },
+    { href: `${langs.find((l) => l.lang === lang)!.href}about/`, label: t.about },
+  ]} />
 </header>
 
 <main class="lab-main">

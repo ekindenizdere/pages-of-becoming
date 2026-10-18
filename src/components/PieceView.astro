@@ -11,7 +11,7 @@ import '../styles/piece.css';
 
 interface Neighbour { title: string; href: string }
 interface Props {
-  lang: Lang; slug: string; kind: 'opinion' | 'article'; title: string; dedication?: string;
+  lang: Lang; slug: string; kind: 'opinion' | 'article' | 'story'; title: string; dedication?: string;
   langs: { lang: string; href: string }[]; prev?: Neighbour; next?: Neighbour; section: { href: string; label: string };
 }
 const { lang, slug, kind, title, dedication, langs, prev, next, section } = Astro.props;
@@ -32,7 +32,7 @@ let ci = 0;
 const r = (i: number, n: number) => (Math.sin(i * 12.9898 + n * 78.233) * 43758.5453) % 1;
 const scatter = () => { const i = ci++; return `--i:${i};--dx:${(r(i, 1) * 1.6).toFixed(2)}em;--dy:${(r(i, 2) * 1.1).toFixed(2)}em;--dr:${(r(i, 3) * 40).toFixed(0)}deg`; };
 ---
-<Base title={title} lang={lang} langs={langs} current={kind === 'opinion' ? 'opinion' : 'articles'}>
+<Base title={title} lang={lang} langs={langs} current={kind === 'opinion' ? 'opinion' : kind === 'story' ? 'stories' : 'articles'}>
   <div class="progress-top" aria-hidden="true"><i></i></div>
   <article class="reader" lang={lang}>
     <aside class="rail" aria-hidden="true"></aside>
