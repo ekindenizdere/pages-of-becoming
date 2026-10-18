@@ -8,6 +8,7 @@ import { pieceText } from '../piece-text';
 import { ETYMOLOGY } from '../lib/configurations.mjs';
 import type { Lang } from '../home-text';
 import '../styles/piece.css';
+import '../styles/story.css';
 
 interface Neighbour { title: string; href: string }
 interface Props {
@@ -28,6 +29,13 @@ const client = {
 };
 const chapterWord = { en: 'Chapter', de: 'Kapitel', tr: 'Bölüm' }[lang];
 const seriesLine = series ? (chapter ? `${series}, ${chapterWord} ${chapter}` : series) : undefined;
+// stories: their places and journey (src/data/stories/<story>.json), in this language
+const storyFiles = import.meta.glob('../data/stories/*.json', { eager: true, import: 'default' }) as Record<string, any>;
+const storyData = kind === 'story' ? storyFiles[`../data/stories/${slug.replace(/-\d+$/, '')}.json`] : undefined;
+const storyClient = storyData && {
+  chapter: chapter ?? 1, geo: storyData.geo, t: { ...t.story, close: t.close },
+  places: storyData.places.map((p: any) => ({ key: p.key, stop: p.stop, arrive: p.arrive ?? null, name: p.name[lang] ?? p.name.en, where: p.where[lang] ?? p.where.en, date: p.date ? (p.date[lang] ?? p.date.en) : undefined })),
+};
 const words = title.split(' ');
 // Configuration opening: each letter starts from its own scattered place (steady pseudo-random, the same on every visit)
 let ci = 0;
@@ -62,9 +70,12 @@ const scatter = () => { const i = ci++; return `--i:${i};--dx:${(r(i, 1) * 1.6).
     </nav>
   </article>
   <div class="pop" id="pop" role="dialog" aria-modal="false" tabindex="-1" hidden></div>
+ {storyClient && <script type="application/json" id="story-client" set:html={JSON.stringify(storyClient).replace(/</g, '\\u003c')} />}
   <script type="application/json" id="piece-client" set:html={JSON.stringify(client).replace(/</g, '\\u003c')} />
   <script>
     import { initPiece } from '../scripts/piece.js';
+    import { initStory } from '../scripts/story.js';
     initPiece();
+    initStory();
   </script>
 </Base>

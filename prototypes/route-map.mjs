@@ -6,7 +6,7 @@ import { feature, mesh } from 'topojson-client';
 import { geoMercator, geoPath } from 'd3-geo';
 const topo = JSON.parse(fs.readFileSync('node_modules/world-atlas/land-10m.json'));
 const land = feature(topo, topo.objects.land);
-const box = { type: 'Feature', geometry: { type: 'Polygon', coordinates: [[[-1.0, 39.55], [2.45, 39.55], [2.45, 41.55], [-1.0, 41.55], [-1.0, 39.55]].reverse()] } };
+const box = { type: 'Feature', geometry: { type: 'Polygon', coordinates: [[[-1.0, 39.3], [2.45, 39.3], [2.45, 41.55], [-1.0, 41.55], [-1.0, 39.3]].reverse()] } };
 const W = 600;
 const proj = geoMercator().fitWidth(W, box);
 const [[, y0], [, y1]] = geoPath(proj).bounds(box);
@@ -24,6 +24,8 @@ const legs = {
   'gar-cal': [[1.9005, 41.2505], [1.86, 41.245], [1.81, 41.237], [1.73, 41.222], [1.67, 41.205], [1.6, 41.195], [1.5685, 41.1875]],
   'cal-alt': [[1.5685, 41.1875], [1.25, 41.13], [1.06, 41.07], [0.8, 40.88], [0.58, 40.71], [0.47, 40.47], [0.2, 40.2], [-0.05, 39.99], [-0.25, 39.75], [-0.42, 39.82], [-0.511, 39.8295]],
 };
-const out = { w: W, h: H, land: path(mesh(topo, topo.objects.land)), stops: Object.fromEntries(Object.entries(stops).map(([k, v]) => [k, p(...v)])), legs: Object.fromEntries(Object.entries(legs).map(([k, v]) => [k, v.map((q) => p(...q))])) };
-fs.writeFileSync('route-map.json', JSON.stringify(out));
+// places named in the story that are not stops on the road
+const refs = { bar: [2.1734, 41.3851], val: [-0.3763, 39.4699] };
+const out = { w: W, h: H, refs: Object.fromEntries(Object.entries(refs).map(([k, v]) => [k, p(...v)])), land: path(mesh(topo, topo.objects.land)), stops: Object.fromEntries(Object.entries(stops).map(([k, v]) => [k, p(...v)])), legs: Object.fromEntries(Object.entries(legs).map(([k, v]) => [k, v.map((q) => p(...q))])) };
+fs.writeFileSync(process.argv[2] || 'route-map.json', JSON.stringify(out));
 console.log(W, H, out.land.length, out.stops);

@@ -9,9 +9,8 @@ import { pieces, pieceUrl, minutes, url } from '../lib';
 import { homeText, type Lang } from '../home-text';
 import MobileMenu from './MobileMenu.astro';
 
-interface Props { lang: Lang; lab?: boolean }
-// `lab`: the preview at /lab/home/ with the Stories part (handwritten heading) for review; the live home stays as it is
-const { lang, lab = false } = Astro.props;
+interface Props { lang: Lang }
+const { lang } = Astro.props;
 const t = homeText[lang];
 
 const all = await pieces();
@@ -26,7 +25,8 @@ const firstLine = (text = '') => {
     .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
     .replace(/\s+/g, ' ')
     .trim();
-  return plain.match(/^.+?[.?!…](?=\s|$)/)?.[0] ?? plain.slice(0, 120);
+  // a full stop right after a number is a German ordinal ("Am 12. Oktober"), not the end of the sentence
+  return plain.match(/^.+?(?<!\d)[.?!…](?=\s|$)/)?.[0] ?? plain.slice(0, 120);
 };
 // Translated title, first line and link where a translation exists; English otherwise.
 const translations = lang === 'en' ? [] : await getCollection('translations', (x) => x.data.lang === lang);
@@ -44,7 +44,7 @@ const toItem = (p: (typeof all)[number]) => {
 const data = {
   opinion: all.filter((p) => p.data.kind === 'opinion').map(toItem),
   articles: all.filter((p) => p.data.kind === 'article').map(toItem),
-  ...(lab ? { stories: all.filter((p) => p.data.kind === 'story').map(toItem) } : {}),
+  stories: all.filter((p) => p.data.kind === 'story').map(toItem),
 };
 
 const description = t.description;
@@ -59,7 +59,6 @@ const h = (path: string) => url(`home/${path}?v=${build}`);
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pages of Becoming</title>
-  {lab && <meta name="robots" content="noindex" />}
   <meta name="description" content={description} />
   <meta property="og:title" content="Pages of Becoming" />
   <meta property="og:description" content={description} />
@@ -73,12 +72,12 @@ const h = (path: string) => url(`home/${path}?v=${build}`);
 </head>
 <body class="home">
 <header class="site-top">
-  <nav><a class="opt" href="#opinion">{t.opinion}</a><a class="opt" href="#articles">{t.articles}</a><a class="opt" href={`${langs.find((l) => l.lang === lang)!.href}stories/`}>{t.stories}</a><a class="opt" href={`${langs.find((l) => l.lang === lang)!.href}configurations/`}>{t.configurations}</a><a class="opt" href={`${langs.find((l) => l.lang === lang)!.href}about/`}>{t.about}</a>
+  <nav><a class="opt" href="#opinion">{t.opinion}</a><a class="opt" href="#articles">{t.articles}</a><a class="opt" href="#stories">{t.stories}</a><a class="opt" href={`${langs.find((l) => l.lang === lang)!.href}configurations/`}>{t.configurations}</a><a class="opt" href={`${langs.find((l) => l.lang === lang)!.href}about/`}>{t.about}</a>
     <span class="lang-switch" role="group" aria-label={t.language}>{langs.map((l) => <a href={l.href} hreflang={l.lang} lang={l.lang} aria-current={l.lang === lang ? 'true' : undefined}>{l.lang.toUpperCase()}</a>)}</span>
   </nav>
   <MobileMenu edge menu={t.menu} close={t.close} links={[
     { href: '#opinion', label: t.opinion }, { href: '#articles', label: t.articles },
-    { href: `${langs.find((l) => l.lang === lang)!.href}stories/`, label: t.stories },
+    { href: '#stories', label: t.stories },
     { href: `${langs.find((l) => l.lang === lang)!.href}configurations/`, label: t.configurations },
     { href: `${langs.find((l) => l.lang === lang)!.href}about/`, label: t.about },
   ]} />
@@ -102,12 +101,10 @@ const h = (path: string) => url(`home/${path}?v=${build}`);
           <div class="title-stage" data-cap="shared" data-question={t.articles} role="img" aria-label={t.articles}></div>
           <div class="toc" data-list="articles" data-style="contents"></div>
         </div>
-        {lab && (
-          <div class="part" id="stories">
-            <div class="title-stage" data-cap="shared" data-pen={t.stories} role="img" aria-label={t.stories}></div>
-            <div class="toc" data-list="stories" data-style="contents"></div>
-          </div>
-        )}
+        <div class="part" id="stories">
+          <div class="title-stage" data-cap="shared" data-pen={t.stories} role="img" aria-label={t.stories}></div>
+          <div class="toc" data-list="stories" data-style="contents"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -124,6 +121,6 @@ const h = (path: string) => url(`home/${path}?v=${build}`);
 <script is:inline src={h('motif.js')}></script>
 <script is:inline src={h('home.js')}></script>
 <script is:inline src={h('home-boot.js')}></script>
-{lab && <script is:inline src={h('pen.js')}></script>}
+<script is:inline src={h('pen.js')}></script>
 </body>
 </html>

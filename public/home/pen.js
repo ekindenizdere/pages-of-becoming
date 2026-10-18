@@ -1,7 +1,7 @@
 // "Stories": the heading writes itself. Each letter of the display font is traced as one pen line,
 // outline by outline, the way the stories begin in a notebook; a small blue pen tip leads the line,
 // and each letter settles into solid ink once it is written. Hovering a letter writes it again.
-// Prototype (shown at /lab/home/), built from the same glyph outlines as Eli's other section titles.
+// Approved 2026-10-18; built from the same glyph outlines as Eli's other section titles.
 /* global GLYPHS, LAB */
 (() => {
   const NS = "http://www.w3.org/2000/svg";
@@ -20,6 +20,13 @@
 
   const penTitle = async (stage, text) => {
     const W = await GLYPHS.word(GLYPHS.DISPLAY, text), S = W.S, pad = 30;
+    // a letter the font cannot draw (e.g. "â" in the stand-in font): show the word as plain type instead of a box
+    if ([...text].some((c) => c.trim() && W.reg.charToGlyph(c).index === 0)) {
+      const capH = (W.reg.tables.os2.sCapHeight || W.reg.ascender * 0.7) / W.reg.unitsPerEm;
+      const set = () => { stage.style.fontSize = `${Math.min(46, stage.parentElement.clientWidth * 0.1) / capH}px`; };
+      Object.assign(stage.style, { fontFamily: "var(--font-display)", fontWeight: "var(--display-weight)", lineHeight: "1.1", color: "var(--ink)" });
+      stage.textContent = text; set(); new ResizeObserver(set).observe(stage.parentElement); return;
+    }
     const VW = W.width + pad * 2, VH = W.height;
     // the same cap height as the other section titles ("shared")
     if (stage.dataset.cap === "shared") {

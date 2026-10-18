@@ -6,6 +6,14 @@ import {
   compile, VOCAB, PEOPLE, personPattern, conceptFlags, conceptStats,
   ITALIC_TERMS, WORD_AS_WORD, NOTE_VOICES, ETYMOLOGY,
 } from '../lib/configurations.mjs';
+import fs from 'node:fs';
+import path from 'node:path';
+
+// Stories: their places (src/data/stories/<story>.json, named after the slug without the chapter number).
+const storyPlaces = (slug) => {
+  const file = path.join(process.cwd(), 'src/data/stories', `${slug.replace(/-\d+$/, '')}.json`);
+  return fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')).places : null;
+};
 
 const SKIP_TAGS = new Set(['a', 'sup', 'code', 'pre', 'script', 'style', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
 const UNSAFE_TAGS = new Set(['script', 'style', 'iframe', 'object', 'embed', 'form', 'input', 'button', 'textarea', 'select', 'link', 'meta', 'base']);
@@ -111,6 +119,15 @@ export default function rehypePiece() {
     transform(tree, new RegExp(`(?<![\\p{L}\\p{N}_])(?:${terms})(?![\\p{L}\\p{N}_])`, 'gu'), (s) => el('em', { className: ['ed'] }, [text(s)]), { skip: ['ed'] });
     // stories are told, not argued: no people, concepts or etymology cards, and they stay off the map
     const story = file.data?.astro?.frontmatter?.kind === 'story';
+    // stories: every mention of a place becomes clickable (the map and the place card live in src/scripts/story.js)
+    const places = story ? storyPlaces(slug) : null;
+    if (places) {
+      const byName = new Map(places.flatMap((p) => (p.match[lang] ?? []).map((m) => [m, p.key])));
+      const names = [...byName.keys()].sort((a, b) => b.length - a.length).map(escape).join('|');
+      // whole words only; "Valencia paella" is a dish, not the city
+      const rx = new RegExp(`(?<![\\p{L}\\p{N}])(?:${names})(?![\\p{L}\\p{N}])(?!\\s+paella)`, 'gu');
+      transform(tree, rx, (s) => el('span', { className: ['place'], dataPlace: byName.get(s), tabIndex: 0, role: 'button', ariaHasPopup: 'dialog' }, [text(s)]), { skip: ['place', 'qt', 'ed'] });
+    }
     if (!story) {
     // people: every one, as a tribute
     for (const [key, , rx] of PEOPLE) {
