@@ -133,8 +133,10 @@ export function initMap() {
   }));
   // drag to move; two fingers to zoom; ctrl + wheel (or a trackpad pinch) to zoom
   const pts = new Map();
-  let drag = null, pinch = null, movedPx = 0;
+  let drag = null, pinch = null, movedPx = 0, downNode = null;
   svg.addEventListener('pointerdown', (e) => {
+    // remember the node under the press: pointer capture below retargets the click to the svg itself
+    downNode = e.target.closest('.node');
     pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
     svg.setPointerCapture(e.pointerId);
     movedPx = 0;
@@ -203,15 +205,16 @@ export function initMap() {
   gNodes.addEventListener('focusout', () => { hovered = null; paint(); });
   svg.addEventListener('click', (e) => {
     if (movedPx > 6) return; // that was a drag
-    const g = e.target.closest('.node');
+    const g = e.target.closest('.node') || downNode;
+    downNode = null;
     if (!g) { select(null); return; }
     const n = byId.get(g.dataset.id);
-    if (n === selected && n.type === 'piece') { location.href = n.href; return; }
+    if (n.type === 'piece') { location.href = n.href; return; }  // a piece opens; concepts and people show their links
     select(n);
   });
   svg.addEventListener('keydown', (e) => {
     const g = e.target.closest?.('.node');
-    if (g && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); select(byId.get(g.dataset.id)); }
+    if (g && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); const n = byId.get(g.dataset.id); if (n.type === 'piece') location.href = n.href; else select(n); }
     if (e.key === 'Escape') select(null);
   });
   panel.addEventListener('click', (e) => { const b = e.target.closest('[data-id]'); if (b) select(byId.get(b.dataset.id)); });
@@ -240,7 +243,7 @@ export function initMap() {
     };
     list.innerHTML = col('piece', T.pieces) + col('concept', T.concepts) + col('person', T.people);
   }
-  list.addEventListener('click', (e) => { const b = e.target.closest('[data-id]'); if (b) select(byId.get(b.dataset.id), { centre: false }); });
+  list.addEventListener('click', (e) => { const b = e.target.closest('[data-id]'); if (!b) return; const n = byId.get(b.dataset.id); if (n.type === 'piece') { location.href = n.href; return; } select(n, { centre: false }); });
   const setView = (v) => {
     $$('[data-view]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.view === v)));
     list.hidden = v !== 'list';

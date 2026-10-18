@@ -58,7 +58,7 @@ export const homeText: Record<Lang, HomeText> = {
   tr: {
     description: 'Ekin Deniz Dere’den felsefe, bilişsel bilim ve bilim üzerine denemeler.',
     language: 'Dil', opinion: 'Görüş Yazıları', articles: 'Makaleler', about: 'Hakkında', configurations: 'Konfigürasyonlar',
-    stories: 'Öyküler', storiesEmpty: 'İlk öykü yazılıyor.', menu: 'Menü', close: 'Kapat',
+    stories: 'Hikâyeler', storiesEmpty: 'İlk hikâye yazılıyor.', menu: 'Menü', close: 'Kapat',
     sub: 'Her zamanki karmaşa, ama profesyonelce çerçevelenmiş',
     contents: 'İçindekiler', portraitAlt: 'Ekin Deniz Dere’nin portresi',
     bio: 'Ben Ekin Deniz Dere; bilişsel bilimci ve bilim iletişimcisiyim. Asıl ilgimi çeken, insanların ve yapay sistemlerin çeşitli etkileşim biçimleriyle yarattıkları dünyaları nasıl anlamlandırdığı.',
