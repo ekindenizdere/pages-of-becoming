@@ -4,10 +4,12 @@
 // dates, and a small car that follows the reading. It dances a little (the chapter's "dancing car"),
 // more under the pointer. The map follows the car along the leg being read; at the chapter's last stop
 // it zooms out to the road ahead. Where the margin folds away (phones), the journey sits under the title.
+// Drawings (figures in the story's data) take the place of the list of stops while their passage is read;
+// on phones they sit under their first paragraph. A click opens them larger.
 export function initStory() {
   const node = document.getElementById('story-client');
   if (!node) return;
-  const { places, geo: G, chapter, t: T } = JSON.parse(node.textContent);
+  const { places, geo: G, chapter, t: T, figures = [] } = JSON.parse(node.textContent);
   const prose = document.querySelector('.prose'), reader = document.querySelector('.reader'), head = document.querySelector('.title-block');
   const NS = 'http://www.w3.org/2000/svg';
   const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
@@ -65,7 +67,7 @@ export function initStory() {
     }
     const note = document.createElement('p'); note.className = 'j-note'; note.textContent = T.approx; box.appendChild(note);
     host.appendChild(box);
-    const J = { svg, done, dots, car, body, cap, list, vb: null, hover: 0 };
+    const J = { box, svg, done, dots, car, body, cap, list, vb: null, hover: 0 };
     car.addEventListener('pointerenter', () => { J.hover = 1; });
     car.addEventListener('pointerleave', () => { J.hover = 0; });
     journeys.push(J);
@@ -82,14 +84,44 @@ export function initStory() {
     for (let i = p.arrive.para; i < paras.length; i++) { const m = paras[i].querySelector(`.place[data-place="${p.key}"]`); if (m) return m; }
     return paras[p.arrive.para] || null;
   };
+  // drawings: one beside the journey (wide screens), one under its first paragraph (phones); the art is the
+  // same SVG file, set into the page so it takes the site's fonts and colours
+  const figs = figures.filter((f) => paras[f.from]).map((f) => {
+    const make = (cls) => {
+      const fig = document.createElement('figure'); fig.className = cls;
+      fig.innerHTML = `<div class="fig-l" aria-hidden="true"><span>${esc(T.before)}</span><span>${esc(T.after)}</span></div><div class="fig-art" role="img" aria-label="${esc(f.alt)}"></div>`;
+      return fig;
+    };
+    const side = make('j-fig'); side.tabIndex = 0; side.setAttribute('role', 'button'); side.setAttribute('aria-label', `${T.enlarge}: ${f.alt}`);
+    const box = journeys[0].box; box.insertBefore(side, journeys[0].list);
+    const inline = make('fig-inline'); paras[f.from].after(inline);
+    fetch(f.src).then((r) => (r.ok ? r.text() : Promise.reject())).then((svgText) => {
+      [side, inline].forEach((fig) => { fig.querySelector('.fig-art').innerHTML = svgText; });
+    }).catch(() => {
+      [side, inline].forEach((fig) => { fig.querySelector('.fig-art').innerHTML = `<img src="${esc(f.src)}" alt="">`; });
+    });
+    return { ...f, side };
+  });
+  let figOn = null;
+  const measureFig = () => {
+    const y = innerHeight * 0.45;
+    const on = figs.find((f) => paras[f.from].getBoundingClientRect().top <= y && paras[f.to].getBoundingClientRect().bottom >= y) || null;
+    if (on === figOn) return;
+    figOn = on;
+    journeys[0].box.classList.toggle('fig-on', !!on);
+    figs.forEach((f) => f.side.classList.toggle('is-on', f === on));
+  };
   let state = { leg: 0, f: 0, at: travelled[0]?.key, end: false };
   const measure = () => {
+    measureFig();
     const y = innerHeight * 0.45;
     const tops = travelled.map((p) => { const a = anchorOf(p); return a ? a.getBoundingClientRect().top : -Infinity; });
     let i = -1; tops.forEach((t, k) => { if (t <= y) i = k; });
     if (i < 0) { state = { leg: 0, f: 0, at: travelled[0].key, end: false }; return; }
     if (i >= travelled.length - 1) { state = { leg: travelled.length - 1, f: 0, at: travelled[i].key, end: true }; return; }
-    const f = Math.max(0, Math.min(1, (y - tops[i]) / (tops[i + 1] - tops[i])));
+    // a stop reached in an earlier chapter: the leg out of it starts where this chapter's text starts
+    const t0 = Number.isFinite(tops[i]) ? tops[i] : Math.min(prose.getBoundingClientRect().top, tops[i + 1]);
+    const f = Math.max(0, Math.min(1, (y - t0) / (tops[i + 1] - t0 || 1)));
     state = { leg: i, f, at: f > 0.5 ? travelled[i + 1].key : travelled[i].key, end: false };
   };
 
@@ -172,6 +204,25 @@ export function initStory() {
     pop.querySelector('.pop-x').onclick = close;
   };
   const close = () => { if (pop.hidden) return; pop.hidden = true; lit = null; if (from && from.focus) from.focus(); };
+  const openFig = (fig) => {
+    pop.setAttribute('aria-label', fig.querySelector('.fig-art').getAttribute('aria-label'));
+    pop.innerHTML = `<button class="pop-x" type="button" aria-label="${esc(T.close)}">×</button><figure class="fig-big">${fig.innerHTML}</figure>`;
+    const phone = innerWidth <= 700;
+    pop.className = `pop place-pop fig-pop ${phone ? 'is-sheet' : 'is-side'}`;
+    pop.hidden = false;
+    if (phone) { pop.style.left = ''; pop.style.top = ''; }
+    else {
+      const r = fig.getBoundingClientRect();
+      pop.style.left = `${Math.max(scrollX + 16, r.right + scrollX - pop.offsetWidth)}px`;
+      pop.style.top = `${Math.max(scrollY + 16, r.top + scrollY - 40)}px`;
+    }
+    from = fig; lit = null;
+    pop.querySelector('.pop-x').onclick = close;
+  };
+  figs.forEach((f) => {
+    f.side.addEventListener('click', (e) => { e.stopPropagation(); if (!pop.hidden && from === f.side) close(); else openFig(f.side); });
+    f.side.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openFig(f.side); } });
+  });
   const trigger = (e) => e.target.closest?.('.prose .place, .j-list .n, .j-stop');
   document.addEventListener('click', (e) => {
     const el = trigger(e); if (!el) return;
@@ -181,7 +232,7 @@ export function initStory() {
   }, true);
   prose.addEventListener('keydown', (e) => { const s = e.target.closest?.('.place'); if (s && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); open(s.dataset.place, s); } });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
-  document.addEventListener('pointerdown', (e) => { if (!pop.hidden && !pop.contains(e.target) && !trigger(e)) close(); });
+  document.addEventListener('pointerdown', (e) => { if (!pop.hidden && !pop.contains(e.target) && !trigger(e) && !e.target.closest?.('.j-fig')) close(); });
   // hovering a place lights it in the list and on the map
   prose.addEventListener('pointerover', (e) => { const s = e.target.closest('.place'); if (s && pop.hidden) lit = s.dataset.place; });
   prose.addEventListener('pointerout', (e) => { const s = e.target.closest('.place'); if (s && pop.hidden) lit = null; });

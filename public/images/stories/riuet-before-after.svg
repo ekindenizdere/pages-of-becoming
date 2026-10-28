@@ -1,30 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 700" role="img" aria-label="El Riuet de Coma-ruga, before and after">
-<style>.ser{font-family:"Instrument Serif",Georgia,serif;fill:#0b0b0c}.ln{fill:none;stroke:#0b0b0c;stroke-width:.75}.hl{fill:none;stroke:#b9b9b6;stroke-width:.5}.w{fill:#c4f8fc;stroke:#0a6f79;stroke-width:.75}.fl{fill:none;stroke:#0a6f79;stroke-width:.6;stroke-linecap:round}.sd{fill:#efede6}.rk{fill:#fafaf7;stroke:#0b0b0c;stroke-width:.6}</style>
-<g transform="translate(0,0)"><text class="ser" x="10" y="26" font-size="20">Before</text><rect class="sd" x="0" y="190" width="310" height="150"/>
-<rect class="ln" x="10" y="40" width="290" height="150"/>
-<path class="hl" d="M10 70H300M10 100H300M10 130H300M10 160H300M40 40V70M95 40V55M150 40V55M210 40V55M270 40V70M30 100V130M80 100V130M230 100V130M280 100V130M55 130V160M250 130V160M30 160V190M90 160V190M220 160V190M275 160V190"/>
-<rect x="45" y="52" width="220" height="36" fill="#c4f8fc" stroke="#0a6f79" stroke-width=".75"/>
-<path d="M45 64H265M45 76H265" stroke="#0a6f79" stroke-width=".3"/>
-<text class="ser" x="155" y="74" text-anchor="middle" font-size="15" font-style="italic">El Riuet de Coma-ruga</text>
-<rect class="ln" x="137" y="106" width="36" height="22"/>
-<path d="M115 190V172A40 40 0 0 1 195 172V190Z" fill="#3f3f3e"/>
-<path class="ln" d="M115 190V172A40 40 0 0 1 195 172V190"/>
-<path stroke="#fafaf7" stroke-width="1" d="M118 182H192"/><path class="w" d="M110 190H200C215 205 230 220 225 245C220 262 195 268 175 272L172 340H140L137 272C115 268 90 262 85 245C80 220 95 205 110 190Z"/>
-<path class="fl" d="M140 205q8-4 16 0t16 0M125 225q10-4 20 0t20 0t20 0M120 245q10-4 20 0t20 0t20 0t20 0M148 290q4-3 8 0M150 320q4-3 8 0"/>
-<ellipse class="rk" cx="88" cy="215" rx="16" ry="9"/><ellipse class="rk" cx="228" cy="213" rx="15" ry="8"/><ellipse class="rk" cx="80" cy="255" rx="12" ry="7"/>
-<path class="ln" d="M232 225l40 -18M240 240l40 -18M236 205v38M276 190v36"/>
-<rect x="120" y="296" width="72" height="12" fill="#fafaf7" stroke="#0b0b0c" stroke-width=".75"/>
-<path class="hl" d="M132 296v12M144 296v12M156 296v12M168 296v12M180 296v12"/></g>
-<g transform="translate(0,355)"><text class="ser" x="10" y="26" font-size="20">After</text><rect class="sd" x="0" y="190" width="310" height="150"/>
-<rect class="ln" x="10" y="40" width="290" height="150"/>
-<path class="hl" d="M10 70H300M10 100H300M10 130H300M10 160H300M40 40V70M95 40V55M150 40V55M210 40V55M270 40V70M30 100V130M80 100V130M230 100V130M280 100V130M55 130V160M250 130V160M30 160V190M90 160V190M220 160V190M275 160V190"/>
-<rect x="45" y="52" width="220" height="36" fill="#c4f8fc" stroke="#0a6f79" stroke-width=".75"/>
-<path d="M45 64H265M45 76H265" stroke="#0a6f79" stroke-width=".3"/>
-<text class="ser" x="155" y="74" text-anchor="middle" font-size="15" font-style="italic">El Riuet de Coma-ruga</text>
-<rect class="ln" x="137" y="106" width="36" height="22"/>
-<path d="M115 190V172A40 40 0 0 1 195 172V190Z" fill="#3f3f3e"/>
-<path class="ln" d="M115 190V172A40 40 0 0 1 195 172V190"/>
-<path stroke="#fafaf7" stroke-width="1" d="M118 182H192"/><path class="w" d="M30 290C60 270 110 262 155 262C210 262 260 272 285 292C260 315 200 322 155 322C100 322 55 312 30 290Z"/>
-<path class="fl" d="M80 292q12-3 24 0M170 300q12-3 24 0M120 310q10-2 20 0M215 285q10-2 20 0M152 196q4 18 0 34t3 32"/>
-<ellipse class="rk" cx="125" cy="200" rx="18" ry="9"/><ellipse class="rk" cx="178" cy="203" rx="20" ry="10"/><ellipse class="rk" cx="150" cy="212" rx="10" ry="6"/><ellipse class="rk" cx="95" cy="225" rx="14" ry="7"/><ellipse class="rk" cx="212" cy="228" rx="16" ry="8"/><ellipse class="rk" cx="60" cy="210" rx="9" ry="5"/><ellipse class="rk" cx="250" cy="208" rx="11" ry="6"/><ellipse class="rk" cx="120" cy="240" rx="7" ry="4"/></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" class="rf-svg" aria-hidden="true">
+<g transform="translate(0,-30)"><rect class="rf-sand" x="0" y="190" width="310" height="160" fill="#efede6"/>
+<rect class="rf-ink" x="10" y="40" width="290" height="150" fill="none" stroke="#0b0b0c" stroke-width=".75"/>
+<path class="rf-hair" fill="none" stroke="#b9b9b6" stroke-width=".5" d="M10 70H300M10 100H300M10 130H300M10 160H300M40 40V70M95 40V55M150 40V55M210 40V55M270 40V70M30 100V130M80 100V130M230 100V130M280 100V130M55 130V160M250 130V160M30 160V190M90 160V190M220 160V190M275 160V190"/>
+<rect class="rf-sign" x="45" y="52" width="220" height="36" fill="#c4f8fc" stroke="#0a6f79" stroke-width=".75"/>
+<path class="rf-signline" d="M45 64H265M45 76H265" stroke="#0a6f79" stroke-width=".3"/>
+<text class="rf-signtext" x="155" y="74" text-anchor="middle" font-size="15" font-style="italic" font-family="Instrument Serif, Georgia, serif" fill="#0b0b0c">El Riuet de Coma-ruga</text>
+<rect class="rf-ink" x="137" y="106" width="36" height="22" fill="none" stroke="#0b0b0c" stroke-width=".75"/>
+<path class="rf-arch" d="M115 190V172A40 40 0 0 1 195 172V190Z" fill="#3f3f3e"/>
+<path class="rf-ink" fill="none" stroke="#0b0b0c" stroke-width=".75" d="M115 190V172A40 40 0 0 1 195 172V190"/>
+<path class="rf-bar" stroke="#fafaf7" stroke-width="1" d="M118 182H192"/><path class="rf-water" fill="#c4f8fc" stroke="#0a6f79" stroke-width=".75" d="M110 190H200C215 205 230 220 225 245C220 262 195 268 175 272L172 350H140L137 272C115 268 90 262 85 245C80 220 95 205 110 190Z"/>
+<path class="rf-flow" fill="none" stroke="#0a6f79" stroke-width=".6" stroke-linecap="round" d="M140 205q8-4 16 0t16 0M125 225q10-4 20 0t20 0t20 0M120 245q10-4 20 0t20 0t20 0t20 0M148 290q4-3 8 0M150 325q4-3 8 0"/>
+<ellipse class="rf-rock" fill="#fafaf7" stroke="#0b0b0c" stroke-width=".6" cx="88" cy="215" rx="16" ry="9"/><ellipse class="rf-rock" fill="#fafaf7" stroke="#0b0b0c" stroke-width=".6" cx="228" cy="213" rx="15" ry="8"/><ellipse class="rf-rock" fill="#fafaf7" stroke="#0b0b0c" stroke-width=".6" cx="80" cy="255" rx="12" ry="7"/>
+<path class="rf-ink" fill="none" stroke="#0b0b0c" stroke-width=".75" d="M232 225l40 -18M240 240l40 -18M236 205v38M276 190v36"/>
+<rect class="rf-bridge" x="120" y="300" width="72" height="12" fill="#fafaf7" stroke="#0b0b0c" stroke-width=".75"/>
+<path class="rf-hair" fill="none" stroke="#b9b9b6" stroke-width=".5" d="M132 300v12M144 300v12M156 300v12M168 300v12M180 300v12"/></g>
+<g transform="translate(330,-30)"><rect class="rf-sand" x="0" y="190" width="310" height="160" fill="#efede6"/>
+<rect class="rf-ink" x="10" y="40" width="290" height="150" fill="none" stroke="#0b0b0c" stroke-width=".75"/>
+<path class="rf-hair" fill="none" stroke="#b9b9b6" stroke-width=".5" d="M10 70H300M10 100H300M10 130H300M10 160H300M40 40V70M95 40V55M150 40V55M210 40V55M270 40V70M30 100V130M80 100V130M230 100V130M280 100V130M55 130V160M250 130V160M30 160V190M90 160V190M220 160V190M275 160V190"/>
+<rect class="rf-sign" x="45" y="52" width="220" height="36" fill="#c4f8fc" stroke="#0a6f79" stroke-width=".75"/>
+<path class="rf-signline" d="M45 64H265M45 76H265" stroke="#0a6f79" stroke-width=".3"/>
+<text class="rf-signtext" x="155" y="74" text-anchor="middle" font-size="15" font-style="italic" font-family="Instrument Serif, Georgia, serif" fill="#0b0b0c">El Riuet de Coma-ruga</text>
+<rect class="rf-ink" x="137" y="106" width="36" height="22" fill="none" stroke="#0b0b0c" stroke-width=".75"/>
+<path class="rf-arch" d="M115 190V172A40 40 0 0 1 195 172V190Z" fill="#3f3f3e"/>
+<path class="rf-ink" fill="none" stroke="#0b0b0c" stroke-width=".75" d="M115 190V172A40 40 0 0 1 195 172V190"/>
+<path class="rf-bar" stroke="#fafaf7" stroke-width="1" d="M118 182H192"/><path class="rf-water" fill="#c4f8fc" stroke="#0a6f79" stroke-width=".75" d="M30 295C60 275 110 267 155 267C210 267 260 277 285 297C260 320 200 327 155 327C100 327 55 317 30 295Z"/>
+<path class="rf-flow" fill="none" stroke="#0a6f79" stroke-width=".6" stroke-linecap="round" d="M80 297q12-3 24 0M170 305q12-3 24 0M120 315q10-2 20 0M215 290q10-2 20 0M152 196q4 18 0 34t3 37"/>
+<ellipse class="rf-rock" fill="#fafaf7" stroke="#0b0b0c" stroke-width=".6" cx="125" cy="200" rx="18" ry="9"/><ellipse class="rf-rock" fill="#fafaf7" stroke="#0b0b0c" stroke-width=".6" cx="178" cy="203" rx="20" ry="10"/><ellipse class="rf-rock" fill="#fafaf7" stroke="#0b0b0c" stroke-width=".6" cx="150" cy="212" rx="10" ry="6"/><ellipse class="rf-rock" fill="#fafaf7" stroke="#0b0b0c" stroke-width=".6" cx="95" cy="225" rx="14" ry="7"/><ellipse class="rf-rock" fill="#fafaf7" stroke="#0b0b0c" stroke-width=".6" cx="212" cy="228" rx="16" ry="8"/><ellipse class="rf-rock" fill="#fafaf7" stroke="#0b0b0c" stroke-width=".6" cx="60" cy="210" rx="9" ry="5"/><ellipse class="rf-rock" fill="#fafaf7" stroke="#0b0b0c" stroke-width=".6" cx="250" cy="208" rx="11" ry="6"/><ellipse class="rf-rock" fill="#fafaf7" stroke="#0b0b0c" stroke-width=".6" cx="120" cy="240" rx="7" ry="4"/></g>
 </svg>

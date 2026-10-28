@@ -44,10 +44,33 @@
 .pl-name { font-family: var(--font-display); font-weight: var(--display-weight); font-size: var(--step-1); color: var(--ink); margin: 0 0 var(--space-1); }
 .pl-where { margin: 0; font-style: italic; }
 .pl-stop { margin: var(--space-3) 0 0; font-family: var(--font-sans); color: var(--grey-600); }
+/* drawings: beside the journey while their passage is read (the list of stops steps aside), under their paragraph on phones */
+.j-fig { margin: var(--space-4) 0 0; cursor: zoom-in; display: none; }
+.journey.fig-on .j-fig.is-on { display: block; animation: fig-in var(--dur-3) var(--ease-default); }
+.journey.fig-on .j-list, .journey.fig-on .j-note { display: none; }
+.j-fig:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
+@keyframes fig-in { from { opacity: 0; } to { opacity: 1; } }
+.fig-l { display: grid; grid-template-columns: 1fr 1fr; gap: 3%; margin: 0 0 var(--space-2); font-family: var(--font-sans); font-size: var(--step--1); color: var(--grey-600); }
+.fig-art svg, .fig-art img { display: block; width: 100%; height: auto; }
+.fig-art .rf-signtext { font-family: var(--font-display); fill: var(--ink); }
+.fig-art .rf-sand { fill: color-mix(in srgb, var(--grey-200) 45%, var(--paper)); }
+.fig-art .rf-sign, .fig-art .rf-water { fill: var(--blue); stroke: var(--blue-deep); }
+.fig-art .rf-flow, .fig-art .rf-signline { stroke: var(--blue-deep); }
+.fig-art .rf-ink { stroke: var(--ink); }
+.fig-art .rf-rock, .fig-art .rf-bridge { fill: var(--paper); stroke: var(--ink); }
+.fig-art .rf-hair { stroke: var(--grey-300); }
+.fig-art .rf-arch { fill: var(--grey-700); }
+.fig-art .rf-bar { stroke: var(--paper); }
+.fig-inline { display: none; margin: 0 0 1.1em; }
+.pop.fig-pop { width: min(44rem, calc(100vw - 2rem)); max-height: none; }
+.pop.fig-pop.is-sheet { width: auto; }
+.fig-big { margin: var(--space-2) 0 0; }
+@media (prefers-reduced-motion: reduce) { .journey.fig-on .j-fig.is-on { animation: none; } }
 /* where the margin folds away, the journey sits under the title */
 @container page (max-width: 859px) {
   .journey-col { display: none; }
   .journey-under { display: block; margin-top: var(--space-5); }
   .journey-under .j-map { aspect-ratio: 16 / 10; }
+  .fig-inline { display: block; }
 }
-@media print { .journey-col, .journey-under { display: none; } }
+@media print { .journey-col, .journey-under { display: none; } .fig-inline { display: block; } }

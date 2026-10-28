@@ -5,7 +5,7 @@ export const pieceText: Record<Lang, {
   opinion: string; article: string; notes: string; back: string; keywords: string;
   auto?: [string, string, string]; autoShort?: string; contents: string;
   alsoIn: string; onlyHere: string; openMap: string; close: string; note: string;
-  story: { journey: string; ahead: string; stop: string; /* {i} and {n} */ end: string; approx: string; chapter: string };
+  story: { journey: string; ahead: string; stop: string; /* {i} and {n} */ end: string; approx: string; chapter: string; before: string; after: string; enlarge: string };
   map: {
     title: string; intro: string; search: string; pieces: string; concepts: string; people: string; keyConcepts: string;
     list: string; graph: string; zoomIn: string; zoomOut: string; reset: string; choose: string; appearsIn: (n: number) => string;
@@ -14,7 +14,7 @@ export const pieceText: Record<Lang, {
   };
 }> = {
   en: {
-    story: { journey: 'The journey', ahead: 'ahead', stop: 'Stop {i} of {n}', end: 'Ahead: the end of the journey', approx: 'Roads approximate', chapter: 'Chapter' },
+    story: { journey: 'The journey', ahead: 'ahead', stop: 'Stop {i} of {n}', end: 'Ahead: the end of the journey', approx: 'Roads approximate', chapter: 'Chapter', before: 'Before', after: 'After', enlarge: 'Enlarge the drawing' },
     opinion: 'Opinion', article: 'Article', notes: 'Notes', back: 'Back to the text', keywords: 'Keywords', contents: 'Contents',
     alsoIn: 'Also in', onlyHere: 'Only in this piece so far', openMap: 'Open in the map', close: 'Close', note: 'Note',
     map: {
@@ -27,7 +27,7 @@ export const pieceText: Record<Lang, {
     },
   },
   de: {
-    story: { journey: 'Die Reise', ahead: 'noch vor uns', stop: 'Halt {i} von {n}', end: 'Noch vor uns: das Ende der Reise', approx: 'Straßen ungefähr', chapter: 'Kapitel' },
+    story: { journey: 'Die Reise', ahead: 'noch vor uns', stop: 'Halt {i} von {n}', end: 'Noch vor uns: das Ende der Reise', approx: 'Straßen ungefähr', chapter: 'Kapitel', before: 'Vorher', after: 'Nachher', enlarge: 'Zeichnung vergrößern' },
     opinion: 'Meinung', article: 'Artikel', notes: 'Anmerkungen', back: 'Zurück zur Stelle', keywords: 'Schlagwörter', contents: 'Inhalt',
     auto: ['Automatisch übersetzt. Das Original ist auf ', 'Englisch', '.'], autoShort: 'automatisch übersetzt',
     alsoIn: 'Auch in', onlyHere: 'Bisher nur in diesem Text', openMap: 'In der Karte öffnen', close: 'Schließen', note: 'Anmerkung',
@@ -41,7 +41,7 @@ export const pieceText: Record<Lang, {
     },
   },
   tr: {
-    story: { journey: 'Yolculuk', ahead: 'sırada', stop: 'Durak {i} / {n}', end: 'Sırada: yolculuğun sonu', approx: 'Yollar yaklaşık', chapter: 'Bölüm' },
+    story: { journey: 'Yolculuk', ahead: 'sırada', stop: 'Durak {i} / {n}', end: 'Sırada: yolculuğun sonu', approx: 'Yollar yaklaşık', chapter: 'Bölüm', before: 'Önce', after: 'Sonra', enlarge: 'Çizimi büyüt' },
     opinion: 'Görüş', article: 'Makale', notes: 'Notlar', back: 'Metne dön', keywords: 'Anahtar sözcükler', contents: 'İçindekiler',
     auto: ['Otomatik çeviridir. Özgün metin ', 'İngilizce', 'dir.'], autoShort: 'otomatik çeviri',
     alsoIn: 'Şurada da', onlyHere: 'Şimdilik yalnızca bu yazıda', openMap: 'Haritada aç', close: 'Kapat', note: 'Not',
