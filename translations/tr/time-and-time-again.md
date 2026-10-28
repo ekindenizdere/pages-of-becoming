@@ -1,5 +1,5 @@
 ---
-title: "Zaman ve Yine Zaman"
+title: "Dönüp Dolaşıp Zaman"
 kind: article
 status: upcoming
 order: 2
