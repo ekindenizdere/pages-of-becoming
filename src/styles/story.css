@@ -22,6 +22,11 @@
 .j-stop.ref.is-lit text { opacity: 1; }
 .j-stop.is-here circle, .j-stop.is-lit circle { fill: var(--blue-deep); stroke: var(--blue-deep); }
 .j-stop.is-here text, .j-stop.is-lit text { fill: var(--ink); }
+.j-masia .m-wall, .j-masia .m-tower { fill: color-mix(in srgb, #d8a493 38%, var(--paper)); stroke: var(--ink); stroke-width: 0.45; stroke-linejoin: round; }
+.j-masia .m-cap { fill: var(--paper); stroke: var(--ink); stroke-width: 0.45; stroke-linejoin: round; }
+.j-masia .m-dark { fill: var(--ink); }
+.j-masia.ahead { opacity: 0.55; }
+.j-masia.is-here { opacity: 1; }
 .j-car { cursor: pointer; }
 .j-body { fill: var(--paper); stroke: var(--ink); stroke-width: 1.1; stroke-linejoin: round; }
 .j-win { fill: var(--blue); stroke: none; }

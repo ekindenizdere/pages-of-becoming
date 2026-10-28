@@ -35,7 +35,7 @@ const storyData = kind === 'story' ? storyFiles[`../data/stories/${slug.replace(
 const storyClient = storyData && {
   chapter: chapter ?? 1, geo: storyData.geo, t: { ...t.story, close: t.close },
   figures: (storyData.figures ?? []).filter((f: any) => f.chapter === (chapter ?? 1)).map((f: any) => ({ src: url(f.src), from: f.from, to: f.to, alt: f.alt[lang] ?? f.alt.en })),
-  places: storyData.places.map((p: any) => ({ key: p.key, stop: p.stop, arrive: p.arrive ?? null, name: p.name[lang] ?? p.name.en, where: p.where[lang] ?? p.where.en, date: p.date ? (p.date[lang] ?? p.date.en) : undefined })),
+  places: storyData.places.map((p: any) => ({ key: p.key, stop: p.stop, icon: p.icon, arrive: p.arrive ?? null, name: p.name[lang] ?? p.name.en, where: p.where[lang] ?? p.where.en, date: p.date ? (p.date[lang] ?? p.date.en) : undefined })),
 };
 const words = title.split(' ');
 // Configuration opening: each letter starts from its own scattered place (steady pseudo-random, the same on every visit)

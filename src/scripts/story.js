@@ -52,6 +52,23 @@ export function initStory() {
       mk('text', { x: xy[0], y: xy[1] }, g).textContent = p.name;
       return { g, xy, ref: !p.stop };
     });
+    // drawings beside some stops: the farmhouse at Altura (Masia de San Juan, after the photos), left of its dot
+    // so the arriving car can stand beside it: the tall square tower, the walls with battlements, two slim
+    // round towers in pointed caps and the arched wooden door between them
+    const icons = places.filter((p) => p.icon === 'masia' && xyOf(p.key)).map((p) => {
+      const s = stops.find((q) => q.key === p.key);
+      const g = mk('g', { class: 'j-stop j-masia' + (s && s.ahead ? ' ahead' : ''), 'data-place': p.key }, svg), art = mk('g', {}, g);
+      mk('path', { class: 'm-wall', d: 'M-21 0V-11H-20V-12.6H-18.6V-11H-16.4V-12.6H-15V-11H-12.6V-12.6H-11.2V-11H-8.6V-12.6H-7.2V-11H-6V0Z' }, art);
+      mk('path', { class: 'm-wall', d: 'M-27 0V-17H-26V-19H-24.4V-17H-23.6V-19H-22V-17H-21V0Z' }, art);
+      mk('ellipse', { class: 'm-dark', cx: -24, cy: -14.2, rx: 0.9, ry: 0.9 }, art);
+      mk('path', { class: 'm-dark', d: 'M-15.4 0V-4.2Q-13.5 -6.6 -11.6 -4.2V0Z' }, art);
+      [-17.2, -9.8].forEach((x) => {
+        mk('rect', { class: 'm-tower', x: x - 1, y: -12.4, width: 2, height: 12.4 }, art);
+        mk('path', { class: 'm-cap', d: `M${x - 1.3} -12.4L${x} -16.2L${x + 1.3} -12.4Z` }, art);
+      });
+      mk('path', { class: 'm-dark', d: 'M-25.2 -6.5h1.4v2h-1.4zM-19.5 -7.5h1v1.6h-1zM-8.2 -7.5h1v1.6h-1z' }, art);
+      return { g, xy: xyOf(p.key) };
+    });
     // the car: a small side view in ink
     const car = mk('g', { class: 'j-car' }, svg), body = mk('g', {}, car);
     mk('path', { d: 'M-11 1 L-11 -3 Q-10 -5 -7 -5 L-4 -9 Q-3 -10 -1 -10 L4 -10 Q6 -10 7 -8 L9 -5 Q11 -5 11 -3 L11 1 Z', class: 'j-body' }, body);
@@ -67,7 +84,7 @@ export function initStory() {
     }
     const note = document.createElement('p'); note.className = 'j-note'; note.textContent = T.approx; box.appendChild(note);
     host.appendChild(box);
-    const J = { box, svg, done, dots, car, body, cap, list, vb: null, hover: 0 };
+    const J = { box, svg, done, dots, icons, car, body, cap, list, vb: null, hover: 0 };
     car.addEventListener('pointerenter', () => { J.hover = 1; });
     car.addEventListener('pointerleave', () => { J.hover = 0; });
     journeys.push(J);
@@ -168,6 +185,7 @@ export function initStory() {
         // names only where they help: the ends of the leg being read; at the end, the last stop and the one ahead
         d.g.classList.toggle('named', !d.ref && (state.end ? key === state.at || stops.find((s) => s.key === key)?.ahead : key === from || key === to));
       });
+      J.icons.forEach((ic) => { ic.g.setAttribute('transform', `translate(${ic.xy[0] - 6 * k} ${ic.xy[1]}) scale(${k * 1.25})`); ic.g.classList.toggle('is-here', ic.g.dataset.place === state.at); });
       const amp = still ? 0 : 1 + J.hover * 2.5;
       const sway = Math.sin(t * 7) * 4 * amp, hop = Math.abs(Math.sin(t * 5)) * -1.2 * amp;
       const face = Math.cos(pos.ang) < 0 ? -1 : 1;
