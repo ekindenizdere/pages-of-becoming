@@ -1,5 +1,5 @@
 ---
-title: "Immer und immer wieder"
+title: "Immer wieder Zeit"
 kind: article
 status: upcoming
 order: 2
